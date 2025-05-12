@@ -1,6 +1,7 @@
 \documentclass[11pt,a4paper]{ivoa}
 \input tthdefs
 
+\setlength {\marginparwidth }{4cm}
 \usepackage{todonotes}
 \usepackage{supertabular}
 
@@ -37,7 +38,7 @@ spectra.
 
 It makes  use of the Simple Spectral Line Data Model SSLDM
 \citep{todo:ssldm} to characterize spectral lines through the use of
-uTypes \citep{TODO: they're still unspecified}. Physical quantities of
+uTypes [no, let's not; they're nothing but trouble]. Physical quantities of
 units are described by using the standard VO Units syntax
 \citep{2014ivoa.spec.0523D}.
 
@@ -137,7 +138,7 @@ IVOA architecture \citep{note:VOARCH}.
 
 
 \section{Spectral line service type}
-\label{RefHeadingToc5716682}
+\label{sect:service-type}
 
 It is assumed that compliant spectral line services fall into one of two categories.
 
@@ -194,13 +195,13 @@ or by the registry relies on an implementation of a VOSI-capabilities
 endpoint \citep{2017ivoa.spec.0524G}.
 
 \section{Use cases}
-\label{RefHeadingToc5716683}
+\label{sect:use-cases}
 
 The SLAP protocol aims at covering some classic use cases, some of which
 will be described below.
 
 \subsection{Finding available lines for a given species}
-\label{RefHeadingToc5716684}
+\label{sect:finding-all}
 
 In the context of a numerical code, one might need to integrate
 extensive data related to one or several given species.  In that case,
@@ -210,7 +211,7 @@ first step could be to ask the service the complete list of species in
 order to know if data are available or not.
 
 \subsection[Line identification]{Line identification}
-\label{RefHeadingToc5716685}
+\label{sect:line-id}
 
 A user visualizing a spectrum might want to identify some absorption or
 emission lines. As wavelength is a mandatory query parameter of the
@@ -223,7 +224,7 @@ applications, providing a line identification function form a graphical
 user interface.
 
 \subsection{Discovering the content of a database}
-\label{RefHeadingToc5716686}
+\label{sect:content-discovery}
 
 In the context of a graphical user interface (be it a web interface or a
 local standalone application) able to query SLAP services, an
@@ -238,7 +239,7 @@ auto-completion feature if the user wants to manually enter the name of
 a species.
 
 \clearpage\section{Query interface}
-\label{RefHeadingToc5716687}
+\label{sect:query-interface}
 
 The SLAP resources are synchronous web service resources that conform to
 the DALI-sync description \citep{2017ivoa.spec.0517D}. For a DALI-sync
@@ -246,7 +247,7 @@ resource, the parameters for a request may be submitted using an HTTP
 GET (query string) or POST action.
 
 \subsection{Resources}
-\label{RefHeadingToc5716688}
+\label{sect:dali-resources}
 
 Publishers are free to name (set paths) resources whatever they wish;
 clients will find resource paths thanks to the VOSI-capabilities
@@ -284,7 +285,7 @@ a registry, \{lines\} and \{species\} will have distinct standardID as
 specified in sect~\ref{toc368}.
 
 \subsection{Input parameters}
-\label{RefHeadingToc5716694}
+\label{sect:input-pars}
 
 As specified in the DALI recommendation, parameter names are not
 case sensitive; a SLAP service must treat upper-, lower-, and mixed-case
@@ -326,7 +327,7 @@ The open-ended interval (-infinity, infinity) (all values) is:
 
 
 \section{\{lines\} resource}
-\label{RefHeadingToc5716699}
+\label{sect:lines-res}
 
 The purpose of this resource is to allow users/clients to search in a
 wavelength range for spectral lines. This resource MUST be implemented
@@ -335,7 +336,7 @@ and maximum value for the wavelength range. Additional parameters may be
 used to refine the search or to model physical scenarios.
 
 \subsection{Required parameters}
-\label{RefHeadingToc5716700}
+\label{sect:lines-pars}
 
 A service must support the input parameters described in this section.
 That means that the service must accept them as valid ones without
@@ -343,7 +344,6 @@ raising an error, and the parameters must be properly used to constrain
 the query.
 
 \subsubsection[Wavelength]{Wavelength}
-\label{RefHeadingToc5716701}
 
 The service \textbf{MUST} support the \textbf{WAVELENGTH} parameter, to
 specify the wavelength spectral range, to be specified in meters. This
@@ -367,7 +367,6 @@ micrometers:
 \parexample{WAVELENGTH=5.1E-6 5.6E-6}
 
 \subsubsection{RESPONSEFORMAT}
-\label{RefHeadingToc5716702}
 
 The RESPONSEFORMAT parameter, defined in the DALI standard, is used so
 the client can specify the format of the response. The possible values
@@ -397,7 +396,6 @@ Return a result with a MIME-type of text/xml:
 \parexample{RESPONSEFORMAT=text/xml}
 
 \subsubsection{MAXREC}
-\label{RefHeadingToc5716703}
 
 The MAXREC parameter is defined in DALI and allows the client to
 limit the number or records in the response. A service implementation
@@ -413,10 +411,8 @@ Display only 100 lines:
 \parexample{MAXREC=100}
 
 \subsection{Non-compulsory parameters}
-\label{RefHeadingToc5716704}
 
 \subsubsection{Chemical element}
-\label{RefHeadingToc5716705}
 
 A service \textbf{MAY} have a search parameter called
 \textbf{CHEMICAL\_ELEMENT}. This parameter would constrain the search to
@@ -439,7 +435,6 @@ All lines related to the carbon dioxide molecule:
 \parexample{CHEMICAL\_ELEMENT=CO2}
 
 \subsubsection{Ion charge range}
-\label{RefHeadingToc5716706}
 
 A service \textbf{MAY} implement the parameter \textbf{ION\_CHARGE} to
 specify the minimum and maximum charge of an ion.  It will look for the
@@ -459,7 +454,6 @@ All lines related to Fe+ ion:
 \parexample{CHEMICAL\_ELEMENT=Fe\&ION\_CHARGE=1}
 
 \subsubsection{Energy level range}
-\label{RefHeadingToc5716707}
 
 \paragraph{Level energy}
 
@@ -500,7 +494,6 @@ Energy of upper level between 3.93E-18 and 3.94E-18 Joules:
 \parexample{UPPER\_LEVEL\_ENERGY=3.93E-18 3.94E-18}
 
 \subsubsection{Temperature range}
-\label{RefHeadingToc5716708}
 
 A service \textbf{MAY} implement the parameter \textbf{TEMPERATURE} to
 specify the minimum and maximum expected temperatures of the object, to
@@ -515,7 +508,6 @@ Temperature between 10 and 50 Kelvins:
 \parexample{TEMPERATURE=10 50}
 
 \subsubsection{Einstein coefficient A range}
-\label{RefHeadingToc5716709}
 
 A service \textbf{MAY }implement a parameter \textbf{EINSTEIN\_A} to accept constraints in the transition probability by
 specifying the minimum and maximum Einstein A, defined as the probability per unit time s\textsuperscript{-1} for
@@ -528,7 +520,6 @@ Transition probability between 1.1E-7 and 1.2E-7 s-1:
 \parexample{EINSTEIN\_A=1.1E-7 1.2E-1}
 
 \subsubsection{Physical process parameters}
-\label{RefHeadingToc5716710}
 
 It is possible to discriminate the result lines per physical process
 that originate or modify the line. To achieve this result, and in line
@@ -568,7 +559,6 @@ Search lines with Stark Broadening process:
 \parexample{PROCESS\_NAME=Stark Broadening}
 
 \subsubsection{Custom query parameters}
-\label{RefHeadingToc5716711}
 
 As we saw in Section 3, there is a need to have a general mechanism for
 free query parameters to filter out or sort the table result.
@@ -581,7 +571,7 @@ Using this information, a VO client would be able to dynamically
 construct a form, where this information could be inserted.
 
 \subsection{Successful output}
-\label{RefHeadingToc5716712}
+\label{sect:lines-output}
 
 The output returned by a SLAP service is a VOTable
 \citep{2013ivoa.spec.0920O}, an XML table format, returned with a
@@ -606,7 +596,6 @@ xmlns:ssldm="http://www.ivoa.net/xml/SimpleSpectralLineDM/v2.0"
 \end{verbatim}
 
 \subsubsection[RESOURCE element]{RESOURCE element}
-\label{RefHeadingToc5716713}
 
 The RESOURCE element contains several INFO elements storing metadata
 about the request execution and the queried service, as described in the
@@ -659,7 +648,6 @@ performed to obtain the data.
 \end{lstlisting}
 
 \subsubsection{The TABLE element}
-\label{RefHeadingToc5716714}
 
 \paragraph{Standard column with multiple units}
 
@@ -678,7 +666,6 @@ client. A standard column \textbf{MUST} have a defined utype and a
 defined UCD as described in the next section.
 
 \subsection{Standard output fields}
-\label{RefHeadingToc5716715}
 
 For a given field, it is allowed to have more than one instance of it,
 with different units in order to preserve the precision of the original
@@ -688,7 +675,6 @@ default unit is specified in this document, the latter value
 have a different value in the unit field descriptor.
 
 \subsubsection[Line.wavelength.value]{Line.wavelength.value}
-\label{RefHeadingToc5716716}
 
 One field \textbf{MUST} have
 utype={\textquotedbl}\textbf{ssldm:Line.wavelength.value{\textquotedbl}},
@@ -698,7 +684,6 @@ ucd={\textquotedbl}em.wl{\textquotedbl}, containing the wavelength in
 vacuum of the transition originating the line in meters.
 
 \subsubsection{Line.title}
-\label{RefHeadingToc5716717}
 
 Exactly one field \textbf{MUST }have
 utype=''\textbf{ssldm:Line.title}'', with
@@ -718,7 +703,6 @@ In case of corrected but unidentified lines, some examples could be:
 Examples: \verb|M31 1001.784 A|, \verb|011910191 800.2 A|
 
 \subsubsection{Line.identificationStatus}
-\label{RefHeadingToc5716718}
 
 Exactly one field \textbf{SHOULD }have
 utype=''\textbf{ssldm:Line.identificationStatus}'' with
@@ -727,10 +711,9 @@ arraysize={\textquotedbl}*{\textquotedbl}, containing the identification
 status of the line. Possible values are: UNIDENTIFIED,
 IDENTIFICATION\_UNCERTAIN, IDENTIFICATION\_PROVISIONAL, IDENTIFIED.
 
-See Appendix \ A for details.
+See Appendix~\ref{app:A} for details.
 
 \subsubsection{Line.lowerLevel.element.name}
-\label{RefHeadingToc5716719}
 
 Exactly one field \textbf{SHOULD} have
 utype=''\textbf{{ssldm:Line.lowerLevel.element.name}}'' with
@@ -740,7 +723,6 @@ ucd=''phys.atmol.element'', containing the name of the chemical element
 source of the lower level of this line.
 
 \subsubsection{Line.upperLevel.element.name}
-\label{RefHeadingToc5716720}
 
 Exactly one field \textbf{SHOULD} have
 utype=''\textbf{ssldm:Line.upperLevel.element.name}'' with
@@ -751,7 +733,6 @@ for the upper level of this line. If only one of lower and upper element
 name is specified, it is assumed that both are identical.
 
 \subsubsection{Line.lowerLevel.element.inChiKey}
-\label{RefHeadingToc5716721}
 
 Exactly one field \textbf{SHOULD} have
 utype=''\textbf{{ssldm:Line.lowerLevel.element.inChiKey}}'' with
@@ -761,7 +742,6 @@ ucd=''phys.atmol.element'', containing the inchikey \citep{inchi} of
 the chemical element for the lower level of this line.
 
 \subsubsection{Line.upperLevel.element.inChiKey}
-\label{RefHeadingToc5716722}
 
 Exactly one field \textbf{SHOULD} have
 utype=''\textbf{{ssldm:Line.upperLevel.element.inChiKey}}'' with
@@ -773,7 +753,6 @@ element inChiKey \ is specified, it is assumed that both are
 identical.
 
 \subsubsection{Line.lowerLevel.element.inChi}
-\label{RefHeadingToc5716723}
 
 Exactly one field \textbf{MAY} have
 utype=''\textbf{{ssldm:Line.lowerLevel.element.inChi}}'' with
@@ -783,7 +762,6 @@ ucd=''phys.atmol.element'', containing the inchi of the
 chemical element for the lower level of this line.
 
 \subsubsection{Line.upperLevel.element.inChi}
-\label{RefHeadingToc5716724}
 
 Exactly one field \textbf{MAY} have
 utype=''\textbf{{ssldm:Line.upperLevel.element.inChi}}{'' with
@@ -794,7 +772,6 @@ for the upper level of this line. If only one of lower and upper state
 element inChi is specified, it is assumed that both are identical.
 
 \subsubsection{Line.lowerLevel.element.ionCharge}
-\label{RefHeadingToc5716725}
 
 Exactly one field \textbf{SHOULD} have
 utype=''\textbf{{ssldm:Line.lowerLevel.element.ionCharge}}'' with
@@ -803,7 +780,6 @@ ucd=''phys.atmol.ionization'', containing the charge of the chemical
 element origin of the lower level of the line.
 
 \subsubsection{Line.upperLevel.element.ionCharge}
-\label{RefHeadingToc5716726}
 
 Exactly one field \textbf{SHOULD} have
 utype=''\textbf{{ssldm:Line.upperLevel.element.ionCharge}}'' with
@@ -814,7 +790,6 @@ upper element ion charge is specified, it is assumed that both are
 identical.
 
 \subsubsection{Line.lowerLevel.name}
-\label{RefHeadingToc5716727}
 
 Exactly one field \textbf{SHOULD }have
 utype=''\textbf{ssldm:Line.lowerLevel.name}'', with
@@ -824,7 +799,6 @@ containing a full description of the lower level of the transition
 originating the line.}}
 
 \subsubsection{Line.upperLevel.name}
-\label{RefHeadingToc5716728}
 
 Exactly one field \textbf{SHOULD} have
 utype=''\textbf{ssldm:Line.upperLevel.name}'', with
@@ -834,7 +808,6 @@ containing a full description of the upper level of the transition
 originating the line.
 
 \subsubsection{Line.observedWavelength.value}
-\label{RefHeadingToc5716729}
 
 Exactly one field \textbf{MAY} have
 utype=''\textbf{{ssldm:Line.observedWavelength.value}}'',with
@@ -846,7 +819,6 @@ meters, as it was observed. This may be used by observational spectral
 line databases.
 
 \subsubsection[Query.Score]{Query.Score}
-\label{RefHeadingToc5716730}
 
 Exactly one field \textbf{MAY} have utype=''\textbf{slap:Query.Score}'',
 with datatype={\textquotedbl}double{\textquotedbl}. A line with a higher
@@ -863,7 +835,6 @@ xmlns:slap=http://www.ivoa.net/xml/SimpleLineAccessDM/v2.0"
 \end{lstlisting}
 
 \subsubsection{Line.lowerLevel.energy.value}
-\label{RefHeadingToc5716731}
 
 Exactly one field \textbf{MAY} have
 utype=''\textbf{ssldm:Line.lowerLevel.energy.value}'', with
@@ -889,7 +860,6 @@ in the VOTable response. Other fields with the same utype should have a
 different value in the unit field descriptor.
 
 \subsubsection{Line.lowerLevel.configuration}
-\label{RefHeadingToc5716732}
 
 Exactly one field \textbf{MAY} have
 utype=''\textbf{ssldm:Line.lowerLevel.configuration}'' with
@@ -935,7 +905,6 @@ $$\hbox{\^\{2S+1\}{\textbackslash}Lambda \_\{{\textbackslash}Sigma \}}$$
 See \citep{latexstyle} for a complete reference.
 
 \subsubsection{Line.lowerLevel.quantumState}
-\label{RefHeadingToc5716733}
 
 Exactly one field \textbf{MAY} have
 utype=''\textbf{ssldm:Line.lowerLevel.quantumState}'' and one with
@@ -973,7 +942,6 @@ Example:
 [J:totalAngularMomentumJ:1:1;F1:totalAngularMomemtumF:0:1;F:totalAngularMomemtum:1:1]
 
 \subsubsection{Process.type}
-\label{RefHeadingToc5716736}
 
 One field \textbf{MAY} have utype=''\textbf{ssldm:Process.type}'' with
 datatype=''char{\textquotedbl} and arraysize=''*'' \ identifying the
@@ -989,7 +957,6 @@ interaction'', ``Energy shift'', ``Broadening'' (see section 3.8.1 of
 Simple Spectral Data Model).
 
 \subsubsection{Process.name}
-\label{RefHeadingToc5716737}
 
 One field \textbf{MAY} have utype=''\textbf{ssldm:Process.name}'' with
 datatype=''char{\textquotedbl} and arraysize=''*'', identifying a
@@ -1005,7 +972,6 @@ process types described in previous section. Please notice that ``:'' is
 a reserved character.
 
 \subsubsection{Line.Reference.url}
-\label{RefHeadingToc5716738}
 
 One or more fields \textbf{MAY} have
 utype={\textquotedbl}\textbf{ssldm:Line.Reference.url}{\textquotedbl}
@@ -1019,7 +985,6 @@ enclosed in an XML CDATA section
 any embedded metacharacters.
 
 \subsubsection{Line.Reference.bibtex}
-\label{RefHeadingToc5716739}
 
 One or more fields \textbf{MAY} have
 utype={\textquotedbl}\textbf{ssldm:Line.Reference.bibtex}{\textquotedbl},
@@ -1041,7 +1006,6 @@ Example:
 \end{lstlisting}
 
 \subsubsection{Additional references}
-\label{RefHeadingToc5716740}
 
 One or more fields \textbf{MAY} have
 ucd={\textquotedbl}meta.ref.url{\textquotedbl} with
@@ -1051,7 +1015,6 @@ URLs that contains extra information related to the spectral line. Same
 criteria than before about the CDATA section.
 
 \subsubsection{Observational line databases specificities}
-\label{RefHeadingToc5716741}
 
 In the case of observational line databases, some characterization
 information of the observation itself could be relevant. Next, we
@@ -1091,7 +1054,7 @@ the VOTable response.
 \end{itemize}
 
 \subsection{Non-standard output fields}
-\label{RefHeadingToc5716742}
+\label{sect:lines-nonstd}
 
 In many occasions, extra scientifically interesting parameters may be
 added to the output. Implementers are encouraged to add descriptions and
@@ -1101,7 +1064,7 @@ whenever possible.
 
 
 \section{\{species\} resource}
-\label{RefHeadingToc5716743}
+\label{sect:species}
 
 A simple spectral service \textbf{MAY} support a resource listing all
 the species for which lines are available. This operation returns the
@@ -1111,26 +1074,24 @@ returned with a MIME-type of
 {\textquotedbl}application/x-votable+xml{\textquotedbl}.
 
 \subsection{Parameters}
-\label{RefHeadingToc5716744}
+\label{sect:species-parameters}
 
 \subsubsection{RESPONSEFORMAT}
-\label{RefHeadingToc5716745}
 
 The RESPONSEFORMAT parameter is defined in a similar way to 6.1.2 for
 the \{lines\} resource.
 
 \subsection{Successful output}
-\label{RefHeadingToc5716746}
+\label{lines-output}
 
 The global metadata returned by a SLAP service for the \{species\}
 resource are identical to the output of the \{lines\} resource (see
 section 6.3).
 
 \subsection{Standard output fields}
-\label{RefHeadingToc5716747}
+\label{lines-fields}
 
 \subsubsection{Species.name}
-\label{RefHeadingToc5716748}
 
 Exactly one field \textbf{MUST} have
 utype={\textquotedbl}\textbf{ssldm:Species.name}{\textquotedbl},
@@ -1142,7 +1103,6 @@ chemical element for which at least one spectral line is available in
 the service.
 
 \subsubsection{Species.type}
-\label{RefHeadingToc5716749}
 
 {Exactly one field }\textbf{{MAY }}{have
 utype=''}\textbf{{ssldm:Species.type}}{'',
@@ -1152,7 +1112,6 @@ arraysize={\textquotedbl}*{\textquotedbl}. Possible values are Atom,
 Molecule and Particle.
 
 \subsubsection[Species.ionCharge]{Species.ionCharge}
-\label{RefHeadingToc5716750}
 
 Exactly one field \textbf{SHOULD} have
 utype={\textquotedbl}\textbf{ssldm:Species.ionCharge}{\textquotedbl},
@@ -1162,7 +1121,6 @@ datatype={\textquotedbl}int'' containing the charge of the considered
 chemical species.
 
 \subsubsection{Species.inChiKey}
-\label{RefHeadingToc5716751}
 
 Exactly one field \textbf{{MAY} have
 utype={\textquotedbl}}\textbf{{ssldm:Species.inChiKey}}{{\textquotedbl},
@@ -1172,7 +1130,6 @@ arraysize={\textquotedbl}*{\textquotedbl}, containing the inchikey of
 the chemical element.
 
 \subsubsection{Species.inChi}
-\label{RefHeadingToc5716752}
 
 Exactly one field \textbf{MAY} have
 utype={\textquotedbl}}\textbf{{ssldm:Species.inChi}}{{\textquotedbl},
@@ -1182,19 +1139,11 @@ arraysize={\textquotedbl}*{\textquotedbl}, containing the inchi of the
 chemical element.
 
 \subsection{Example}
-\label{RefHeadingToc5716753}
+\label{sect:example}
 
 \todo{Translate}
 
-\section{VOSI-availability}
-\label{RefHeadingToc5716754}
-
-A SLAP service \textbf{MUST} provide a VOSI-availability resource.
-
-\nolinkurl{http://example.com/slap2/availability}}
-
-\section{VOSI-capabilities }
-\label{RefHeadingToc5716755}
+\subsubsection{VOSI-capabilities }
 
 A compliant simple spectral line service \textbf{MUST} provide a
 \{capabilities\} resource used to query the service metadata:
@@ -1291,7 +1240,6 @@ An example of such a document could be:
 \end{lstlisting}
 
 \section{Registration and discovering of SLAP resources}
-\label{RefHeadingToc5716756}
 
 Users can discover a service instance through an IVOA-compliant
 registry. \ The description is recognized as an instance of a SLAP
@@ -1301,7 +1249,7 @@ schema \citep{2017ivoa.spec.0530P}.
 \appendix
 
 \section{SLAP services for uncorrected and unidentified lines}
-\label{RefHeadingToc5716757}
+\label{app:unidentified}
 
 One important constraint for observational line databases in the SLAP
 definition is to limit the lines in the SLAP output to corrected lines,
@@ -1714,12 +1662,11 @@ and both in deg &
 \appendix
 \section{Changes from Previous Versions}
 
-Changes from version 1\todo{fill in}
+\subsection{Changes from version 1}
+\todo{fill in}
 % these would be subsections "Changes from v. WD-..."
 % Use itemize environments.
 
-% NOTE: IVOA recommendations must be cited from docrepo rather than ivoabib
-% (REC entries there are for legacy documents only)
-\bibliography{ivoatex/ivoabib,ivoatex/docrepo,local}
+\bibliography{ivoatex/ivoabib,ivoatex/docrepo}
 
 \end{document}
