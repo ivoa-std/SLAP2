@@ -4,6 +4,8 @@
 \setlength {\marginparwidth }{4cm}
 \usepackage{todonotes}
 \usepackage{supertabular}
+\usepackage{float}
+\usepackage{tabularx}
 
 \lstset{flexiblecolumns=true,showstringspaces=False,
   language={}}
@@ -21,10 +23,24 @@
 \author{Guainazzi, M.}
 \author{Dubernet, M.-L.}
 \author{Tody, D.}
+\author{Zwölf, C.M.}
+
 
 \editor{Moreau, N.}
 
 \previousversion[https://ivoa.net/documents/SLAP/20101209/]{REC-1.0}
+
+\def\ivoaBaseURL{http://ivoa.net/documents/} % URL de base attendue
+\def\ivoaDocdatecode{20250627} % Par exemple, date au format YYYYMMDD
+\def\ivoaDocname{SLAP2}
+\def\ivoaDocversion{1.0}
+\def\ivoaDocdate{2025-06-17}
+\def\ivoaDocauthors{Nicolas Moreau} % Remplacez par les auteurs
+\def\ivoaDocstatus{WD} % ou "WD", "REC", "NOTE", etc.
+\def\ivoaDocid{IVOA-SLAP2-1.0}
+\def\ivoaDoctype{WD} % ou "Working Draft", "Recommendation", etc.
+
+\usepackage[a4paper, left=3cm, right=3cm, top=2.5cm, bottom=2.5cm]{geometry}
 
 \begin{document}
 \begin{abstract}
@@ -36,11 +52,11 @@ These lines can be either observed or theoretical and will be typically
 used to identify emission or absorption features in astronomical
 spectra.
 
-It makes  use of the Simple Spectral Line Data Model SSLDM
-\citep{todo:ssldm} to characterize spectral lines through the use of
-uTypes [no, let's not; they're nothing but trouble]. Physical quantities of
-units are described by using the standard VO Units syntax
-\citep{2014ivoa.spec.0523D}.
+It makes use of the \href{https://dictionary.vamdc.eu/}{VAMDC dictionary} to define the query parameters and the returned data. This dictionary is actually the equivalent of a 
+relational database view built on top of the data model defined in the \textit{VAMDC XSAMS schema 12.07}
+\citep{std:XSAMS12.07}. The primary objective of this schema is to set up a framework for the correct exchange of atomic, molecular and particle-surface interaction processes data. It has been developped and is currently maintained by the \href{https://vamdc.org/structure/presentation/}{VAMDC Consortium}. Each quantity defined in the dictionary is clearly defined and related to a field in the VAMDC schema.
+
+Physical quantities of units are described by using the standard VO Units syntax \citep{2014ivoa.spec.0523D}.
 
 SLAP services can be registered in an IVOA \textit{Registry of Resources}
 where they have a unique \textit{ResourceIdentifier}
@@ -55,14 +71,9 @@ service providers. A basic query will be done in a wavelength range for
 the different services, using the \{lines\} resource. The service
 returns a list of spectral lines formatted as a VOTable.  An
 implementation of the service may support additional search parameters
-(some which may be custom to that particular service) to more finely
-control the selection of spectral lines. Fully compliant services will
-also provide the \{species\} resource, returning an exhaustive list of
-all the species for which lines are available.
-
-The specification also describes how the search on extra parameters has
-to be done, making use of the support provided by the Simple
-Spectral Line Data Model (SSLDM).
+(some of which may be custom to that particular service) to control more finely the selection of spectral lines. Fully compliant services will
+also provide the \{species\} resource, returning a list of
+all the species for which lines are available.\textbf{\textbf{}}
 \end{abstract}
 
 \section*{Acknowledgments}
@@ -89,17 +100,15 @@ infrastructure that enable VO applications.
 
 \section{Introduction}
 
-This Simple Line Access Protocol (SLAP henceforth) specification makes
-use of the work done in the Simple Spectral Lines Data Model (SSLDM
-henceforth) definition, as the source of the abstract representation of
-a spectral line. All the information collected in this document will be
-used to homogenize the access to the different existing spectral line
-databases.
+This Simple Line Access Protocol (SLAP henceforth) in its first version \citep{2010ivoa.specQ1209O} made
+use of the work done in the Simple Spectral Lines Data Model definition \citep{2010ivoa.spec.1209O}, as the source of the abstract representation of
+a spectral line. This second version now rely on the standardization work made by 
+the VAMDC Consortium in the XSAMS data model to describe quantities \citep{std:XSAMS12.07}.
 
 Web services in the Virtual Observatory infrastructure share a common
 interface, described in the Data Access Layer Interface 1.1
-\citep{2017ivoa.spec.0517D}, document describing behaviors that must be
-implemented by all services concerning for example:
+\citep{2017ivoa.spec.0517D}, a document describing behaviors that must be
+implemented by all services concerning for example :
 
 \begin{itemize}
 \item the use of VOTable for encoding search results,
@@ -115,26 +124,27 @@ requests metadata from the server. These metadata include links to
 images or spectra. In the second step, the VO client application
 requests the data from the server. In the particular case of Simple Line
 Access Services, \ service will be, in essence, a one-step process,
-i.e., only the first request for metadata is needed and from that point
+i.e., only one request is needed whose result includes both data and metadata and from that point
 of view it looks more like the Simple Cone Search protocol
 \citep{2008ivoa.specQ0222P}.
 
-Even when no link to astronomical products is expected because of the
-nature of the service, the SLAP metadata could contain reference links
-to html pages, spectra files, spectral line profiles, etc.
+Even if no link to astronomical products is expected because of the
+nature of the service, the metadata associated to each line could contain reference 
+links to html pages, spectra files, spectral line profiles, etc. This is particularly useful for data citation
+because When the output table contains a DOI it can be cited along the data to ensure proper credit to data provider.
+
 
 \subsection{Role within the VO Architecture}
 
-\begin{figure}
-\centering
-
-\includegraphics[width=0.9\textwidth]{role_diagram.pdf}
-\caption{Architecture diagram for this document}
-\label{fig:archdiag}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{role_diagram.pdf}
+  \caption{Architecture diagram for this document}
+  \label{fig:archdiag}
 \end{figure}
 
 Fig.~\ref{fig:archdiag} shows the role this document plays within the
-IVOA architecture \citep{note:VOARCH}.
+IVOA architecture \citep{ivoaArchitecture}.
 
 
 \section{Spectral line service type}
@@ -165,10 +175,9 @@ due to the application of physical models.
 Examples:
 
 \begin{itemize}
-\item For the Atomic spectral line database from CD-ROM 23 of R. L. Kurucz
-\citep{kuruz}, the absorption oscillator strength, $\log(gf)$, can be selected
+\item For the Stark-b database \citep{2012JPhCS.397a2019S} which provides widths and shifts of isolated lines of neutral and ionized elements due to electron and ion impacts, it is necessary to provide the perturber density and the temperature to filter the transitions.
 
-\item For the NIST Atomic Spectra Database Lines \citep{nist}
+\item For the NIST Atomic Spectra Database Lines \citep{NIST_ASD}
 as it is extracted from the Saha-LTE model, ``\textit{The level
 populations are calculated according to the Boltzmann distribution
 within each ion and Saha distribution between the ion stages. Thus, to
@@ -188,8 +197,8 @@ In ISO Astronomical Spectroscopy Database (IASD),
 the observation number parameter can be used to select only the lines
 observed during this ISO satellite observation.
 
-Since it is awkward to compile all such extra parameters in a document
-such as this one, a general mechanism is described. As will be explained
+Since it is not the role of a standard to compile service specific parameters, 
+a general mechanism is described. As will be explained
 later, the discovery of these extra parameters by VO client applications
 or by the registry relies on an implementation of a VOSI-capabilities
 endpoint \citep{2017ivoa.spec.0524G}.
@@ -203,25 +212,46 @@ will be described below.
 \subsection{Finding available lines for a given species}
 \label{sect:finding-all}
 
-In the context of a numerical code, one might need to integrate
-extensive data related to one or several given species.  In that case,
-he/she would query one or several SLAP services supporting the
-CHEMICAL\_ELEMENT parameter. If the \{species\} endpoint is available, a
-first step could be to ask the service the complete list of species in
-order to know if data are available or not.
+Using a mass spectrometer, researchers find a molecule with the sum formula C16H10 in a comet particle. They now want to figure out whether any line in the spectrum of the coma of the parent object corresponds to some molecule with that sum formula. Conversely, a researcher may want to find lines of Methane or perhaps even Methane with one hydrogen atom being replaced by a deuteron. 
 
-\subsection[Line identification]{Line identification}
+In that case,  a first step could be to search in the list of available species if the \{species\} endpoint is available,
+then using the \{lines\} endpoint with CHEMICAL\_ELEMENT or INCHIKEY parameters.
+
+\subsection{Getting Properties of Well-Known Lines}
+\label{sect:finding-known-line}
+
+A user wants to display the Lyman series over a plot of a spectrum. Hence, a client needs to discover which service holds such data, select the appropriate records - presumably by their properties, perhaps even by their name -, and retrieve them. If multiple services hold the desired data, it might need to reconcile differing specifications. 
+
+This could be done by defining H as the searched CHEMICAL\_ELEMENT and providing a narrow WAVELENGTH interval corresponding to each lines in the serie.
+
+\subsection[Identifying a Single Line]{Identifying a Single Line}
 \label{sect:line-id}
 
-A user visualizing a spectrum might want to identify some absorption or
-emission lines. As wavelength is a mandatory query parameter of the
-\{lines\} endpoint for any valid SLAP service, the user could
-potentially query any existing service, providing the wavelength range
-inside which lines must be searched.
+A user sees a feature in a spectrum with known (and reliable) spectral
+calibration and now wants to know what might possibly be responsible for
+it. Hence, they query a narrow spectral range and retrieve all known lines
+from all services.
 
-This feature can also be implemented into spectrum visualization
-applications, providing a line identification function form a graphical
-user interface.
+To select which of the candidate lines are plausible matches, users would
+inspect line metadata such as the originating atom or molecule, the ionisation
+state, oscillator strengths or quantum numbers to identify rotational or vibrational level.
+
+\subsection[Retrieving Spectral Lines for Cross-Identification]{Retrieving Spectral Lines for Cross-Identification}
+\label{sect:line-cross-id}
+
+Users may have various reasons to retrieve a larger number of spectral lines:
+
+    When analysing a given spectrum, selecting spectral lines that may fit the ones in the spectrum, for instance to establish the source's chemistry or physical state. Depending on the prior knowledge of the source, they will want to constrain the matches to specific species in specific ionisation (or even excitation) states.
+
+    When estimating the redshift of an object, features found in the spectrum need to be matched to the rest wavelengths.
+
+    When computing theoretical spectra, a comparison to the (observed) ground truth is desirable.
+
+The challenge in all these cases is that displaying all lines known obviously is impossible due to the sheer volume of the data, and it would not help users in any way. Hence, the client needs to have some idea of which lines can be expected to be strong given the physics of the emission's source region.
+
+Selecting the lines before retrieval is a significant optimisation in this case, as in wider spectra at least hundreds of thousands of lines will be within the spectral range, while it probably rarely makes sense to plot more than a hundred or so. Hence, careful selection of lines can reduce the volume of data transferred and processed by the client by several orders of magnitude.
+
+To make good on this promise, the service need to be queryable such that lines suspected to be strong for some combination of chemistry, temperature, and pressure can be filtered out with some accuracy. 
 
 \subsection{Discovering the content of a database}
 \label{sect:content-discovery}
@@ -250,11 +280,13 @@ GET (query string) or POST action.
 \label{sect:dali-resources}
 
 Publishers are free to name (set paths) resources whatever they wish;
-clients will find resource paths thanks to the VOSI-capabilities
+clients will find their paths thanks to the VOSI-capabilities
 resource.  The table below shows the list of available resources for a
 service and their mandatory status.
 
-\begin{inlinetable}
+\begin{table}[htbp]
+\centering
+\caption{Description of available resources}
 \begin{tabular}{p{4.806cm}p{4.894cm}p{4.951cm}}
 \sptablerule
 \textbf{Resource type}&
@@ -266,23 +298,27 @@ service and their mandatory status.
  yes\\
  DALI-sync &
  \{species\} &
- no\\
- DALI-examples &
- /examples &
- no\\
+ yes\\
  VOSI-availability &
  service specific &
- yes\\
+ no\\
  VOSI-capabilities &
  /capabilities &
  yes\\
+  DALI-examples &
+ /examples &
+ no\\
 \sptablerule
 \end{tabular}
-\end{inlinetable}
+\end{table}
 
 In order to distinguish between resources when a service is declared in
-a registry, \{lines\} and \{species\} will have distinct standardID as
-specified in sect~\ref{toc368}.
+a registry, the following standardIds will be used : 
+
+\begin{itemize}
+  \item \{lines\} : ivo://ivoa.net/std/SLAP\#lines-2.0
+  \item \{species\} : ivo://ivoa.net/std/SLAP\#species-2.0
+\end{itemize}
 
 \subsection{Input parameters}
 \label{sect:input-pars}
@@ -290,41 +326,32 @@ specified in sect~\ref{toc368}.
 As specified in the DALI recommendation, parameter names are not
 case sensitive; a SLAP service must treat upper-, lower-, and mixed-case
 parameter names as equal. Parameter values are case sensitive.
-
-Some query parameters are multi-valued which means multiple occurrences
+All query parameters are multi-valued which means multiple occurrences
 of the parameter=value pairs as specified in the DALI recommendation are
-permitted. The constraints from multiple occurrences of a parameter are
+permitted, excepting the MAXREC parameter which is single valued. 
+The constraints from multiple occurrences of a parameter are
 combined with a logical OR operator. The constraints from different
-parameters are combined with a logical AND operator.
+parameters are combined with a logical AND operator. In accordance with these rules, 
+a query to search lines for both hydrogen and helium atoms at once can be written as follows : \\
 
-Query parameters for numeric fields are either scalar, accepting a
-single floating point or integer value, or a range of values. Such range
-values are encoded using the VOTable array serialization (space
-separated).
+CHEMICAL\_ELEMENT=H\&CHEMICAL\_ELEMENT=He \\
 
-Numeric intervals are pairs of numeric values (integer and
-floating-point). For floating point intervals, special values for
-positive and negative infinity may be used to specify open-ended
-intervals. Finite bounding values are included in the interval.
+Query parameters for text or string fields are always case-sensitive and indicate an exact match. \\
 
-For example, the interval [300,600] is:
+Query parameters for numeric fields accept a single numeric value or a range 
+of values with optional lower and upper bounds separated by a / (slash) character. 
+If  the lower or upper bound is not specified, the range is open-ended. \\ \\
+For example, the interval [300,600] is:\\
+\texttt{300/600} \\
+The open-ended interval [300,infinity) (all values greater than or equal to 300) is:\\
+\texttt{300/} \\
+The open-ended interval (-infinity,600] (all values less than or equal to 600) is:\\
+\texttt{/600}\\
+The open-ended interval (-infinity,infinity) (all values) is:\\
+\texttt{/} \\ \\
+If specified, the boundary value is always included in the interval.
 
-300 600
-
-The open-ended interval [300,infinity) (all values greater than or equal
-to 300) is:
-
-300 +Inf
-
-The open-ended interval (-infinity,600] (all values less than or equal
-to 600) is:
-
--Inf 600
-
-The open-ended interval (-infinity, infinity) (all values) is:
-
--Inf +Inf
-
+The units for numeric values are specified for each parameter and never included in the value. If the separator (/) is not present, the interval is assumed to be a scalar value.
 
 \section{\{lines\} resource}
 \label{sect:lines-res}
@@ -343,14 +370,15 @@ That means that the service must accept them as valid ones without
 raising an error, and the parameters must be properly used to constrain
 the query.
 
-\subsubsection[Wavelength]{Wavelength}
+\subsubsection{WAVELENGTH}
 
-The service \textbf{MUST} support the \textbf{WAVELENGTH} parameter, to
+The service \textbf{MUST} support the \textbf{WAVELENGTH}  parameter, to
 specify the wavelength spectral range, to be specified in meters. This
 wavelength range will be interpreted as the wavelength in the vacuum of
-the transition originating in the line
+the transition originating the line
 ({ucd={\textquotedbl}em.wl{\textquotedbl}};
-utype=''\textbf{ssldm:Line.wavelength.value}'').
+corresponding VAMDC restrictable is {\textquotedbl}RadTransWavelength{\textquotedbl} 
+to be specified in Angstroms).
 
 As the units in the spectral line database could be different than
 meters, the service will need to translate from the selected units
@@ -362,49 +390,23 @@ spectral line databases, even when in some cases, the unit selected
 Example
 
 To query for spectral lines in the wavelength range between 5.1 and 5.6
-micrometers:
+micrometers ( both values are included in search ):
 
-\parexample{WAVELENGTH=5.1E-6 5.6E-6}
-
-\subsubsection{RESPONSEFORMAT}
-
-The RESPONSEFORMAT parameter, defined in the DALI standard, is used so
-the client can specify the format of the response. The possible values
-in the context of a SLAP service are:
-
-\begin{inlinetable}
-\begin{tabular}{p{4.88cm}p{4.88cm}p{4.905cm}}
-\sptablerule
-\textbf{Table type}&
-\textbf{Media type}&
-\textbf{Short form}\\
-VOTable&
-application/x-votable+xml &
-votable\\
-VOTable &
-text/xml &
-votable\\
-\sptablerule
-\end{tabular}
-\end{inlinetable}
-
-If the parameter is not specified by the client in the query or uses the ``votable'' short form, the returned VOTABLE
-use a base MIME-type of application/x-votable+xml (as specified in section 3.4.3 of the DALI specification).
-
-Return a result with a MIME-type of text/xml:
-
-\parexample{RESPONSEFORMAT=text/xml}
+\parexample{WAVELENGTH=5.1E-6/5.6E-6}
 
 \subsubsection{MAXREC}
 
-The MAXREC parameter is defined in DALI and allows the client to
+The service \textbf{SHOULD} support the MAXREC parameter defined in DALI.
+It allows the client to
 limit the number or records in the response. A service implementation
 may also impose default and maximum values for this limit. However the
 limit is determined, if the output is truncated due to the limit, the
-server must indicate this using an overflow (as described in section
-4.4.1 of the DALI specification) indicator except in the special
-case of MAXREC=0, where the service respond with metadata-only (normal
+server must indicate this using an overflow indicator (\ref{par:QUERY_STATUS}) except in the special
+case of MAXREC=0 where the service respond with metadata-only (normal
 output document with no records).
+
+This parameter is single valued and services must respond with an error if 
+the request includes multiple values for it.\\
 
 Display only 100 lines:
 
@@ -412,151 +414,122 @@ Display only 100 lines:
 
 \subsection{Non-compulsory parameters}
 
-\subsubsection{Chemical element}
+\subsubsection{CHEMICAL\_ELEMENT}
 
-A service \textbf{MAY} have a search parameter called
+A service \textbf{SHOULD} have a search parameter called
 \textbf{CHEMICAL\_ELEMENT}. This parameter would constrain the search to
-the chemical element selected. A list of different chemical elements
-could be queried by specifying this parameter multiple times.
+the selected chemical element. A list of different chemical elements
+could be queried by specifying this parameter multiple times (ucd={\textquotedbl}phys.atmol.element{\textquotedbl}).
 
-(ucd=``phys.atmol.element''; utype=''\textbf{ssldm:Species.name''})
+Atom can be specified exactly by symbol (corresponding VAMDC restrictable is {\textquotedbl}AtomSymbol{\textquotedbl}). 
+Molecules can be specified by conventional molecular name (formula like CO2, CH4 or names like carbon or water {\dots}) which might not be
+unique (corresponding VAMDC restrictable is {\textquotedbl}MoleculeChemicalName{\textquotedbl}). The \{species\} 
+endpoint is the recommended place to discover the correct syntax of a given species in a particular service.
 
-Atom can be specified exactly by symbol. Molecules can be specified by
-conventional molecular name (CO2, CH4 {\dots}) which might not be
-unique. The \{species\} endpoint is the recommended place to discover
-the correct syntax of a given species in a particular service.
-
-All lines related to the iron atom:
-
+Filter results for Iron only : 
 \parexample{CHEMICAL\_ELEMENT=Fe}
 
-All lines related to the carbon dioxide molecule:
+Filter results for Carbon Dioxide molecule only:
 
 \parexample{CHEMICAL\_ELEMENT=CO2}
 
-\subsubsection{Ion charge range}
+\subsubsection{INCHIKEY}
 
-A service \textbf{MAY} implement the parameter \textbf{ION\_CHARGE} to
-specify the minimum and maximum charge of an ion.  It will look for the
-ionized forms of the chemical element specified in CHEMICAL\_ELEMENT
+InChI is an acronym for IUPAC International Chemical Identifier \citep{Heller2015}. 
+It is a string of characters capable of uniquely representing a chemical substance. 
+InChIKey is a compact chemical identifier derived from InChI. The InChIKey is always 
+only 27-characters long. 
+
+A service \textbf{SHOULD} have a search parameter called
+\textbf{INCHIKEY} (ucd={\textquotedbl}phys.atmol.element{\textquotedbl}; corresponding VAMDC restrictable is {\textquotedbl}InchiKey{\textquotedbl}). This parameter would constrain the search to
+the chemical element corresponding the provided inchikey value. A list of different
+inchikeys could be queried by specifying this parameter multiple times.
+
+The \{species\} 
+endpoint is the recommended place to discover the InChIkey of a given species in a particular service. You can also 
+use the dedicated \href{https://species.vamdc.org/}{VAMDC Species service}. This service relies on the VAMDC Species
+Database  \citep{Zwölf2024} that regularly harvest the species for which data are available within the VAMDC infrastructure.
+
+Filter results for neutral Iron atom (InChI=1S/Fe) only : 
+
+\parexample{INCHIKEY=XEEYBQQBJWHFJM-UHFFFAOYSA-N}
+
+
+\subsubsection{SPECIES\_MASS}
+
+A service \textbf{MAY} implement the parameters \textbf{SPECIES\_MASS} to specify the minimum and maximum mass of a species, 
+to be specified in Unified Atomic Mass Unit (u).  
+
+The mass will be a float value greater than 0. The provided range will be interpreted as the 
+mass of the chemical species  (ucd={\textquotedbl}phys.atmol.element, phys.mass {\textquotedbl}; 
+corresponding VAMDC restrictable are {\textquotedbl}AtomMass{\textquotedbl} for atoms and {\textquotedbl}MoleculeMolecularWeight{\textquotedbl} for molecules{\textquotedbl}).
+
+Filter all atoms chemical species between 0 and 12.011 u:
+
+\parexample{SPECIES\_MASS=0/12.011}
+
+
+\subsubsection{ION\_CHARGE}
+
+A service \textbf{MAY} implement the parameters \textbf{ION\_CHARGE} to specify the minimum and maximum charge of an ion (ucd={\textquotedbl}phys.atmol.ionization{\textquotedbl}; 
+corresponding VAMDC restrictable is {\textquotedbl}IonCharge{\textquotedbl}).
+ 
+It will look for the ionized forms of the chemical element specified in CHEMICAL\_ELEMENT
 parameter. If it is not defined, the restriction will be applied to all
 the ions available. If several CHEMICAL\_ELEMENT values have been
 provided, the ion charge values will be applied to each one of them.
 
 The charge will be an integer value greater than 0 for ionized species
 (positive charge), less than 0 for negative charge (excess electrons), 0
-for neutral.
-
-(ucd=''phys.atmol.ionization'';utype=''\textbf{ssldm:Species.ionCharge}'')
+for neutral. 
 
 All lines related to Fe+ ion:
 
-\parexample{CHEMICAL\_ELEMENT=Fe\&ION\_CHARGE=1}
+\parexample{CHEMICAL\_ELEMENT=Fe\&ION\_CHARGE=1/1}
 
-\subsubsection{Energy level range}
+All lines related to positively charged Fe ions and excluding the neutral form :
 
-\paragraph{Level energy}
+\parexample{CHEMICAL\_ELEMENT=Fe\&ION\_CHARGE=1/}
 
-A service \textbf{MAY} implement the parameter \textbf{LEVEL\_ENERGY} to
-specify the minimum and maximum energy for any of the level of the
-transition, to be expressed in Joules.
+\subsubsection{LOWER\_LEVEL\_ENERGY}
 
-(ucd={\textquotedbl} phys.energy;phys.atmol.level''; utype=''\textbf{ssldm:Level.energy}'')
-
-Energy of upper or lower level between 3.93E-18 and 3.94E-18 Joules:
-
-\parexample{LEVEL\_ENERGY=3.93E-18 3.94E-18}
-
-\paragraph{Lower level energy}
-
-A service \textbf{MAY} implement the parameter
-\textbf{LOWER\_LEVEL\_ENERGY} to specify the minimum and maximum energy
-for the LOWER level of the transition, to be expressed in Joules.
-
-(ucd={\textquotedbl} phys.energy;phys.atmol.level'';
-utype=''\textbf{ssldm:Line.lowerLevel.energy.value''})
+A service \textbf{MAY} implement the parameters \textbf{LOWER\_LEVEL\_ENERGY}
+to specify the minimum and maximum energy for the LOWER level of the transition, 
+to be expressed in Joules (ucd={\textquotedbl} phys.energy;phys.atmol.level{\textquotedbl}; corresponding VAMDC restrictable is {\textquotedbl}StateEnergy{\textquotedbl}).
 
 Energy of lower level between 3.93E-18 and 3.94E-18 Joules:
 
-\parexample{LOWER\_LEVEL\_ENERGY=3.93E-18 3.94E-18}
+\parexample{LOWER\_LEVEL\_ENERGY=3.93E-18/3.94E-18}
 
-\paragraph{Upper level energy}
+\subsubsection{UPPER\_LEVEL\_ENERGY}
 
-A service \textbf{MAY }implement the parameter
-\textbf{UPPER\_LEVEL\_ENERGY }to specify the minimum and maximum energy
-for the UPPER level of the transition, to be expressed in Joules.
-
-(ucd={\textquotedbl} phys.energy; phys.atmol.level'';
-utype=''\textbf{ssldm:Line.upperLevel.energy.value''})
+A service \textbf{MAY}implement the parameters
+\textbf{UPPER\_LEVEL\_ENERGY} to specify the minimum 
+and maximum energy for the UPPER level of the transition, to be expressed in Joules (ucd={"phys.energy;phys.atmol.level"}; corresponding VAMDC restrictable is {"StateEnergy").
 
 Energy of upper level between 3.93E-18 and 3.94E-18 Joules:
 
-\parexample{UPPER\_LEVEL\_ENERGY=3.93E-18 3.94E-18}
+\parexample{UPPER\_LEVEL\_ENERGY=3.93E-18/3.94E-18}
 
-\subsubsection{Temperature range}
+\subsubsection{TEMPERATURE}
 
-A service \textbf{MAY} implement the parameter \textbf{TEMPERATURE} to
+A service \textbf{MAY} implement the parameters \textbf{TEMPERATURE} to
 specify the minimum and maximum expected temperatures of the object, to
-be specified in Kelvin. This parameter would be used (in particular for
+be specified in Kelvin (ucd={\textquotedbl}phys.temperature{\textquotedbl};corresponding VAMDC restrictable is {\textquotedbl}EnvironmentTemperature{\textquotedbl}). This parameter would be used (in particular for
 theoretical spectral line databases) to sort the lines in the output
 using physical models.
 
-(ucd=''phys.temperature'';utype=''\textbf{ssldm:Line.environment.temperature.value}'')
-
 Temperature between 10 and 50 Kelvins:
 
-\parexample{TEMPERATURE=10 50}
+\parexample{TEMPERATURE=10/50}
 
-\subsubsection{Einstein coefficient A range}
+\subsubsection{EINSTEINA}
 
-A service \textbf{MAY }implement a parameter \textbf{EINSTEIN\_A} to accept constraints in the transition probability by
-specifying the minimum and maximum Einstein A, defined as the probability per unit time s\textsuperscript{-1} for
-spontaneous emission in a bound-bound transition.
-
-(ucd='' phys.atmol.transProb''; utype=''\textbf{ssldm:Line.einsteinA.value}'').
+A service \textbf{MAY }implement the parameter \textbf{EINSTEINA} to accept constraints in the transition probability by specifying the minimum and maximum Einstein A, defined as the probability per unit time s\textsuperscript{-1} for spontaneous emission in a bound-bound transition (ucd={\textquotedbl}phys.atmol.transProb{\textquotedbl};corresponding VAMDC restrictable is {\textquotedbl}RadTransProbabilityA{\textquotedbl})..
 
 Transition probability between 1.1E-7 and 1.2E-7 s-1:
 
-\parexample{EINSTEIN\_A=1.1E-7 1.2E-1}
-
-\subsubsection{Physical process parameters}
-
-It is possible to discriminate the result lines per physical process
-that originate or modify the line. To achieve this result, and in line
-with SSLDM, the following input parameters could be added.
-
-\paragraph{Process type}
-
-A service \textbf{MAY} implement the parameter \textbf{PROCESS\_TYPE} to
-specify the physical process type responsible for the generation of the
-line or for the modification of its physical properties
-(utype=''\textbf{ssldm:Process.type}'').
-
-Valid values are: ``Matter-radiation interaction'', `Matter-matter
-interaction'', ``Energy shift'', ``Broadening'' as specified in the
-section 3.8.1 of the Simple Spectral Line Data Model.
-
-Search Broadening related lines:
-
-\parexample{PROCESS\_TYPE=Broadening}
-
-\paragraph{Process name}
-
-A service \textbf{MAY} implement the parameter \textbf{PROCESS\_NAME} to
-specify the physical process responsible for the generation of the line
-or for the modification of its physical properties
-(utype=''\textbf{ssldm:Process.name}''). \ There is a great variety of
-possible values, so this input parameter would need to make use of the
-capabilities resource, as described in related section.
-
-Some possible values are: ``Photoionization'', ``Collisional
-excitation'', ``Gravitational redshift'', ``Stark broadening'',
-``Resonance broadening'', ``Van der Waals broadening'', etc... \ as
-specified in the section 3.8.2 of the Simple Spectral Line Data Model.
-
-Search lines with Stark Broadening process:
-
-\parexample{PROCESS\_NAME=Stark Broadening}
+\parexample{EINSTEINA=1.1E-7/1.2E-1}
 
 \subsubsection{Custom query parameters}
 
@@ -588,12 +561,7 @@ are present it is recommended that the query results be returned in the
 first resource element.
 
 The VOTable \textbf{MAY} contain references to other name spaces, like
-SLAP, Characterization, etc. The VOTable \textbf{MUST} contain a
-reference to the SSLDM namespace.
-
-\begin{verbatim}
-xmlns:ssldm="http://www.ivoa.net/xml/SimpleSpectralLineDM/v2.0"
-\end{verbatim}
+SLAP, Characterization, etc. 
 
 \subsubsection[RESOURCE element]{RESOURCE element}
 
@@ -601,14 +569,18 @@ The RESOURCE element contains several INFO elements storing metadata
 about the request execution and the queried service, as described in the
 following sections.
 
-\paragraph{QUERY\_STATUS}
+\paragraph{QUERY\_STATUS}\label{par:QUERY_STATUS}
 
 It \textbf{MUST} contain an INFO with
 name={\textquotedbl}QUERY\_STATUS{\textquotedbl}. Its value attribute
-MUST be set to ``OK{\textquotedbl} if the query executed successfully,
+MUST be set to {\textquotedbl}OK{\textquotedbl} if the query is executed successfully,
 regardless of whether any matching spectral lines were found. \ If an
 overflow occurs (result exceeds MAXREC) the value attribute will be set
-to ``OVERFLOW''.
+to {\textquotedbl}OVERFLOW{\textquotedbl}.
+
+\begin{lstlisting}{language=XML}
+<INFO name="QUERY_STATUS" value="OK" />
+\end{lstlisting}
 
 \paragraph{REQUEST\_COMPLETED\_TIMESTAMP}
 
@@ -616,6 +588,10 @@ The RESOURCE element \textbf{SHOULD} contain an INFO with
 name={\textquotedbl}REQUEST\_COMPLETED\_TIMESTAMP{\textquotedbl}. Its
 value attribute should contain the UNIX timestamp in seconds when the
 file was created by the service.
+
+\begin{lstlisting}{language=XML}
+<INFO name="FILE_TIMESTAMP" value="1485360332" />
+\end{lstlisting}
 
 \paragraph{SERVICE\_VERSION}
 
@@ -626,6 +602,10 @@ relying, in order to follow data evolution over time. The format of this
 value is managed by the data provider. It must be updated each time the
 database content evolves.
 
+\begin{lstlisting}{language=XML}
+<INFO name="SERVICE_VERSION" value="2017_01_25"/>
+\end{lstlisting}
+
 \paragraph{SERVICE\_NAME}
 
 The RESOURCE element \textbf{SHOULD} contain an INFO with
@@ -633,36 +613,30 @@ name={\textquotedbl}SERVICE\_NAME{\textquotedbl}. Its value attribute
 contains the name of the service that was queried. The format of this
 value is managed by the data provider.
 
+\begin{lstlisting}{language=XML}
+<INFO name="SERVICE_NAME" value="slap service name"/>
+\end{lstlisting}
+
 \paragraph{REQUEST\_DESCRIPTION}
 
 The RESOURCE element \textbf{SHOULD} contain an INFO with
 name={\textquotedbl}REQUEST\_DESCRIPTION{\textquotedbl}. Its value
-attribute contains a text description of the request that has been
-performed to obtain the data.
+attribute contains a text representation of the request that has been
+performed to obtain the data ( the list of GET parameters and their respective value ).
 
 \begin{lstlisting}{language=XML}
-<INFO name="QUERY_STATUS" value="OK" />
-<INFO name="FILE_TIMESTAMP" value="1485360332" />
-<INFO name="SERVICE_VERSION" value="2017_01_25"/>
-<INFO name="SERVICE_NAME" value="slap service name"/>
+<INFO name="REQUEST_DESCRIPTION" value="WAVELENGTH=900/1000"/>
 \end{lstlisting}
 
 \subsubsection{The TABLE element}
 
 \paragraph{Standard column with multiple units}
 
-A standard column could appear multiple times with different units. When
-a standard column can appear multiple times with the same utype but
-different units, the column is uniquely identified by its utype and
-unit.  Otherwise, a standard column is uniquely defined by its utype.
-
-Each non standard FIELD \textbf{SHOULD} contain a utype reference to
-the Simple Spectral Line Data Model whenever possible.
+A standard column could appear multiple times with different units. 
 
 \paragraph{Table rows}
 
-Each table row of represents a different spectral line available to the
-client. A standard column \textbf{MUST} have a defined utype and a
+Each table row represents a different spectral line. A standard column \textbf{MUST} have a
 defined UCD as described in the next section.
 
 \subsection{Standard output fields}
@@ -674,22 +648,18 @@ default unit is specified in this document, the latter value
 \textbf{MUST} be returned and other fields with the same utype should
 have a different value in the unit field descriptor.
 
-\subsubsection[Line.wavelength.value]{Line.wavelength.value}
+\subsubsection{Vacuum wavelength}
 
-One field \textbf{MUST} have
-utype={\textquotedbl}\textbf{ssldm:Line.wavelength.value{\textquotedbl}},
-with datatype={\textquotedbl}double{\textquotedbl}
-unit={\textquotedbl}m{\textquotedbl} and
+Exactly one field \textbf{MUST} have name={\textquotedbl}vacuum\_wavelength{\textquotedbl},
+with datatype={\textquotedbl}double{\textquotedbl}, unit={\textquotedbl}m{\textquotedbl} and
 ucd={\textquotedbl}em.wl{\textquotedbl}, containing the wavelength in
-vacuum of the transition originating the line in meters.
+vacuum of the transition originating the line in meters. The corresponding VAMDC returnable is  {\textquotedbl}\textbf{RadTransWavelength{\textquotedbl}}.
 
-\subsubsection{Line.title}
+\subsubsection{Line title}
 
-Exactly one field \textbf{MUST }have
-utype=''\textbf{ssldm:Line.title}'', with
-datatype={\textquotedbl}char{\textquotedbl}
-arraysize={\textquotedbl}*{\textquotedbl} and ucd=''meta.title'',
-containing a small description identifying the line.
+Exactly one field \textbf{MUST} have name={\textquotedbl}line\_title{\textquotedbl}, with
+datatype={\textquotedbl}char{\textquotedbl}, arraysize={\textquotedbl}*{\textquotedbl} and ucd={\textquotedbl}meta.title{\textquotedbl}, containing a small description identifying the line.
+The corresponding VAMDC returnable is {\textquotedbl}\textbf{RadTransComment}{\textquotedbl}.
 
 Note that this line title is only a short string representation to be
 used in the clients for display. There is no required syntax, but it is
@@ -702,172 +672,86 @@ In case of corrected but unidentified lines, some examples could be:
 
 Examples: \verb|M31 1001.784 A|, \verb|011910191 800.2 A|
 
-\subsubsection{Line.identificationStatus}
+\subsubsection{Chemical element name}
 
-Exactly one field \textbf{SHOULD }have
-utype=''\textbf{ssldm:Line.identificationStatus}'' with
-datatype={\textquotedbl}char{\textquotedbl},
-arraysize={\textquotedbl}*{\textquotedbl}, containing the identification
-status of the line. Possible values are: UNIDENTIFIED,
-IDENTIFICATION\_UNCERTAIN, IDENTIFICATION\_PROVISIONAL, IDENTIFIED.
+Exactly one field \textbf{SHOULD} have 
+name={\textquotedbl}chemical\_element\_name{\textquotedbl}, with  datatype={\textquotedbl}char{\textquotedbl}, arraysize={\textquotedbl}*{\textquotedbl} and
+ucd={\textquotedbl}phys.atmol.element{\textquotedbl}.
+In the case of an atom, the corresponding VAMDC returnable is {\textquotedbl}\textbf{AtomSymbol}{\textquotedbl}.
+If this is a molecular line, the corresponding VAMDC returnable is  {\textquotedbl}\textbf{MoleculeChemicalName}{\textquotedbl}.\\
+Example of valid values are : Fe for a iron line or CH4 for a methane line.
 
-See Appendix~\ref{app:A} for details.
+\subsubsection{Chemical element mass}
 
-\subsubsection{Line.lowerLevel.element.name}
+Exactly one field \textbf{MAY} have name={\textquotedbl}chemical\_element\_mass{\textquotedbl}, with  datatype={\textquotedbl}float{\textquotedbl} and ucd={\textquotedbl}phys.atmol.element{\textquotedbl}. The field contains the atom mass or the molecular weight of the species, to be specified in Unified Atomic Mass Unit (u). For an atom, the ccorresponding VAMDC returnable is {\textquotedbl}\textbf{AtomMass}{\textquotedbl}. If this is a molecular line, the corresponding VAMDC returnable is {\textquotedbl}\textbf{MoleculeMolecularWeight}{\textquotedbl}.
 
-Exactly one field \textbf{SHOULD} have
-utype=''\textbf{{ssldm:Line.lowerLevel.element.name}}'' with
-datatype={\textquotedbl}char{\textquotedbl},
-arraysize={\textquotedbl}*{\textquotedbl} and
-ucd=''phys.atmol.element'', containing the name of the chemical element
-source of the lower level of this line.
+\subsubsection{InChiKey}
 
-\subsubsection{Line.upperLevel.element.name}
+Exactly one field \textbf{SHOULD} have name={\textquotedbl}InChiKey{\textquotedbl}, with datatype={\textquotedbl}char{\textquotedbl}, arraysize={\textquotedbl}*{\textquotedbl} and
+ucd={\textquotedbl}phys.atmol.element{\textquotedbl}, containing the inchikey \citep{Heller2015} of
+the chemical element of this line. For an atom, the corresponding VAMDC returnable is  {\textquotedbl}\textbf{{AtomInchiKey}}{\textquotedbl} and {\textquotedbl}\textbf{{MoleculeInchiKey}}{\textquotedbl} for a molecular line.
 
-Exactly one field \textbf{SHOULD} have
-utype=''\textbf{ssldm:Line.upperLevel.element.name}'' with
-datatype={\textquotedbl}char{\textquotedbl},
-arraysize={\textquotedbl}*{\textquotedbl} and
-ucd=''phys.atmol.element'', containing a name of the chemical element
-for the upper level of this line. If only one of lower and upper element
-name is specified, it is assumed that both are identical.
+\subsubsection{InChi}
 
-\subsubsection{Line.lowerLevel.element.inChiKey}
+Exactly one field \textbf{MAY} have name={\textquotedbl}InChi{\textquotedbl}, with
+datatype={\textquotedbl}char{\textquotedbl}, arraysize={\textquotedbl}*{\textquotedbl} and
+ucd={\textquotedbl}phys.atmol.element{\textquotedbl}, containing the inchi of the
+chemical element for the lower level of this line. The corresponding VAMDC returnable is  {\textquotedbl}\textbf{{AtomInchi}}{\textquotedbl} for an atomic line and  {\textquotedbl}\textbf{{MoleculeInchi}}{\textquotedbl} for a molecular line.
 
-Exactly one field \textbf{SHOULD} have
-utype=''\textbf{{ssldm:Line.lowerLevel.element.inChiKey}}'' with
-datatype={\textquotedbl}char{\textquotedbl},
-arraysize={\textquotedbl}*{\textquotedbl} and
-ucd=''phys.atmol.element'', containing the inchikey \citep{inchi} of
-the chemical element for the lower level of this line.
+\subsubsection{Ion charge}
 
-\subsubsection{Line.upperLevel.element.inChiKey}
+Exactly one field \textbf{SHOULD} have name={\textquotedbl}ionCharge{\textquotedbl}, with
+datatype={\textquotedbl}int{\textquotedbl} and ucd={\textquotedbl}phys.atmol.ionization{\textquotedbl}, containing the charge of the chemical element origin of the line. The corresponding VAMDC returnable is {\textquotedbl}\textbf{{AtomIonCharge}}{\textquotedbl} for an atomic line and {\textquotedbl}\textbf{{MoleculeIonCharge}}{\textquotedbl}  for a molecular line.
 
-Exactly one field \textbf{SHOULD} have
-utype=''\textbf{{ssldm:Line.upperLevel.element.inChiKey}}'' with
-datatype={\textquotedbl}char{\textquotedbl},
-arraysize={\textquotedbl}*{\textquotedbl} and
-ucd=''phys.atmol.element'', containing the inchikey of the chemical
-element for the upper level of this line. If only one of lower and upper
-element inChiKey \ is specified, it is assumed that both are
-identical.
+\subsubsection{Lower state description}
 
-\subsubsection{Line.lowerLevel.element.inChi}
+Exactly one field \textbf{SHOULD} have name={\textquotedbl}lower\_state\_description{\textquotedbl}, with datatype={\textquotedbl}char{\textquotedbl}, arraysize={\textquotedbl}*{\textquotedbl} and ucd={\textquotedbl}phys.atmol.level{\textquotedbl}, containing a full description of the lower level of the transition originating the line. The corresponding VAMDC returnable is  {\textquotedbl}\textbf{AtomStateDescription}{\textquotedbl} for an atomic state and {\textquotedbl}\textbf{MoleculeStateDescription}{\textquotedbl} for a molecular state.
 
-Exactly one field \textbf{MAY} have
-utype=''\textbf{{ssldm:Line.lowerLevel.element.inChi}}'' with
-datatype={\textquotedbl}char{\textquotedbl},
-arraysize={\textquotedbl}*{\textquotedbl} and
-ucd=''phys.atmol.element'', containing the inchi of the
-chemical element for the lower level of this line.
+\subsubsection{Upper state description}
 
-\subsubsection{Line.upperLevel.element.inChi}
+Exactly one field \textbf{SHOULD} have name={\textquotedbl}upper\_state\_description{\textquotedbl}, with datatype={\textquotedbl}char{\textquotedbl}, arraysize={\textquotedbl}*{\textquotedbl} and ucd={\textquotedbl}phys.atmol.level{\textquotedbl}, containing a full description of the upper level of the transition originating the line. The corresponding VAMDC returnable is  {\textquotedbl}\textbf{AtomStateDescription}{\textquotedbl} for an atomic state and  {\textquotedbl}\textbf{MoleculeStateDescription}{\textquotedbl} for a molecular state, 
 
-Exactly one field \textbf{MAY} have
-utype=''\textbf{{ssldm:Line.upperLevel.element.inChi}}{'' with
-datatype={\textquotedbl}char{\textquotedbl},
-arraysize={\textquotedbl}*{\textquotedbl} and
-ucd=''phys.atmol.element'', containing the inchi of the chemical element
-for the upper level of this line. If only one of lower and upper state
-element inChi is specified, it is assumed that both are identical.
+\subsubsection{Observed wavelength}
 
-\subsubsection{Line.lowerLevel.element.ionCharge}
+Exactly one field \textbf{MAY} have name={\textquotedbl}observed\_wavelength{\textquotedbl}, with
+datatype={\textquotedbl}double{\textquotedbl} unit={\textquotedbl}m{\textquotedbl} and ucd={\textquotedbl}em.wl{\textquotedbl}, containing the observed wavelength in the vacuum of the transition originating the line in meters, as it was observed. This may be used by observational spectral line databases. The corresponding VAMDC returnable is  {\textquotedbl}\textbf{{RadTransWavelength}}{\textquotedbl}.
 
-Exactly one field \textbf{SHOULD} have
-utype=''\textbf{{ssldm:Line.lowerLevel.element.ionCharge}}'' with
-datatype={\textquotedbl}int{\textquotedbl} and
-ucd=''phys.atmol.ionization'', containing the charge of the chemical
-element origin of the lower level of the line.
+\subsubsection{Lower level energy}
 
-\subsubsection{Line.upperLevel.element.ionCharge}
+Exactly one field \textbf{MAY} have name={\textquotedbl}lower\_level\_energy{\textquotedbl}, with
+datatype={\textquotedbl}double{\textquotedbl}, unit={\textquotedbl}J{\textquotedbl} and
+ucd={\textquotedbl}phys.energy;phys.atmol.level{\textquotedbl} describing the energy for the lower level of the transition which originates this line. The value must appear in Joules to unify results.
+The corresponding VAMDC returnable is  {\textquotedbl}\textbf{StateEnergy}{\textquotedbl}.
+It is allowed to have more than one \textbf{Line.lowerLevel.energy.value} field in different units in order to preserve the precision of the original value prior to unit conversion. If this is the case and to get backwards compatibility with already existing services, there \textbf{MUST} be one field with
+name={\textquotedbl}\textbf{lower\_level\_energy}{\textquotedbl} where unit={\textquotedbl}J{\textquotedbl} in the VOTable response. Other fields with the same utype should have a different value in the unit field descriptor.
 
-Exactly one field \textbf{SHOULD} have
-utype=''\textbf{{ssldm:Line.upperLevel.element.ionCharge}}'' with
-datatype={\textquotedbl}int{\textquotedbl} and
-ucd=''phys.atmol.ionization'', containing the charge of the chemical
-element origin of the upper level of the line. If only one of lower and
-upper element ion charge is specified, it is assumed that both are
-identical.
+\subsubsection{Upper level energy}
 
-\subsubsection{Line.lowerLevel.name}
-
-Exactly one field \textbf{SHOULD }have
-utype=''\textbf{ssldm:Line.lowerLevel.name}'', with
-datatype={\textquotedbl}char{\textquotedbl},
-arraysize={\textquotedbl}*{\textquotedbl} {and ucd=''phys.atmol.level'',
-containing a full description of the lower level of the transition
-originating the line.}}
-
-\subsubsection{Line.upperLevel.name}
-
-Exactly one field \textbf{SHOULD} have
-utype=''\textbf{ssldm:Line.upperLevel.name}'', with
-datatype={\textquotedbl}char{\textquotedbl},
-arraysize={\textquotedbl}*{\textquotedbl} and ucd=''phys.atmol.level'',
-containing a full description of the upper level of the transition
-originating the line.
-
-\subsubsection{Line.observedWavelength.value}
-
-Exactly one field \textbf{MAY} have
-utype=''\textbf{{ssldm:Line.observedWavelength.value}}'',with
-datatype={\textquotedbl}double{\textquotedbl}
-unit={\textquotedbl}m{\textquotedbl} and
-ucd={\textquotedbl}em.wl{\textquotedbl}, containing the observed
-wavelength in the vacuum of the transition originating the line in
-meters, as it was observed. This may be used by observational spectral
-line databases.
-
-\subsubsection[Query.Score]{Query.Score}
-
-Exactly one field \textbf{MAY} have utype=''\textbf{slap:Query.Score}'',
-with datatype={\textquotedbl}double{\textquotedbl}. A line with a higher
-score more closely matches the query parameters.  The query response
-table should normally be returned sorted in order of decreasing values
-of score, with the top-scoring items at the top of the list. The details
-of the heuristic used to compute the score are left to the service. This
-is particularly useful for the theoretical spectral line databases
-examples explained in section 3\todo{ref!}. Please note that a reference to the
-relevant characterization namespace is needed in the VOTable response.
-
-\begin{lstlisting}
-xmlns:slap=http://www.ivoa.net/xml/SimpleLineAccessDM/v2.0"
-\end{lstlisting}
-
-\subsubsection{Line.lowerLevel.energy.value}
-
-Exactly one field \textbf{MAY} have
-utype=''\textbf{ssldm:Line.lowerLevel.energy.value}'', with
-datatype={\textquotedbl}double{\textquotedbl}, unit=''J'' and
-ucd={\textquotedbl}phys.energy;phys.atmol.level{\textquotedbl} and
-exactly one field \textbf{MAY} have
-utype=''\textbf{ssldm:Line.upperLevel.energy.value}'', with
-datatype={\textquotedbl}double{\textquotedbl}, unit=''J'' and
+Exactly one field \textbf{MAY} have corresponding, with
+datatype={\textquotedbl}double{\textquotedbl}, unit={\textquotedbl}J{\textquotedbl} and
 ucd={\textquotedbl}phys.energy;phys.atmol.level{\textquotedbl},
-describing the energy for the lower and upper levels of the transition
-respectively which originates this line. The value must appear in Joules
-to unify results.
+describing the energy for the upper level of the transition which originates this line. The value must appear in Joules to unify results. The VAMDC returnable is {\textquotedbl}\textbf{StateEnergy}{\textquotedbl}2
 
 It is allowed to have more than one
-\textbf{Line.lowerLevel.energy.value} and
-\textbf{Line.upperLevel.energy.value} fields in different units in order
+\textbf{Line.upperLevel.energy.value} field in different units in order
 to preserve the precision of the original value prior to unit
 conversion. If this is the case and to get backwards compatibility with
 already existing services, there \textbf{MUST} be one field with
-utype=''\textbf{ssldm:Line.lowerLevel.energy.value}'' and one with
-utype=\textbf{ ssldm:Line.upperlLevel.energy.value}'' where unit=''J''
+name={\textquotedbl}\textbf{upper\_level\_energy}{\textquotedbl} where unit={\textquotedbl}J{\textquotedbl}
 in the VOTable response. Other fields with the same utype should have a
 different value in the unit field descriptor.
 
-\subsubsection{Line.lowerLevel.configuration}
+\subsubsection{Level configuration}
 
-Exactly one field \textbf{MAY} have
-utype=''\textbf{ssldm:Line.lowerLevel.configuration}'' with
-ucd={\textquotedbl}phys.atmol.configuration;{\textquotedbl} and one with
-utype=''\textbf{ssldm:Line.upperLevel.configuration}'', with
-ucd={\textquotedbl}phys.atmol.configuration{\textquotedbl}, \
-datatype=''char{\textquotedbl}, and arraysize=''*'' describing the
-electron configuration of the lower and upper levels of the line.
+\paragraph{Lower level}
+
+Exactly one field \textbf{MAY} have name={\textquotedbl}lower\_level\_configuration{\textquotedbl}, with ucd={\textquotedbl}phys.atmol.configuration{\textquotedbl}, datatype={\textquotedbl}char{\textquotedbl} and arraysize={\textquotedbl}*{\textquotedbl} describing the electron configuration of the lower level of the line. The corresponding VAMDC restrictable is  {\textquotedbl}\textbf{AtomStateConfigurationLabel}{\textquotedbl}.
+
+\paragraph{Upper level}
+
+Exactly one field \textbf{MAY} have name={\textquotedbl}upper\_level\_configuration{\textquotedbl}, with ucd={\textquotedbl}phys.atmol.configuration{\textquotedbl}, datatype={\textquotedbl}char{\textquotedbl} and arraysize={\textquotedbl}*{\textquotedbl} describing the electron configuration of the upper level of the line. The corresponding VAMDC restrictable is  {\textquotedbl}\textbf{AtomStateConfigurationLabel}{\textquotedbl}.
+
+\paragraph{Syntax}
 
 The format of the string representing the electron configuration is as
 follows.
@@ -904,154 +788,43 @@ $$\hbox{\^\{2S+1\}{\textbackslash}Lambda \_\{{\textbackslash}Sigma \}}$$
 
 See \citep{latexstyle} for a complete reference.
 
-\subsubsection{Line.lowerLevel.quantumState}
 
-Exactly one field \textbf{MAY} have
-utype=''\textbf{ssldm:Line.lowerLevel.quantumState}'' and one with
-utype=''\textbf{ssldm:Line.upperLevel. quantumState}'', with
-datatype=''char{\textquotedbl} and arraysize=''*'' describing the
-quantumState of the lower and upper levels in a parseable string
-representation. The format must comply with the following syntax:
+\subsubsection{Level quantum state}
 
-$$
-\hbox{[label:type:numerator:denominator;label:type:numerator:denominator;
-{\dots}][{\dots}]}$$
+\paragraph{Lower state}
+Exactly one field \textbf{MAY} have name={\textquotedbl}lower\_state\_quantum\_numbers{\textquotedbl} with datatype={\textquotedbl}char{\textquotedbl} and arraysize={\textquotedbl}*{\textquotedbl} describing the quantum state of the lower in a string representation. The corresponding VAMDC returnable is  {\textquotedbl}\textbf{MoleculeStateQuantumNumbers}{\textquotedbl}.
 
-Where, for the lower level:
+\paragraph{Upper state}
+Exactly one field \textbf{MAY} have name={\textquotedbl}lower\_state\_quantum\_numbers{\textquotedbl} with datatype={\textquotedbl}char{\textquotedbl}{\textquotedbl} and arraysize={\textquotedbl}*{\textquotedbl} describing the quantum state of the lower in a string representation. The corresponding VAMDC returnable is {\textquotedbl}\textbf{MoleculeStateQuantumNumbers}{\textquotedbl}, 
 
-\begin{itemize}
-\item label is a string legal value for the model component given by
-\textbf{ssldm:Line.lowerLevel.quantumState.quantumNumber.label}
-\item type is a string legal value for the model component given by
-\textbf{ssldm:Line.lowerLevel.quantumState.quantumNumber.type}
-\item numerator is a integer legal value for the model component given by
-\textbf{ssldm:Line.lowerLevel.quantumState.quantumNumber.numeratorValue}
-\item denominator is a integer legal value for the model component given by
-\textbf{ssldm:Line.lowerLevel.quantumState.quantumNumber.denominatorValue}
-\end{itemize}
+\paragraph{Syntax}
 
-(Please refer to the Simple Spectral Line Data Model for meaning and format)
+The recommended syntax for the quantum numbers is name:value. Quantum Numbers are separated by the ``;'' character.
 
-Quantum Numbers are separated by the ``;'' character.
+To allow for levels needing more than one quantum state to be described, the quantum states would be enclosed by square brackets. 
 
-To allow for levels needing more than one quantum state to be described, the quantum states would be enclosed by square
-brackets.
+Example: [J::1;F1::0;F::1]
 
-Example:
+As this is a protocol meant to stay simple, the text representation is voluntarily simplified. The user
+is encouraged to use the VAMDC infrastructure to get a more detailed and standardized description of the quantum states.
 
-[J:totalAngularMomentumJ:1:1;F1:totalAngularMomemtumF:0:1;F:totalAngularMomemtum:1:1]
+\subsubsection{Reference DOI}
 
-\subsubsection{Process.type}
+One or more fields \textbf{SHOULD} have name={\textquotedbl}reference\_doi{\textquotedbl}, with ucd={\textquotedbl}meta.ref.doi{\textquotedbl}, datatype={\textquotedbl}char{\textquotedbl} and
+arraysize={\textquotedbl}*{\textquotedbl}, to specify a digital object identifier
+attached to this reference. The corresponding VAMDC returnable is  {\textquotedbl}\textbf{SourceDOI}{\textquotedbl}.
 
-One field \textbf{MAY} have utype=''\textbf{ssldm:Process.type}'' with
-datatype=''char{\textquotedbl} and arraysize=''*'' \ identifying the
-types of physical processes responsible for the generation of the
-modification of its physical properties. As more than one value is
-possible per line, the values would be separated by the ``:'' character,
-in the following way:
+\subsubsection{Reference URI}
 
-Example: \verb|Matter-radiation interaction:Broadening|
+One or more fields \textbf{SHOULD} have name={\textquotedbl}reference\_uri{\textquotedbl},
+with ucd={\textquotedbl}meta.ref.uri{\textquotedbl}, datatype={\textquotedbl}char{\textquotedbl} and
+arraysize={\textquotedbl}*{\textquotedbl}, to specify an http link that contains a scientific publication related to the spectral line. Since the URL will often contain metacharacters, the URL is normally enclosed in an XML CDATA section ({\textless}![CDATA[...]]{\textgreater}) or otherwise encoded to escape any embedded metacharacters. The corresponding VAMDC returnable is {\textquotedbl}\textbf{SourceURI}{\textquotedbl}.
 
-Valid values are: ``Matter-radiation interaction'', `Matter-matter
-interaction'', ``Energy shift'', ``Broadening'' (see section 3.8.1 of
-Simple Spectral Data Model).
-
-\subsubsection{Process.name}
-
-One field \textbf{MAY} have utype=''\textbf{ssldm:Process.name}'' with
-datatype=''char{\textquotedbl} and arraysize=''*'', identifying a
-description of the physical processes responsible for the generation of
-for the modification of its physical properties. As more than one value
-is possible per line, the values would be separated by the ``:''
-character, in the following way:
-
-Example: \verb|Photoionization:Natural broadening|
-
-This list should be in correspondence with the value of the possible
-process types described in previous section. Please notice that ``:'' is
-a reserved character.
-
-\subsubsection{Line.Reference.url}
-
-One or more fields \textbf{MAY} have
-utype={\textquotedbl}\textbf{ssldm:Line.Reference.url}{\textquotedbl}
-ucd={\textquotedbl}meta.bib;meta.ref.url{\textquotedbl}, with
-datatype={\textquotedbl}char{\textquotedbl} and
-arraysize={\textquotedbl}*{\textquotedbl}, to specify an http link that
-contains a scientific publication related to the spectral line. Since
-the URL will often contain \ metacharacters, the URL is normally
-enclosed in an XML CDATA section
-({\textless}![CDATA[...]]{\textgreater}) or otherwise encoded to escape
-any embedded metacharacters.
-
-\subsubsection{Line.Reference.bibtex}
-
-One or more fields \textbf{MAY} have
-utype={\textquotedbl}\textbf{ssldm:Line.Reference.bibtex}{\textquotedbl},
-\ ucd={\textquotedbl}meta.bib{\textquotedbl} with
-datatype={\textquotedbl}char{\textquotedbl} and
-arraysize={\textquotedbl}*{\textquotedbl} and free names, to specify the
-description of url-less references in bibtex format. Since this notation
-will contain metacharacters, it must be enclosed in an XML CDATA section
-({\textless}![CDATA[...]]{\textgreater}).
-
-Example:
-
-\begin{lstlisting}
-@misc{BCDMS-1920},
-  author = {Evenson, K. M.},
-  title = {},
-  year = {1995},
-  howpublished={'private communication'}
-\end{lstlisting}
 
 \subsubsection{Additional references}
 
-One or more fields \textbf{MAY} have
-ucd={\textquotedbl}meta.ref.url{\textquotedbl} with
-datatype={\textquotedbl}char{\textquotedbl} and
-arraysize={\textquotedbl}*{\textquotedbl} and free names, to specify
-URLs that contains extra information related to the spectral line. Same
-criteria than before about the CDATA section.
-
-\subsubsection{Observational line databases specificities}
-
-In the case of observational line databases, some characterization
-information of the observation itself could be relevant. Next, we
-present some examples of possible observation-related output metadata
-(note that all the following fields are in line to the ones described in
-the SSAP specification.
-
-\begin{itemize}
-\item Exactly one field \textbf{MAY} have
-utype=''\textbf{Target.Name}'', with
-datatype={\textquotedbl}char{\textquotedbl}, and arraysize=''*''
-containing a short string identifying the observed astronomical object,
-suitable for input to a name resolver.
-\item Exactly one field \textbf{MAY} have
-utype=''\textbf{char:SpatialAxis.Coverage.Location.Value}'', with
-datatype={\textquotedbl}double{\textquotedbl}, arraysize=''*'' and
-ucd={\textquotedbl}pos{\textquotedbl}, containing the observation
-position of the observation in the format: ra dec, white space separated
-and both in deg. Please note that a reference to the relevant
-characterization namespace is needed in the VOTable response,
-\verb|xmlns:char="http://www.ivoa.net/xml/Characterisation/v1.11"|
-\item Exactly one field \textbf{MAY} have
-utype=''\textbf{char:TimeAxis.Coverage.Bounds.Start}'', with
-datatype={\textquotedbl}char{\textquotedbl}, arraysize=''*'' and
-ucd={\textquotedbl} time.start;obs.exposure{\textquotedbl}, containing
-the start time for the observation in MJD with units of days. Please
-note that a reference to the relevant characterization namespace is
-needed in the VOTable response.
-
-\item Exactly one field \textbf{MAY} have
-utype=''\textbf{char:TimeAxis.Coverage.Bounds.Stop}'', with
-datatype={\textquotedbl}char{\textquotedbl}, arraysize=''*'' and
-ucd={\textquotedbl} time.stop;obs.exposure{\textquotedbl}, containing
-the end time for the observation in MJD with units of days. Please note
-that a reference to the relevant characterization namespace is needed in
-the VOTable response.
-\end{itemize}
+One or more fields \textbf{MAY} have name={\textquotedbl}reference\_additional\_uri{\textquotedbl} with ucd={\textquotedbl}meta.ref.uri{\textquotedbl}, datatype={\textquotedbl}char{\textquotedbl}, arraysize={\textquotedbl}*{\textquotedbl} and free names, to specify URLs that contains extra information related to the spectral line. Same criteria than before about the CDATA section.
+The corresponding VAMDC restrictable is  {\textquotedbl}\textbf{SourceURI}{\textquotedbl}.
 
 \subsection{Non-standard output fields}
 \label{sect:lines-nonstd}
@@ -1066,82 +839,147 @@ whenever possible.
 \section{\{species\} resource}
 \label{sect:species}
 
-A simple spectral service \textbf{MAY} support a resource listing all
+A simple spectral service \textbf{MUST} support a resource listing all
 the species for which lines are available. This operation returns the
 complete list of the chemical elements available in the service. The
 output returned by the service is a VOTable, an XML table format,
 returned with a MIME-type of
 {\textquotedbl}application/x-votable+xml{\textquotedbl}.
 
-\subsection{Parameters}
-\label{sect:species-parameters}
+Several optional restriction parameters are defined to perform some 
+search operations on the species list. If none of those parameter is used 
+in the user query, the complete list of species will be returned.
 
-\subsubsection{RESPONSEFORMAT}
+\subsection{Optional parameters}
+\label{sect:species-optional-parameters}
 
-The RESPONSEFORMAT parameter is defined in a similar way to 6.1.2 for
-the \{lines\} resource.
+\subsubsection{ELEMENT\_TYPE}
+
+A service \textbf{SHOULD} implement the parameter \textbf{ELEMENT\_TYPE} to specify
+the type of chemical elements expected in the response. The possible values are {\textquotedbl}atom{\textquotedbl} and {\textquotedbl}molecule{\textquotedbl}.
+
+If the parameter is available in the service but not used in the query then both atoms and molecules are returned.
+
+
+Returns all the molecules :
+
+\parexample{ELEMENT\_TYPE=molecule}
+
+
+\subsubsection{INCHIKEY}
+
+A service \textbf{SHOULD} implement the parameter \textbf{INCHIKEY} to test the existence of a given inchikey in the service data among the data shared by the service.
+
+Returns the molecular hydrogen :
+
+\parexample{INCHIKEY=UFHFLCQGNIYNRP-UHFFFAOYSA-N}
+
+
+\subsubsection{CHEMICAL\_ELEMENT\_NAME\_STARTSWITH}
+
+A service \textbf{SHOULD} implement the parameter \textbf{CHEMICAL\_ELEMENT\_NAME\_STARTSWITH}. It defines a list of characters with which the name of the chemical species must start. The search is case-sensitive.
+
+Returns all the chemical species whose name starts with "CO" :
+
+\parexample{CHEMICAL\_ELEMENT\_NAME\_STARTSWITH=CO}
+
+Returns only the Cobalt atom :
+
+\parexample{CHEMICAL\_ELEMENT\_NAME\_STARTSWITH=Co}
+
+
+\subsubsection{CHEMICAL\_ELEMENT\_NAME\_CONTAINS}
+
+A service \textbf{SHOULD} implement the parameter \textbf{CHEMICAL\_ELEMENT\_NAME\_CONTAINS}. It defines a list of characters which is contained somewhere in the name of the chemical species must start. The search is case-sensitive.
+
+Returns all the chemical species whose name contains H2 ( like CH2 ) :
+
+\parexample{CHEMICAL\_ELEMENT\_NAME\_CONTAINS=H2}
+
+\subsubsection{STOICHIOMETRIC\_FORMULA\_STARTSWITH}
+
+The stoichiometric formula is a chemical expression that indicates the quantitative composition of atoms that make up the molecule, e.g. CO2, NH3, CH4.
+
+A service \textbf{SHOULD} implement the parameter \textbf{STOICHIOMETRIC\_FORMULA\_STARTSWITH}. It defines a list of characters with which the stoichiometric formula of the chemical species must start. The search is case-sensitive.
+
+Returns all the chemical species whose stoichiometric formula starts with CO :
+
+\parexample{STOICHIOMETRIC\_FORMULA\_STARTSWITH=CO}
+
+Returns only the Cobalt atom :
+
+\parexample{STOICHIOMETRIC\_FORMULA\_STARTSWITH=Co}
+
+
+\subsubsection{STOICHIOMETRIC\_FORMULA\_CONTAINS}
+
+A service \textbf{SHOULD} implement the parameter \textbf{STOICHIOMETRIC\_FORMULA\_CONTAINS}. It defines a list of characters which is contained somewhere in stoichiometric formula of the chemical species. The search is case-sensitive.
+
+Returns all the chemical species whose name contains H2 ( like CH2 ) :
+
+\parexample{CHEMICAL\_ELEMENT\_NAME\_CONTAINS=H2}
 
 \subsection{Successful output}
-\label{lines-output}
+\label{species-output}
 
 The global metadata returned by a SLAP service for the \{species\}
 resource are identical to the output of the \{lines\} resource (see
 section 6.3).
 
 \subsection{Standard output fields}
-\label{lines-fields}
+\label{species-fields}
 
-\subsubsection{Species.name}
+\subsubsection{Chemical element name}
 
 Exactly one field \textbf{MUST} have
-utype={\textquotedbl}\textbf{ssldm:Species.name}{\textquotedbl},
-name={\textquotedbl}SPECIES\_NAME{\textquotedbl},
-ucd={\textquotedbl}phys.atmol.element{\textquotedbl},
-datatype={\textquotedbl}char{\textquotedbl} and
-arraysize={\textquotedbl}*{\textquotedbl}, containing the name of a
+name={\textquotedbl}chemical\_element\_name{\textquotedbl}. The
+corresponding VAMDC returnable is  {\textquotedbl}\textbf{AtomSymbol}{\textquotedbl} for an atom
+and {\textquotedbl}\textbf{MoleculeChemicalName}{\textquotedbl} for a molecule.
+
+This is the conventional molecule name, e.g. CO2, NH3, Feh, Carbon, Methane ... and it may not be unique.
+
+In both cases, datatype={\textquotedbl}char{\textquotedbl},
+arraysize={\textquotedbl}*{\textquotedbl} and
+ucd={\textquotedbl}phys.atmol.element{\textquotedbl}, containing the name of a
 chemical element for which at least one spectral line is available in
 the service.
 
-\subsubsection{Species.type}
-
-{Exactly one field }\textbf{{MAY }}{have
-utype=''}\textbf{{ssldm:Species.type}}{'',
-name={\textquotedbl}SPECIES\_TYPE{\textquotedbl} with
-datatype={\textquotedbl}char{\textquotedbl} and
-arraysize={\textquotedbl}*{\textquotedbl}. Possible values are Atom,
-Molecule and Particle.
-
-\subsubsection[Species.ionCharge]{Species.ionCharge}
+\subsubsection{Chemical element type}
 
 Exactly one field \textbf{SHOULD} have
-utype={\textquotedbl}\textbf{ssldm:Species.ionCharge}{\textquotedbl},
-name={\textquotedbl}ION\_CHARGE{\textquotedbl},
-ucd={\textquotedbl}phys.atmol.ionization{\textquotedbl} and
-datatype={\textquotedbl}int'' containing the charge of the considered
-chemical species.
+name={\textquotedbl}chemical\_element\_type{\textquotedbl}, datatype={\textquotedbl}char{\textquotedbl},
+arraysize={\textquotedbl}*{\textquotedbl}. It will describe the type of chemical element, possible values are
+{"atom"} or {"molecule"}
 
-\subsubsection{Species.inChiKey}
+\subsubsection{Chemical element stoichiometric formula}
 
-Exactly one field \textbf{{MAY} have
-utype={\textquotedbl}}\textbf{{ssldm:Species.inChiKey}}{{\textquotedbl},
-name={\textquotedbl}INCHIKEY{\textquotedbl} with
-datatype={\textquotedbl}char{\textquotedbl} and
-arraysize={\textquotedbl}*{\textquotedbl}, containing the inchikey of
-the chemical element.
+Exactly one field \textbf{SHOULD} have
+name={\textquotedbl}chemical\_element\_stoichiometric\_formula{\textquotedbl}, datatype={\textquotedbl}char{\textquotedbl},
+arraysize={\textquotedbl}*{\textquotedbl} and
+ucd={\textquotedbl}phys.atmol.element{\textquotedbl}, containing the stoichiometric formula of a chemical element for which at least one spectral line is available in the service. For an atom, the atom symbol can be used as a value.
 
-\subsubsection{Species.inChi}
+The corresponding VAMDC returnable is {\textquotedbl}\textbf{MoleculeStoichiometricFormula}{\textquotedbl} in the case of a molecule. The value is not defined for an atom.
 
-Exactly one field \textbf{MAY} have
-utype={\textquotedbl}}\textbf{{ssldm:Species.inChi}}{{\textquotedbl},
-name={\textquotedbl}INCHI{\textquotedbl} with
-datatype={\textquotedbl}char{\textquotedbl} and
-arraysize={\textquotedbl}*{\textquotedbl}, containing the inchi of the
-chemical element.
 
-\subsection{Example}
-\label{sect:example}
+\subsubsection{Ion charge}
 
-\todo{Translate}
+Exactly one field \textbf{SHOULD} have name={\textquotedbl}ion\_charge{\textquotedbl} with datatype={\textquotedbl}int{\textquotedbl} and ucd={\textquotedbl}phys.atmol.ionization{\textquotedbl}, containing the charge of  the considered chemical species.
+The corresponding VAMDC returnable is {\textquotedbl}\textbf{{AtomIonCharge}}{\textquotedbl} for an atom and  {\textquotedbl}\textbf{{MoleculeIonCharge}}{\textquotedbl} for a molecule. 
+
+\subsubsection{InChiKey}
+
+Exactly one field \textbf{SHOULD} have name={\textquotedbl}inchikey{\textquotedbl}, with
+datatype={\textquotedbl}char{\textquotedbl},
+arraysize={\textquotedbl}*{\textquotedbl} and
+ucd={\textquotedbl}phys.atmol.element{\textquotedbl}, containing the inchikey 
+of the chemical element.
+
+The corresponding VAMDC returnable is  {\textquotedbl}\textbf{{AtomInchiKey}}{\textquotedbl} for an atom and {\textquotedbl}\textbf{{MoleculeInchiKey}}{\textquotedbl} for a molecule.
+
+\subsubsection{InChi}
+
+Exactly one field \textbf{MAY} have name={\textquotedbl}inchi{\textquotedbl}, with datatype={\textquotedbl}char{\textquotedbl}, arraysize={\textquotedbl}*{\textquotedbl} and ucd={\textquotedbl}phys.atmol.element{\textquotedbl}, containing the inchi of the chemical element. The corresponding VAMDC returnable is  {\textquotedbl}\textbf{{AtomInchi}}{\textquotedbl} for an atom and {\textquotedbl}\textbf{{MoleculeInchi}}{\textquotedbl} for a molecule. 
+
 
 \subsubsection{VOSI-capabilities }
 
@@ -1163,8 +1001,8 @@ be identified through the standardID attribute:
 \{lines\} &
 {ivo://ivoa.net/std/SLAP\#lines-2.0} \\
 \{species\} &
-{ivo://ivoa.net/std/SLAP\#species-2.0}\
-\\sptablerule
+{ivo://ivoa.net/std/SLAP\#species-2.0}\\
+
 \end{tabular}
 \end{inlinetable}
 
@@ -1175,18 +1013,24 @@ An example of such a document could be:
   xmlns:vosi="http://www.ivoa.net/xml/VOSICapabilities/v1.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:vs="http://www.ivoa.net/xml/VODataService/v1.1">
-  <capability>
+  <capability standardID="ivo://ivoa.net/std/VOSI#availability">
     <interface xsi:type="vs:ParamHTTP" role="std">
       <accessURL use="full">
         http://example.com/slap2/capabilities
      </accessURL>
     </interface>
   </capability>
-  <capability>
+  <capability standardID="ivo://ivoa.net/std/VOSI#availability">
     <interface xsi:type="vs:ParamHTTP" role="std">
       <accessURL use="full">
         http://example.com/slap2/availability
       </accessURL>
+      <!-- non-compulsory parameters -->
+      <param std="true">
+        <name>inchikey</name>
+        <description>Inchikey of the searched chemical element</description>
+        <dataType arraysize="*">char</dataType>
+      </param>
     </interface>
   </capability>
   <capability standardID="ivo://ivoa.net/std/SLAP#species-2.0">
@@ -1204,11 +1048,9 @@ An example of such a document could be:
       <!-- mandatory parameter -->
       <param use="required" std="true">
         <name>wavelength</name>
-        <description>wavelength in the vacuum of the transition
-          originating in the line</description>
+        <description>wavelength in the vacuum of the transition originating in the line</description>
         <unit>m</unit>
         <ucd>em.wl</ucd>
-        <utype>ssldm:Line.wavelength.value</utype>
         <dataType arraysize="2">real</dataType>
       </param>
       <!-- non-compulsory parameters -->
@@ -1216,14 +1058,12 @@ An example of such a document could be:
         <name>chemical_element</name>
         <description>Name of the searched chemical element</description>
         <ucd>phys.atmol.element</ucd>
-        <utype>ssldm:Line.lowerLevel.element.name</utype>
         <dataType arraysize="*">char</dataType>
       </param>
       <param std="true">
         <name>ion_charge</name>
         <description>Minimum and maximum charge of an ion</description>
         <ucd>phys.atmol.ionization</ucd>
-        <utype>ssldm:Line.lowerLevel.element.ionCharge</utype>
         <dataType arraysize="2">integer</dataType>
       </param>
       <!-- custom service parameter -->
@@ -1231,7 +1071,6 @@ An example of such a document could be:
         <name>wavenumber</name>
         <description>Minimum and maximum wavenumber of the line</description>
         <ucd>em.wavenumber</ucd>
-        <utype>ssldm:Line.waveNumber</utype>
         <dataType arraysize="2">integer</dataType>
       </param>
     </interface>
@@ -1255,10 +1094,9 @@ One important constraint for observational line databases in the SLAP
 definition is to limit the lines in the SLAP output to corrected lines,
 i.e. only the lines that have been corrected from wavelength shifts
 (including not only the astrophysical redshift, but also any process
-that could produce a line peak displacement). \ (Note that unidentified
-lines can be distributed as long as these lines could be corrected in
-wavelength. See observational ``\textbf{ssldm:Line.title}'' recommended
-syntax.)
+that could produce a line peak displacement).
+Note that unidentified lines can be distributed as long as these lines could be corrected in
+wavelength. 
 
 The reason for that is, if a user wants to compare two different SLAP
 service outputs or to compare one SLAP service output to one SSAP
@@ -1281,7 +1119,7 @@ parameter could be used to select other types of lines.
 \item {\bfseries CORRECTION\_STATUS}
 A service MAY have a search parameter called CORRECTION\_STATUS.
 This parameter would constraint the search to lines with a certain level
-of identification. As specified in SSLDM the possible values are:
+of identification. The possible values are:
 
 \begin{itemize}
 \item UNCORRECTED
@@ -1289,7 +1127,7 @@ of identification. As specified in SSLDM the possible values are:
 \end{itemize}
 
 And the default value MUST be ``CORRECTED''
-(ucd=``em.line;meta.id.cross''; utype=''ssldm:Line.correctionStatus'')
+(ucd=``em.line;meta.id.cross'')
 
 \item {\bfseries IDENTIFICATION\_STATUS}
 A service \textbf{MAY} have a search parameter called
@@ -1305,7 +1143,7 @@ possible values are:
 \end{itemize}
 
 (ucd=``em.line;meta.id.cross'';
-utype=''\textbf{ssldm:Line.identificationStatus''})
+corresponding VAMDC restrictable is  ''\textbf{ssldm:Line.identificationStatus''})
 
 For theoretical line databases, identified will be synonymous to predicted.
 \end{itemize}
@@ -1314,18 +1152,18 @@ For the output:
 
 \begin{itemize}
 \item Exactly one field \textbf{MAY} have
-utype=''ssldm:Line.correctionStatus'', with
+corresponding VAMDC restrictable is  ''ssldm:Line.correctionStatus'', with
 datatype={\textquotedbl}char{\textquotedbl} and
 ucd=``em.wl.central;meta.id.cross{\textquotedbl}, describing if the
 ``ldm:Line.wavelength'' has been calculated.
 
 Please note that for uncorrected lines the compulsory field with
-utype=''\textbf{ldm:Line.wavelength}'' (corrected wavelength in vacuum)
+corresponding VAMDC restrictable is  ''\textbf{ldm:Line.wavelength}'' (corrected wavelength in vacuum)
 will contain either the observed wavelength for ``Uncorrected'' or a
 provisional assignment value.
 
 \item Exactly one field \textbf{MAY} have
-utype=''\textbf{ssldm:Line.identificationStatus}'', with
+corresponding VAMDC restrictable is  ''\textbf{ssldm:Line.identificationStatus}'', with
 datatype={\textquotedbl}char{\textquotedbl} and
 ucd=``em.line;meta.id.cross{\textquotedbl}, describing the
 identification status of the line.
@@ -1336,337 +1174,113 @@ identification status of the line.
 \section{SLAP valid response example}
 
 \begin{lstlisting}[language=XML]
-<VOTABLE xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ssldm="http://www.ivoa.net/xml/SimpleSpectralLineDM/v2.0" xsi:noNamespaceSchemaLocation="xmlns:http://www.ivoa.net/xml/VOTable/VOTable-1.3.xsd" version="1.3">
-  <RESOURCE type="results">
-    <INFO name="QUERY_STATUS" value="OK"/>
-    <INFO name="REQUEST_COMPLETED_TIMESTAMP" value="1487063789"/>
-    <INFO name="SERVICE_VERSION" value="2017_01_25"/>
-    <INFO name="SERVICE_NAME" value=" European Space Astronomy Centre - Simple Line Access Protocol (SLAP)"/>
-    <TABLE>
-      <FIELD ucd="meta.id;obs" name="OBSNO" datatype="char" arraysize="*"/>
-      <FIELD ucd="em.wl" name="WAVELENGTH" utype="ssldm:Line.wavelength.value" datatype="double" unit="m"/>
-      <FIELD ucd="em.freq" name="FREQUENCY" utype=" ssldm:Line.frequency.value" datatype="double"/>
-      <FIELD ucd="em.wavenumber" name="WAVE_NUMBER" utype="ssldm:Line.wavenumber.value" datatype="double"/>
-      <FIELD ucd="spect.line.width" name="LINEWIDTH" utype="ssldm:Line.observedBroadeningCoefficient.value" datatype="double"/>
-      <FIELD ucd="spect.line.width;meta.unit" name="LINEWIDTH_UNIT" datatype="char" arraysize="*"/>
-      <FIELD ucd="meta.bib" name="ADS_CODE" datatype="char" arraysize="*"/>
-      <FIELD ucd="em.line" name="IDENTIFICATION" utype="ldm:Line.title" datatype="char" arraysize="*"/>
-      <FIELD ucd="phys.atmol.transition" name="TRANSITION" datatype="char" arraysize="*"/>
-      <FIELD name="LINE_TYPE" datatype="char" arraysize="*"/>
-      <FIELD ucd="spect.line;phot.flux" name="FLUX" utype="ssldm:Line.observedFlux.value" datatype="double"/>
-      <FIELD ucd="spect.line.intensity" name="PEAK_INTENSITY" utype="ssldm:Line.observedIntensity.value" datatype="double"/>
-      <FIELD ucd="spect.line.intensity;stat.snr" name="SIGNAL_TO_NOISE" utype=" ssldm:Line.significanceOfDetection.value" datatype="double"/>
-      <DATA>
-        <TABLEDATA>
-          <TR>
-            <TD>116003190</TD>
-            <TD>8.03E-6</TD>
-            <TD>37333.748443</TD>
-            <TD>1245.330012</TD>
-            <TD>0.008580</TD>
-            <TD>micron</TD>
-            <TD>2001ApJ...552..544F</TD>
-            <TD>H2</TD>
-            <TD>0-0 S(4) </TD>
-            <TD>L</TD>
-            <TD>6.800000088194428E-16</TD>
-            <TD> </TD>
-            <TD> </TD>
-          </TR>
-          ...more lines data...
-        </TABLEDATA>
-      </DATA>
-    </TABLE>
-  </RESOURCE>
-</VOTABLE>
+
 \end{lstlisting}
 
-\section{SLAP Data Model summary}
+\section{Mapping between /lines endpoint parameters and VAMDC restrictables}
 
-\begin{supertabular}{|p{6.976cm}|p{2.023cm}|p{4.88cm}|p{1.388cm}|p{1.987cm}|}
-\sptablerule
- \textbf{UTYPE} &
- \textbf{UCD} &
- \textbf{Description} &
- \textbf{Type}&
- \textbf{Size}\\
- \sptablerule
-\bfseries ssldm:Line.title (REQUIRED)
-
-~
- &
- em.line &
- small description identifying the line
-
-~
-
-~
- &
- char &
- *\\
-\bfseries ssldm:Line.wavelength.value
-
-\bfseries (REQUIRED) &
- em.wl &
- wavelength in the vacuum of the transition originating the line in meters.
-
-~
- &
- double &
-~
-\\
-\bfseries ssldm:Line.lowerLevel.element.name &
- phys.atmol.element; &
- Name of the chemical element source of this line &
- char &
- *\\
-\bfseries ssldm:Line.upperLevel.element.name &
- phys.atmol.element; &
- Name of the resulting chemical element for this line &
- char &
- *\\
-\bfseries ssldm:Line.lowerLeve.element.type &
-~
- &
- Type of the chemical element source of this line (atom or molecule) &
- char &
- *\\
-\bfseries ssldm:Line.upperLevel.element.type &
-~
- &
- Type of the resulting chemical for this line (atom or molecule) &
- char &
- *\\
-\bfseries ssldm:Line.lowerLevel.element.inChiKey &
- phys.atmol.element; &
- InChiKey of the chemical element source of this line &
- char &
- *\\
-\bfseries ssldm:Line.upperLevel.element.inChiKey &
- phys.atmol.element; &
- InChiKey of the resulting chemical element for this line &
- char &
- *\\
-\bfseries ssldm:Line.lowerLevel.element.inChi &
- phys.atmol.element; &
- InChi of the chemical element source of this line &
- char &
- *\\
-\bfseries ssldm:Line.upperLevel.element.inChi &
- phys.atmol.element; &
- InChi of the resulting chemical element for this line &
- char &
- *\\
-\bfseries ssldm:Line.lowerLevel.element.ionCharge &
-~
- &
- Charge of the chemical element source of this line &
- integer &
-~
-\\
-\bfseries ssldm:Line.upperLevel.element.ionCharge &
-~
- &
- Charge of the resulting chemical element for this line &
- integer &
-~
-\\
-\bfseries ssldm:Line.lowerLevel.energy.value
-
-~
- &
- phys.energy; phys.atmol.level &
- energy for the LOWER level of the transition &
- double &
-~
-\\
-\bfseries ssldm:Line.upperLevel.energy.value
-
-~
- &
- phys.energy; phys.atmol.level &
- energy for the UPPER level of the transition &
- double &
-~
-\\
-\bfseries ssldm:Line.environment.temperature.value
-
-~
-
-~
- &
- phys.temperature &
- expected temperature of the object &
- double &
-~
-\\
-\bfseries ssldm:Line.einsteinA.value
-
-~
- &
- phys.atmol.transProb &
- Einstein A coefficient, probability per unit time s\textsuperscript{-1} for
-spontaneous emission in a bound-bound transition &
- double &
-~
-\\
-\bfseries ssldm:Process.type
-
-~
-
-~
- &
-~
- &
- physical process type responsible for the generation of the line or for the
-modification of its physical properties &
- char &
- *\\
-\bfseries ssldm:Process.name
-
-~
- &
-~
- &
- physical process exact description responsible for the generation of the line or for
-the modification of its physical properties &
- char &
- *\\
-\bfseries ssldm:Line.identificationStatus &
-~
- &
- identification status of the line &
- char &
- *\\
-\bfseries ssldm:Line.lowerLevel.name &
- phys.atmol.level &
- description of the lower level of the transition originating the line &
- char &
- *\\
-\bfseries ssldm:Line.upperLevel.name &
- phys.atmol.level &
- description of the upper level of the transition originating the line &
- char &
- *\\
-\bfseries ssldm:Line.observedWavelength.value &
- em.wl &
- observed wavelength in the vacuum of the transition originating the line in meters &
- double &
-~
-\\
-\bfseries slap:Query.Score &
-~
- &
- Line ranking ``more closely matches the query parameters'' &
- double &
-~
-\\
-\bfseries ssldm:Line.lowerLevel.configuration &
- phys.atmol.configuration &
- Description of the electron configuration of the lower level of the line &
- char &
- *
-
-~
-\\
-\bfseries ssldm:Line.upperLevel.configuration &
- phys.atmol.configuration &
- describing the electron configuration of the upper level of the line &
- char &
- *\\
-\bfseries ssldm:Line.lowerLevel.quantumState &
-~
- &
- Description of the quantum state of the lower level in a parseable string
-representation &
- char &
- *\\
-\bfseries ssldm:Line.upperLevel. quantumState &
-~
- &
- Description of the quantum state of the upper level in a parseable string
-representation &
- char &
- *\\
-\bfseries ssldm:Line.Reference.url &
- meta.bib;meta.ref.url &
- A http link that contains a scientific publication related to the spectral line &
- char &
- *\\
-\bfseries ssldm:Line.Reference.bibtex &
- meta.bib &
- Description of a reference in bibtex format when no url is available &
- char &
- *\\
-\bfseries Target.Name &
- meta.id;src &
- short string identifying the observed astronomical object, suitable for input to a
-name resolver &
- char &
- *\\
-\bfseries char:SpatialAxis.Coverage.Location.Value &
- Pos &
- observation position of the observation in the format: ra dec, white space separated
-and both in deg &
- double  &
- *\\
-\bfseries char:TimeAxis.Coverage.Bounds.Start &
- time.start;obs.exposure &
- start time for the observation in MJD with units of days &
- char &
- *\\
-\bfseries char:TimeAxis.Coverage.Bounds.Stop &
- time.stop;obs.exposure &
- end time for the observation in MJD with units of days &
- char &
- *\\
-\bfseries ssldm:Species.name (REQUIRED)
-
-~
- &
- em.line &
- small description identifying the line
-
-~
-
-~
- &
- char &
- *\\
-\bfseries ssldm:Species.ionCharge &
-~
- &
- Charge of the chemical element source of this line &
- integer &
-~
-\\
-\bfseries ssldm:Species.type &
-~
- &
- Type of considered species, possible values are Atom, Molecule and Particle &
- char &
- *\\
- \textbf{ssldm:Species. \textbf{{inChiKey}}} &
- phys.atmol.element; &
- InChiKey of the chemical element source of this line &
- char &
- *\\
- \textbf{ssldm:\textbf{{ssldm:Species.inChi}}} &
- phys.atmol.element; &
- InChi of the chemical element source of this line &
- char &
- *\\
-\end{supertabular}
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|l|X|p{2.5cm}|}
+\hline
+\textbf{SLAP2 parameter name} & \textbf{VAMDC restrictable name} & \textbf{Requirements for compliance in SLAP2} \\
+\hline
+WAVELENGTH           & RadTransWavelength                  & MUST  \\
+CHEMICAL\_ELEMENT    & AtomSymbol, MoleculeChemicalName    & SHOULD  \\
+INCHIKEY             & InchiKey                            & SHOULD  \\
+SPECIES\_MASS        & AtomMass, MoleculeMolecularWeight   & MAY  \\
+ION\_CHARGE          & IonCharge                           & MAY  \\
+LEVEL\_ENERGY        & StateEnergy                         & MAY  \\
+LOWER\_LEVEL\_ENERGY & StateEnergy                         & MAY  \\
+UPPER\_LEVEL\_ENERGY & StateEnergy                         & MAY  \\
+TEMPERATURE          & EnvironmentTemperature              & MAY  \\
+EINSTEINA            & RadTransProbabilityA                & MAY  \\
+MAXREC               & N/A                                 & MUST  \\
+\hline
+\end{tabularx}
+\caption{ /lines endpoint parameters and VAMDC restrictables mapping table }
+\end{table}
 
 
-\appendix
+\section{Mapping between /lines endpoint output fields and VAMDC returnables}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|l|X|p{2.5cm}|}
+\hline
+\textbf{SLAP2 field name} & \textbf{VAMDC returnable name} & \textbf{Requirements for compliance in SLAP2} \\
+\hline
+vacuum\_wavelength           & RadTransWavelength                                                      & MUST  \\
+line\_title                  & RadTransComment                                                         & MUST  \\
+chemical\_element\_name      & AtomSymbol, MoleculeChemicalName                                      & SHOULD  \\
+chemical\_element\_mass      & AtomMass, MoleculeMolecularWeight                                     & MAY  \\
+inchikey                     & AtomInchiKey, MoleculeInchiKey                                        & SHOULD  \\
+inchi                        & AtomInchi, MoleculeInchi                                              & MAY  \\
+ion\_charge                    & AtomIonCharge, MoleculeIonCharge                                      & SHOULD  \\
+lower\_state\_description    & AtomStateDescription, MoleculeStateDescription                        & SHOULD  \\
+upper\_state\_description    & AtomStateDescription, MoleculeStateDescription                        & SHOULD  \\
+observed\_wavelength         & RadTransWavelength + RadTransWavelengthMethod = observed               & MAY  \\
+lower\_level\_energy         & StateEnergy                                                            & MAY  \\
+upper\_level\_energy         & StateEnergy                                                            & MAY  \\
+lower\_level\_configuration  & AtomStateConfigurationLabel                                            & MAY  \\
+upper\_level\_configuration  & AtomStateConfigurationLabel                                            & MAY  \\
+lower\_level\_quantum\_numbers & MoleculeStateQuantumNumbers                                         & MAY  \\
+upper\_level\_quantum\_numbers & MoleculeStateQuantumNumbers                                         & MAY  \\
+reference\_doi               & SourceDOI                                                              & SHOULD  \\
+reference\_uri               & SourceURI                                                              & SHOULD  \\
+reference\_additional\_uri   & SourceURI                                                              & MAY  \\
+\hline
+\end{tabularx}
+\caption{/lines endpoint output fields and VAMDC returnables mapping table}
+\end{table}
+
+\section{Mapping between /species endpoint parameters and VAMDC restrictables}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|l|X|p{2.5cm}|}
+\hline
+\textbf{SLAP2 parameter name} & \textbf{VAMDC restrictable name} & \textbf{Requirements for compliance in SLAP2} \\
+\hline
+ELEMENT\_TYPE                         & N/A                                 & SHOULD  \\
+INCHIKEY                              & InchiKey                            & SHOULD  \\
+CHEMICAL\_ELEMENT\_NAME\_STARTSWITH   & AtomSymbol, MoleculeChemicalName    & SHOULD  \\
+CHEMICAL\_ELEMENT\_NAME\_CONTAINS     & AtomSymbol, MoleculeChemicalName    & SHOULD  \\
+STOICHIOMETRIC\_FORMULA\_STARTSWITH   & MoleculeStoichiometricFormula       & SHOULD  \\
+STOICHIOMETRIC\_FORMULA\_CONTAINS     & MoleculeStoichiometricFormula       & SHOULD  \\
+\hline
+\end{tabularx}
+\caption{ /species endpoint parameters and VAMDC restrictables mapping table }
+\end{table}
+
+
+
+\section{Mapping between /species endpoint output fields and VAMDC returnables}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|l|X|p{2.5cm}|}
+\hline
+\textbf{SLAP2 field name} & \textbf{VAMDC returnable name} & \textbf{Requirements for compliance} \\
+\hline
+chemical\_element\_name & AtomSymbol, MoleculeChemicalName & MUST \\
+ion\_charge             & AtomIonCharge, MoleculeIonCharge & SHOULD \\
+inchikey                & AtomInchiKey, MoleculeInchiKey   & SHOULD \\
+inchi                   & AtomInchi, MoleculeInchi         & MAY \\
+\hline
+\end{tabularx}
+\caption{/species endpoint output fields and VAMDC returnables mapping table}
+\end{table}
+
 \section{Changes from Previous Versions}
 
 \subsection{Changes from version 1}
 \todo{fill in}
 % these would be subsections "Changes from v. WD-..."
 % Use itemize environments.
+\appendix
 
-\bibliography{ivoatex/ivoabib,ivoatex/docrepo}
+
+\bibliography{ivoatex/ivoabib,ivoatex/docrepo,ivoatex/vamdc.bib}
 
 \end{document}
