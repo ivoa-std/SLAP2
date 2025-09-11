@@ -525,7 +525,7 @@ Temperature between 10 and 50 Kelvins:
 
 \subsubsection{EINSTEINA}
 
-A service \textbf{MAY }implement the parameter \textbf{EINSTEINA} to accept constraints in the transition probability by specifying the minimum and maximum Einstein A, defined as the probability per unit time s\textsuperscript{-1} for spontaneous emission in a bound-bound transition (ucd={\textquotedbl}phys.atmol.transProb{\textquotedbl};corresponding VAMDC restrictable is {\textquotedbl}RadTransProbabilityA{\textquotedbl})..
+A service \textbf{MAY }implement the parameter \textbf{EINSTEINA} to accept constraints in the transition probability by specifying the minimum and maximum Einstein A, defined as the probability per unit time s\textsuperscript{-1} for spontaneous emission in a bound-bound transition (ucd={\textquotedbl}phys.atmol.transProb{\textquotedbl};corresponding VAMDC restrictable is {\textquotedbl}RadTransProbabilityA{\textquotedbl}).
 
 Transition probability between 1.1E-7 and 1.2E-7 s-1:
 
@@ -648,18 +648,18 @@ default unit is specified in this document, the latter value
 \textbf{MUST} be returned and other fields with the same utype should
 have a different value in the unit field descriptor.
 
-\subsubsection{Vacuum wavelength}
+\subsubsection{vacuum\_wavelength}
 
-Exactly one field \textbf{MUST} have name={\textquotedbl}vacuum\_wavelength{\textquotedbl},
-with datatype={\textquotedbl}double{\textquotedbl}, unit={\textquotedbl}m{\textquotedbl} and
-ucd={\textquotedbl}em.wl{\textquotedbl}, containing the wavelength in
-vacuum of the transition originating the line in meters. The corresponding VAMDC returnable is  {\textquotedbl}\textbf{RadTransWavelength{\textquotedbl}}.
+Exactly one field \textbf{MUST} have name={"vacuum\_wavelength"},
+with datatype={"double"}, unit={"m"} and
+ucd={"em.wl"}, containing the wavelength in
+vacuum of the transition originating the line in meters. The corresponding VAMDC returnable is  {"\textbf{RadTransWavelength"}}.
 
-\subsubsection{Line title}
+\subsubsection{line\_title}
 
-Exactly one field \textbf{MUST} have name={\textquotedbl}line\_title{\textquotedbl}, with
-datatype={\textquotedbl}char{\textquotedbl}, arraysize={\textquotedbl}*{\textquotedbl} and ucd={\textquotedbl}meta.title{\textquotedbl}, containing a small description identifying the line.
-The corresponding VAMDC returnable is {\textquotedbl}\textbf{RadTransComment}{\textquotedbl}.
+Exactly one field \textbf{MUST} have name={"line\_title"}, with
+datatype={"char"}, arraysize={"*"} and ucd={"meta.title"}, containing a small description identifying the line.
+The corresponding VAMDC returnable is {"\textbf{RadTransComment}"}.
 
 Note that this line title is only a short string representation to be
 used in the clients for display. There is no required syntax, but it is
@@ -672,84 +672,88 @@ In case of corrected but unidentified lines, some examples could be:
 
 Examples: \verb|M31 1001.784 A|, \verb|011910191 800.2 A|
 
-\subsubsection{Chemical element name}
+\subsubsection{chemical\_element\_name}
 
 Exactly one field \textbf{SHOULD} have 
-name={\textquotedbl}chemical\_element\_name{\textquotedbl}, with  datatype={\textquotedbl}char{\textquotedbl}, arraysize={\textquotedbl}*{\textquotedbl} and
-ucd={\textquotedbl}phys.atmol.element{\textquotedbl}.
-In the case of an atom, the corresponding VAMDC returnable is {\textquotedbl}\textbf{AtomSymbol}{\textquotedbl}.
-If this is a molecular line, the corresponding VAMDC returnable is  {\textquotedbl}\textbf{MoleculeChemicalName}{\textquotedbl}.\\
+name={"chemical\_element\_name"}, with  datatype={"char"}, arraysize={"*"} and
+ucd={"phys.atmol.element"}.
+In the case of an atom, the corresponding VAMDC returnable is {"\textbf{AtomSymbol}"}.
+If this is a molecular line, the corresponding VAMDC returnable is  {"\textbf{MoleculeChemicalName}"}.\\
 Example of valid values are : Fe for a iron line or CH4 for a methane line.
 
-\subsubsection{Chemical element mass}
+\subsubsection{chemical\_element\_mass}
 
-Exactly one field \textbf{MAY} have name={\textquotedbl}chemical\_element\_mass{\textquotedbl}, with  datatype={\textquotedbl}float{\textquotedbl} and ucd={\textquotedbl}phys.atmol.element{\textquotedbl}. The field contains the atom mass or the molecular weight of the species, to be specified in Unified Atomic Mass Unit (u). For an atom, the ccorresponding VAMDC returnable is {\textquotedbl}\textbf{AtomMass}{\textquotedbl}. If this is a molecular line, the corresponding VAMDC returnable is {\textquotedbl}\textbf{MoleculeMolecularWeight}{\textquotedbl}.
+Exactly one field \textbf{MAY} have name={"chemical\_element\_mass"}, with  datatype={"float"} and ucd={"phys.atmol.element"}. The field contains the atom mass or the molecular weight of the species, to be specified in Unified Atomic Mass Unit (u). For an atom, the ccorresponding VAMDC returnable is {"\textbf{AtomMass}"}. If this is a molecular line, the corresponding VAMDC returnable is {"\textbf{MoleculeMolecularWeight}"}.
 
-\subsubsection{InChiKey}
+\subsubsection{inchikey}
 
-Exactly one field \textbf{SHOULD} have name={\textquotedbl}InChiKey{\textquotedbl}, with datatype={\textquotedbl}char{\textquotedbl}, arraysize={\textquotedbl}*{\textquotedbl} and
-ucd={\textquotedbl}phys.atmol.element{\textquotedbl}, containing the inchikey \citep{Heller2015} of
-the chemical element of this line. For an atom, the corresponding VAMDC returnable is  {\textquotedbl}\textbf{{AtomInchiKey}}{\textquotedbl} and {\textquotedbl}\textbf{{MoleculeInchiKey}}{\textquotedbl} for a molecular line.
+Exactly one field \textbf{SHOULD} have name={"inchikey"}, with datatype={"char"}, arraysize={"*"} and
+ucd={"phys.atmol.element"}, containing the inchikey \citep{Heller2015} of
+the chemical element of this line. For an atom, the corresponding VAMDC returnable is  {"\textbf{{AtomInchiKey}}"} and {"\textbf{{MoleculeInchiKey}}"} for a molecular line.
 
-\subsubsection{InChi}
+\subsubsection{inchi}
 
-Exactly one field \textbf{MAY} have name={\textquotedbl}InChi{\textquotedbl}, with
-datatype={\textquotedbl}char{\textquotedbl}, arraysize={\textquotedbl}*{\textquotedbl} and
-ucd={\textquotedbl}phys.atmol.element{\textquotedbl}, containing the inchi of the
-chemical element for the lower level of this line. The corresponding VAMDC returnable is  {\textquotedbl}\textbf{{AtomInchi}}{\textquotedbl} for an atomic line and  {\textquotedbl}\textbf{{MoleculeInchi}}{\textquotedbl} for a molecular line.
+Exactly one field \textbf{MAY} have name={"inchi"}, with
+datatype={"char"}, arraysize={"*"} and
+ucd={"phys.atmol.element"}, containing the inchi of the
+chemical element for the lower level of this line. The corresponding VAMDC returnable is  {"\textbf{{AtomInchi}}"} for an atomic line and  {"\textbf{{MoleculeInchi}}"} for a molecular line.
 
-\subsubsection{Ion charge}
+\subsubsection{ion\_charge}
 
-Exactly one field \textbf{SHOULD} have name={\textquotedbl}ionCharge{\textquotedbl}, with
-datatype={\textquotedbl}int{\textquotedbl} and ucd={\textquotedbl}phys.atmol.ionization{\textquotedbl}, containing the charge of the chemical element origin of the line. The corresponding VAMDC returnable is {\textquotedbl}\textbf{{AtomIonCharge}}{\textquotedbl} for an atomic line and {\textquotedbl}\textbf{{MoleculeIonCharge}}{\textquotedbl}  for a molecular line.
+Exactly one field \textbf{SHOULD} have name={"ion\_charge"}, with
+datatype={"int"} and ucd={"phys.atmol.ionization"}, containing the charge of the chemical element origin of the line. The corresponding VAMDC returnable is {"\textbf{AtomIonCharge}"} for an atomic line and {"\textbf{{MoleculeIonCharge}}"}  for a molecular line.
 
-\subsubsection{Lower state description}
+\subsubsection{lower\_level\_description}
 
-Exactly one field \textbf{SHOULD} have name={\textquotedbl}lower\_state\_description{\textquotedbl}, with datatype={\textquotedbl}char{\textquotedbl}, arraysize={\textquotedbl}*{\textquotedbl} and ucd={\textquotedbl}phys.atmol.level{\textquotedbl}, containing a full description of the lower level of the transition originating the line. The corresponding VAMDC returnable is  {\textquotedbl}\textbf{AtomStateDescription}{\textquotedbl} for an atomic state and {\textquotedbl}\textbf{MoleculeStateDescription}{\textquotedbl} for a molecular state.
+Exactly one field \textbf{SHOULD} have name={"lower\_level\_description"}, with datatype={"char"}, arraysize={"*"} and ucd={"phys.atmol.level;meta.title"}, containing a full description of the lower level of the transition originating the line. The corresponding VAMDC returnable is  {"\textbf{AtomStateDescription}"} for an atomic state and {"\textbf{MoleculeStateDescription}"} for a molecular state.
 
-\subsubsection{Upper state description}
+\subsubsection{upper\_level\_description}
 
-Exactly one field \textbf{SHOULD} have name={\textquotedbl}upper\_state\_description{\textquotedbl}, with datatype={\textquotedbl}char{\textquotedbl}, arraysize={\textquotedbl}*{\textquotedbl} and ucd={\textquotedbl}phys.atmol.level{\textquotedbl}, containing a full description of the upper level of the transition originating the line. The corresponding VAMDC returnable is  {\textquotedbl}\textbf{AtomStateDescription}{\textquotedbl} for an atomic state and  {\textquotedbl}\textbf{MoleculeStateDescription}{\textquotedbl} for a molecular state, 
+Exactly one field \textbf{SHOULD} have name={"upper\_level\_description"}, with datatype={"char"}, arraysize={"*"} and ucd={"phys.atmol.level;meta.title"}, containing a full description of the upper level of the transition originating the line. The corresponding VAMDC returnable is  {"\textbf{AtomStateDescription}"} for an atomic state and  {"\textbf{MoleculeStateDescription}"} for a molecular state, 
 
-\subsubsection{Observed wavelength}
+\subsubsection{observed\_wavelength}
 
-Exactly one field \textbf{MAY} have name={\textquotedbl}observed\_wavelength{\textquotedbl}, with
-datatype={\textquotedbl}double{\textquotedbl} unit={\textquotedbl}m{\textquotedbl} and ucd={\textquotedbl}em.wl{\textquotedbl}, containing the observed wavelength in the vacuum of the transition originating the line in meters, as it was observed. This may be used by observational spectral line databases. The corresponding VAMDC returnable is  {\textquotedbl}\textbf{{RadTransWavelength}}{\textquotedbl}.
+Exactly one field \textbf{MAY} have name={"observed\_wavelength"}, with
+datatype={"double"} unit={"m"} and ucd={"em.wl"}, containing the observed wavelength in the vacuum of the transition originating the line in meters, as it was observed. This may be used by observational spectral line databases. The corresponding VAMDC returnable is  {"\textbf{RadTransWavelength}"}.
 
-\subsubsection{Lower level energy}
+\subsubsection{einstein\_a}
+Exactly one field \textbf{MAY} have name={"einstein\_a"}, with
+datatype={"double"}, unit={"1/s"} and ucd={"phys.atmol.transProb"}, containing Einstein A value, defined as the probability per unit time s\textsuperscript{-1} for spontaneous emission in a bound-bound transition. The corresponding VAMDC returnable is  {"\textbf{RadTransProbabilityA}"}.
 
-Exactly one field \textbf{MAY} have name={\textquotedbl}lower\_level\_energy{\textquotedbl}, with
-datatype={\textquotedbl}double{\textquotedbl}, unit={\textquotedbl}J{\textquotedbl} and
-ucd={\textquotedbl}phys.energy;phys.atmol.level{\textquotedbl} describing the energy for the lower level of the transition which originates this line. The value must appear in Joules to unify results.
-The corresponding VAMDC returnable is  {\textquotedbl}\textbf{StateEnergy}{\textquotedbl}.
-It is allowed to have more than one \textbf{Line.lowerLevel.energy.value} field in different units in order to preserve the precision of the original value prior to unit conversion. If this is the case and to get backwards compatibility with already existing services, there \textbf{MUST} be one field with
-name={\textquotedbl}\textbf{lower\_level\_energy}{\textquotedbl} where unit={\textquotedbl}J{\textquotedbl} in the VOTable response. Other fields with the same utype should have a different value in the unit field descriptor.
+\subsubsection{lower\_level\_energy}
 
-\subsubsection{Upper level energy}
+Exactly one field \textbf{MAY} have name={"lower\_level\_energy"}, with
+datatype={"double"}, unit={"J"} and
+ucd={"phys.energy;phys.atmol.level"} describing the energy for the lower level of the transition which originates this line. The value must appear in Joules to unify results.
+The corresponding VAMDC returnable is  {"\textbf{StateEnergy}"}.
+It is allowed to have more than one \textbf{lower\_level\_energy} field in different units in order to preserve the precision of the original value prior to unit conversion. If this is the case and to get backwards compatibility with already existing services, there \textbf{MUST} be one field with
+name={"\textbf{lower\_level\_energy}"} where unit={"J"} in the VOTable response. Other fields with the same utype should have a different value in the unit field descriptor.
 
-Exactly one field \textbf{MAY} have corresponding, with
-datatype={\textquotedbl}double{\textquotedbl}, unit={\textquotedbl}J{\textquotedbl} and
-ucd={\textquotedbl}phys.energy;phys.atmol.level{\textquotedbl},
-describing the energy for the upper level of the transition which originates this line. The value must appear in Joules to unify results. The VAMDC returnable is {\textquotedbl}\textbf{StateEnergy}{\textquotedbl}2
+\subsubsection{upper\_level\_energy}
+
+Exactly one field \textbf{MAY} have name={"upper\_level\_energy"}, corresponding, with
+datatype={"double"}, unit={"J" and
+ucd={"phys.energy;phys.atmol.level"},
+describing the energy for the upper level of the transition which originates this line. The value must appear in Joules to unify results. The corresponding VAMDC returnable is {"\textbf{StateEnergy}"}
 
 It is allowed to have more than one
-\textbf{Line.upperLevel.energy.value} field in different units in order
+\textbf{upper\_level\_energy} field in different units in order
 to preserve the precision of the original value prior to unit
 conversion. If this is the case and to get backwards compatibility with
 already existing services, there \textbf{MUST} be one field with
-name={\textquotedbl}\textbf{upper\_level\_energy}{\textquotedbl} where unit={\textquotedbl}J{\textquotedbl}
+name={"\textbf{upper\_level\_energy}"} where unit={"J"}
 in the VOTable response. Other fields with the same utype should have a
 different value in the unit field descriptor.
 
 \subsubsection{Level configuration}
 
-\paragraph{Lower level}
+\paragraph{lower\_level\_configuration}
 
-Exactly one field \textbf{MAY} have name={\textquotedbl}lower\_level\_configuration{\textquotedbl}, with ucd={\textquotedbl}phys.atmol.configuration{\textquotedbl}, datatype={\textquotedbl}char{\textquotedbl} and arraysize={\textquotedbl}*{\textquotedbl} describing the electron configuration of the lower level of the line. The corresponding VAMDC restrictable is  {\textquotedbl}\textbf{AtomStateConfigurationLabel}{\textquotedbl}.
+Exactly one field \textbf{MAY} have name={"lower\_level\_configuration"}, with ucd={"phys.atmol.configuration"}, datatype={"char"} and arraysize={"*"} describing the electron configuration of the lower level of the line. The corresponding VAMDC restrictable is  {"\textbf{AtomStateConfigurationLabel}"}.
 
-\paragraph{Upper level}
+\paragraph{upper\_level\_configuration}
 
-Exactly one field \textbf{MAY} have name={\textquotedbl}upper\_level\_configuration{\textquotedbl}, with ucd={\textquotedbl}phys.atmol.configuration{\textquotedbl}, datatype={\textquotedbl}char{\textquotedbl} and arraysize={\textquotedbl}*{\textquotedbl} describing the electron configuration of the upper level of the line. The corresponding VAMDC restrictable is  {\textquotedbl}\textbf{AtomStateConfigurationLabel}{\textquotedbl}.
+Exactly one field \textbf{MAY} have name={"upper\_level\_configuration"}, with ucd={"phys.atmol.configuration"}, datatype={"char"} and arraysize={"*"} describing the electron configuration of the upper level of the line. The corresponding VAMDC restrictable is  {"\textbf{AtomStateConfigurationLabel}"}.
 
 \paragraph{Syntax}
 
@@ -791,11 +795,11 @@ See \citep{latexstyle} for a complete reference.
 
 \subsubsection{Level quantum state}
 
-\paragraph{Lower state}
-Exactly one field \textbf{MAY} have name={\textquotedbl}lower\_state\_quantum\_numbers{\textquotedbl} with datatype={\textquotedbl}char{\textquotedbl} and arraysize={\textquotedbl}*{\textquotedbl} describing the quantum state of the lower in a string representation. The corresponding VAMDC returnable is  {\textquotedbl}\textbf{MoleculeStateQuantumNumbers}{\textquotedbl}.
+\paragraph{lower\_state\_quantum\_numbers}
+Exactly one field \textbf{MAY} have name={"lower\_state\_quantum\_numbers"} with datatype={"char"} and arraysize={"*"} describing the quantum state of the lower in a string representation. The corresponding VAMDC returnable is  {"\textbf{MoleculeStateQuantumNumbers}"}.
 
 \paragraph{Upper state}
-Exactly one field \textbf{MAY} have name={\textquotedbl}lower\_state\_quantum\_numbers{\textquotedbl} with datatype={\textquotedbl}char{\textquotedbl}{\textquotedbl} and arraysize={\textquotedbl}*{\textquotedbl} describing the quantum state of the lower in a string representation. The corresponding VAMDC returnable is {\textquotedbl}\textbf{MoleculeStateQuantumNumbers}{\textquotedbl}, 
+Exactly one field \textbf{MAY} have name={"lower\_state\_quantum\_numbers"} with datatype={"char"} and arraysize={"*"} describing the quantum state of the lower in a string representation. The corresponding VAMDC returnable is {"\textbf{MoleculeStateQuantumNumbers}"}, 
 
 \paragraph{Syntax}
 
@@ -808,23 +812,23 @@ Example: [J::1;F1::0;F::1]
 As this is a protocol meant to stay simple, the text representation is voluntarily simplified. The user
 is encouraged to use the VAMDC infrastructure to get a more detailed and standardized description of the quantum states.
 
-\subsubsection{Reference DOI}
+\subsubsection{reference\_doi}
 
-One or more fields \textbf{SHOULD} have name={\textquotedbl}reference\_doi{\textquotedbl}, with ucd={\textquotedbl}meta.ref.doi{\textquotedbl}, datatype={\textquotedbl}char{\textquotedbl} and
-arraysize={\textquotedbl}*{\textquotedbl}, to specify a digital object identifier
-attached to this reference. The corresponding VAMDC returnable is  {\textquotedbl}\textbf{SourceDOI}{\textquotedbl}.
+One or more fields \textbf{SHOULD} have name={"reference\_doi"}, with ucd={"meta.ref.doi"}, datatype={"char"} and
+arraysize={"*"}, to specify a digital object identifier
+attached to this reference. The corresponding VAMDC returnable is  {"\textbf{SourceDOI}"}.
 
-\subsubsection{Reference URI}
+\subsubsection{reference\_uri}
 
-One or more fields \textbf{SHOULD} have name={\textquotedbl}reference\_uri{\textquotedbl},
-with ucd={\textquotedbl}meta.ref.uri{\textquotedbl}, datatype={\textquotedbl}char{\textquotedbl} and
-arraysize={\textquotedbl}*{\textquotedbl}, to specify an http link that contains a scientific publication related to the spectral line. Since the URL will often contain metacharacters, the URL is normally enclosed in an XML CDATA section ({\textless}![CDATA[...]]{\textgreater}) or otherwise encoded to escape any embedded metacharacters. The corresponding VAMDC returnable is {\textquotedbl}\textbf{SourceURI}{\textquotedbl}.
+One or more fields \textbf{SHOULD} have name={"reference\_uri"},
+with ucd={"meta.ref.uri"}, datatype={"char"} and
+arraysize={"*"}, to specify an http link that contains a scientific publication related to the spectral line. Since the URL will often contain metacharacters, the URL is normally enclosed in an XML CDATA section ({\textless}![CDATA[...]]{\textgreater}) or otherwise encoded to escape any embedded metacharacters. The corresponding VAMDC returnable is {"\textbf{SourceURI}"}.
 
 
-\subsubsection{Additional references}
+\subsubsection{reference\_additional\_uri}
 
-One or more fields \textbf{MAY} have name={\textquotedbl}reference\_additional\_uri{\textquotedbl} with ucd={\textquotedbl}meta.ref.uri{\textquotedbl}, datatype={\textquotedbl}char{\textquotedbl}, arraysize={\textquotedbl}*{\textquotedbl} and free names, to specify URLs that contains extra information related to the spectral line. Same criteria than before about the CDATA section.
-The corresponding VAMDC restrictable is  {\textquotedbl}\textbf{SourceURI}{\textquotedbl}.
+One or more fields \textbf{MAY} have name={"reference\_additional\_uri"} with ucd={"meta.ref.uri"}, datatype={"char"}, arraysize={"*"} and free names, to specify URLs that contains extra information related to the spectral line. Same criteria than before about the CDATA section.
+The corresponding VAMDC restrictable is  {"\textbf{SourceURI}"}.
 
 \subsection{Non-standard output fields}
 \label{sect:lines-nonstd}
@@ -844,7 +848,7 @@ the species for which lines are available. This operation returns the
 complete list of the chemical elements available in the service. The
 output returned by the service is a VOTable, an XML table format,
 returned with a MIME-type of
-{\textquotedbl}application/x-votable+xml{\textquotedbl}.
+{"application/x-votable+xml"}.
 
 Several optional restriction parameters are defined to perform some 
 search operations on the species list. If none of those parameter is used 
@@ -856,7 +860,7 @@ in the user query, the complete list of species will be returned.
 \subsubsection{ELEMENT\_TYPE}
 
 A service \textbf{SHOULD} implement the parameter \textbf{ELEMENT\_TYPE} to specify
-the type of chemical elements expected in the response. The possible values are {\textquotedbl}atom{\textquotedbl} and {\textquotedbl}molecule{\textquotedbl}.
+the type of chemical elements expected in the response. The possible values are {"atom"} and {"molecule"}.
 
 If the parameter is available in the service but not used in the query then both atoms and molecules are returned.
 
@@ -929,59 +933,59 @@ section 6.3).
 \subsection{Standard output fields}
 \label{species-fields}
 
-\subsubsection{Chemical element name}
+\subsubsection{chemical\_element\_name}
 
 Exactly one field \textbf{MUST} have
-name={\textquotedbl}chemical\_element\_name{\textquotedbl}. The
-corresponding VAMDC returnable is  {\textquotedbl}\textbf{AtomSymbol}{\textquotedbl} for an atom
-and {\textquotedbl}\textbf{MoleculeChemicalName}{\textquotedbl} for a molecule.
+name={"chemical\_element\_name"}. The
+corresponding VAMDC returnable is  {"\textbf{AtomSymbol}"} for an atom
+and {"\textbf{MoleculeChemicalName}"} for a molecule.
 
 This is the conventional molecule name, e.g. CO2, NH3, Feh, Carbon, Methane ... and it may not be unique.
 
-In both cases, datatype={\textquotedbl}char{\textquotedbl},
-arraysize={\textquotedbl}*{\textquotedbl} and
-ucd={\textquotedbl}phys.atmol.element{\textquotedbl}, containing the name of a
+In both cases, datatype={"char"},
+arraysize={"*"} and
+ucd={"phys.atmol.element"}, containing the name of a
 chemical element for which at least one spectral line is available in
 the service.
 
 \subsubsection{Chemical element type}
 
 Exactly one field \textbf{SHOULD} have
-name={\textquotedbl}chemical\_element\_type{\textquotedbl}, datatype={\textquotedbl}char{\textquotedbl},
-arraysize={\textquotedbl}*{\textquotedbl}. It will describe the type of chemical element, possible values are
+name={"chemical\_element\_type"}, datatype={"char"},
+arraysize={"*"}. It will describe the type of chemical element, possible values are
 {"atom"} or {"molecule"}
 
-\subsubsection{Chemical element stoichiometric formula}
+\subsubsection{chemical\_element\_stoichiometric\_formula}
 
 Exactly one field \textbf{SHOULD} have
-name={\textquotedbl}chemical\_element\_stoichiometric\_formula{\textquotedbl}, datatype={\textquotedbl}char{\textquotedbl},
-arraysize={\textquotedbl}*{\textquotedbl} and
-ucd={\textquotedbl}phys.atmol.element{\textquotedbl}, containing the stoichiometric formula of a chemical element for which at least one spectral line is available in the service. For an atom, the atom symbol can be used as a value.
+name={"chemical\_element\_stoichiometric\_formula"}, datatype={"char"},
+arraysize={"*"} and
+ucd={"phys.atmol.element"}, containing the stoichiometric formula of a chemical element for which at least one spectral line is available in the service. For an atom, the atom symbol can be used as a value.
 
-The corresponding VAMDC returnable is {\textquotedbl}\textbf{MoleculeStoichiometricFormula}{\textquotedbl} in the case of a molecule. The value is not defined for an atom.
+The corresponding VAMDC returnable is {"\textbf{MoleculeStoichiometricFormula}"} in the case of a molecule. The value is not defined for an atom.
 
 
-\subsubsection{Ion charge}
+\subsubsection{ion\_charge}
 
-Exactly one field \textbf{SHOULD} have name={\textquotedbl}ion\_charge{\textquotedbl} with datatype={\textquotedbl}int{\textquotedbl} and ucd={\textquotedbl}phys.atmol.ionization{\textquotedbl}, containing the charge of  the considered chemical species.
-The corresponding VAMDC returnable is {\textquotedbl}\textbf{{AtomIonCharge}}{\textquotedbl} for an atom and  {\textquotedbl}\textbf{{MoleculeIonCharge}}{\textquotedbl} for a molecule. 
+Exactly one field \textbf{SHOULD} have name={"ion\_charge"} with datatype={"int"} and ucd={"phys.atmol.ionization"}, containing the charge of  the considered chemical species.
+The corresponding VAMDC returnable is {"\textbf{{AtomIonCharge}}"} for an atom and  {"\textbf{{MoleculeIonCharge}}"} for a molecule. 
 
-\subsubsection{InChiKey}
+\subsubsection{inchikey}
 
-Exactly one field \textbf{SHOULD} have name={\textquotedbl}inchikey{\textquotedbl}, with
-datatype={\textquotedbl}char{\textquotedbl},
-arraysize={\textquotedbl}*{\textquotedbl} and
-ucd={\textquotedbl}phys.atmol.element{\textquotedbl}, containing the inchikey 
+Exactly one field \textbf{SHOULD} have name={"inchikey"}, with
+datatype={"char"},
+arraysize={"*"} and
+ucd={"phys.atmol.element"}, containing the inchikey 
 of the chemical element.
 
-The corresponding VAMDC returnable is  {\textquotedbl}\textbf{{AtomInchiKey}}{\textquotedbl} for an atom and {\textquotedbl}\textbf{{MoleculeInchiKey}}{\textquotedbl} for a molecule.
+The corresponding VAMDC returnable is  {"\textbf{{AtomInchiKey}}"} for an atom and {"\textbf{{MoleculeInchiKey}}"} for a molecule.
 
-\subsubsection{InChi}
+\subsubsection{inchi}
 
-Exactly one field \textbf{MAY} have name={\textquotedbl}inchi{\textquotedbl}, with datatype={\textquotedbl}char{\textquotedbl}, arraysize={\textquotedbl}*{\textquotedbl} and ucd={\textquotedbl}phys.atmol.element{\textquotedbl}, containing the inchi of the chemical element. The corresponding VAMDC returnable is  {\textquotedbl}\textbf{{AtomInchi}}{\textquotedbl} for an atom and {\textquotedbl}\textbf{{MoleculeInchi}}{\textquotedbl} for a molecule. 
+Exactly one field \textbf{MAY} have name={"inchi"}, with datatype={"char"}, arraysize={"*"} and ucd={"phys.atmol.element"}, containing the inchi of the chemical element. The corresponding VAMDC returnable is  {"\textbf{AtomInchi}"} for an atom and {"\textbf{MoleculeInchi}"} for a molecule. 
 
 
-\subsubsection{VOSI-capabilities }
+\section{VOSI-capabilities }
 
 A compliant simple spectral line service \textbf{MUST} provide a
 \{capabilities\} resource used to query the service metadata:
@@ -1174,6 +1178,62 @@ identification status of the line.
 \section{SLAP valid response example}
 
 \begin{lstlisting}[language=XML]
+<VOTABLE version="1.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.ivoa.net/xml/VOTable/v1.3"
+	xsi:schemaLocation="http://www.ivoa.net/xml/VOTable/v1.3 http://www.ivoa.net/xml/VOTable/VOTable-1.3.xsd"
+	xmlns:ssldm="http://www.ivoa.net/xml/SimpleSpectralLineDM/v2.0">
+	<RESOURCE type="results">
+		<INFO name="QUERY_STATUS" value="OK" />
+		<INFO name="REQUEST_COMPLETED_TIMESTAMP" value="1757515067" />
+		<INFO name="REQUEST_DESCRIPTION" value="WAVELENGTH=9.00e-8/9.02e-8" />
+		<INFO name="SERVICE_NAME" value="sesam" />
+		<INFO name="SERVICE_VERSION" value="2025-09-11" />
+		<TABLE>
+			<FIELD ucd="em.wl" name="vacuum_wavelength" datatype="double" unit="m" />
+			<FIELD ucd="meta.title" name="line_title" datatype="char" arraysize="*" />
+			<FIELD ucd="phys.energy;phys.atmol.level" name="lower_level_energy"
+				utype="ssldm:Line.lowerLevel.energy.value" datatype="double" unit="J" />
+			<FIELD ucd="phys.energy;phys.atmol.level" name="upper_level_energy" datatype="double" unit="J" />
+			<FIELD ucd="phys.atmol.level;meta.title" name="lower_level_description" datatype="char" arraysize="*" />
+			<FIELD ucd="phys.atmol.level;meta.title" name="upper_level_description" datatype="char" arraysize="*" />
+			<FIELD ucd="phys.atmol.transProb" name="einstein_a" datatype="double" unit="1/s" />
+			<FIELD ucd="phys.atmol.element" name="chemical_element_name" datatype="char" arraysize="*" />
+			<FIELD ucd="phys.atmol.ionization" name="ion_charge" datatype="int" />
+			<FIELD ucd="phys.atmol.element" name="inchikey" datatype="char" arraysize="*" />
+			<FIELD ucd="meta.ref.doi" name="reference_doi" datatype="char" arraysize="*" />
+			<DATA>
+				<TABLEDATA>
+					<TR>
+						<TD>9.0001e-08</TD>
+						<TD>element : Molecular deuterium, upper energy : 2.3505030918e-18 , lower energy : 1.43849952e-19 </TD>
+						<TD>1.43849952e-19</TD>
+						<TD>2.3505030918e-18</TD>
+						<TD>ElecStateLabel=X  J=12  v=1 </TD>
+						<TD>ElecStateLabel=B'  J=13  v=5  elecInv=u  elecRefl=+  Lambda=0  S=0  KronigParity=e </TD>
+						<TD>11629800.0</TD>
+						<TD>Molecular deuterium</TD>
+						<TD>0</TD>
+						<TD>UFHFLCQGNIYNRP-VVKOMZTBSA-N</TD>
+						<TD>10.1088/0953-4075/32/15/313</TD>
+					</TR>
+					<TR>
+						<TD>9.0001e-08</TD>
+						<TD>element : Molecular deuterium, upper energy : 2.2695378438e-18 , lower energy : 6.288390960000001e-20 </TD>
+						<TD>6.288390960000001e-20</TD>
+						<TD>2.2695378438e-18</TD>
+						<TD>ElecStateLabel=X  J=2  v=1 </TD>
+						<TD>ElecStateLabel=B  J=1  v=35  elecInv=u  elecRefl=+  Lambda=0  S=0  KronigParity=e </TD>
+						<TD>14548700.0</TD>
+						<TD>Molecular deuterium</TD>
+						<TD>0</TD>
+						<TD>UFHFLCQGNIYNRP-VVKOMZTBSA-N</TD>
+						<TD>10.1088/0953-4075/32/15/313</TD>
+					</TR>
+				</TABLEDATA>
+			</DATA>
+		</TABLE>
+	</RESOURCE>
+</VOTABLE>
 
 \end{lstlisting}
 
@@ -1281,6 +1341,6 @@ inchi                   & AtomInchi, MoleculeInchi         & MAY \\
 \appendix
 
 
-\bibliography{ivoatex/ivoabib,ivoatex/docrepo,ivoatex/vamdc.bib}
+\bibliography{bibliography/ivoabib,bibliography/docrepo,bibliography/vamdc.bib}
 
 \end{document}
