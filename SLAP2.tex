@@ -454,7 +454,7 @@ Filter results for neutral Iron atom (InChI=1S/Fe) only :
 
 \subsubsection{SPECIES\_MASS}
 
-A service \textbf{MAY} implement the parameters \textbf{SPECIES\_MASS} to specify the minimum and maximum mass of a species, 
+A service \textbf{MAY} implement the \textbf{SPECIES\_MASS} parameter to specify the minimum and maximum mass of a species, 
 to be specified in Unified Atomic Mass Unit (u).  
 
 The mass will be a float value greater than 0. The provided range will be interpreted as the 
@@ -468,7 +468,7 @@ Filter all atoms chemical species between 0 and 12.011 u:
 
 \subsubsection{ION\_CHARGE}
 
-A service \textbf{MAY} implement the parameters \textbf{ION\_CHARGE} to specify the minimum and maximum charge of an ion (ucd={\textquotedbl}phys.atmol.ionization{\textquotedbl}; 
+A service \textbf{MAY} implement the \textbf{ION\_CHARGE} parameter to specify the minimum and maximum charge of an ion (ucd={\textquotedbl}phys.atmol.ionization{\textquotedbl}; 
 corresponding VAMDC restrictable is {\textquotedbl}IonCharge{\textquotedbl}).
  
 It will look for the ionized forms of the chemical element specified in CHEMICAL\_ELEMENT
@@ -490,7 +490,7 @@ All lines related to positively charged Fe ions and excluding the neutral form :
 
 \subsubsection{LOWER\_LEVEL\_ENERGY}
 
-A service \textbf{MAY} implement the parameters \textbf{LOWER\_LEVEL\_ENERGY}
+A service \textbf{MAY} implement the \textbf{LOWER\_LEVEL\_ENERGY} parameter
 to specify the minimum and maximum energy for the LOWER level of the transition, 
 to be expressed in Joules (ucd={\textquotedbl} phys.energy;phys.atmol.level{\textquotedbl}; corresponding VAMDC restrictable is {\textquotedbl}StateEnergy{\textquotedbl}).
 
@@ -500,8 +500,7 @@ Energy of lower level between 3.93E-18 and 3.94E-18 Joules:
 
 \subsubsection{UPPER\_LEVEL\_ENERGY}
 
-A service \textbf{MAY}implement the parameters
-\textbf{UPPER\_LEVEL\_ENERGY} to specify the minimum 
+A service \textbf{MAY}implement the \textbf{UPPER\_LEVEL\_ENERGY} parameter to specify the minimum 
 and maximum energy for the UPPER level of the transition, to be expressed in Joules (ucd={"phys.energy;phys.atmol.level"}; corresponding VAMDC restrictable is {"StateEnergy").
 
 Energy of upper level between 3.93E-18 and 3.94E-18 Joules:
@@ -510,9 +509,10 @@ Energy of upper level between 3.93E-18 and 3.94E-18 Joules:
 
 \subsubsection{TEMPERATURE}
 
-A service \textbf{MAY} implement the parameters \textbf{TEMPERATURE} to
+A service \textbf{MAY} implement the \textbf{TEMPERATURE} parameter to
 specify the minimum and maximum expected temperatures of the object, to
-be specified in Kelvin (ucd={\textquotedbl}phys.temperature{\textquotedbl};corresponding VAMDC restrictable is {\textquotedbl}EnvironmentTemperature{\textquotedbl}). This parameter would be used (in particular for
+be specified in Kelvin (ucd={\textquotedbl}phys.temperature{\textquotedbl};corresponding VAMDC restrictable
+is {\textquotedbl}EnvironmentTemperature{\textquotedbl}). This parameter would be used (in particular for
 theoretical spectral line databases) to sort the lines in the output
 using physical models.
 
@@ -522,7 +522,11 @@ Temperature between 10 and 50 Kelvins:
 
 \subsubsection{EINSTEINA}
 
-A service \textbf{MAY }implement the parameter \textbf{EINSTEINA} to accept constraints in the transition probability by specifying the minimum and maximum Einstein A, defined as the probability per unit time s\textsuperscript{-1} for spontaneous emission in a bound-bound transition (ucd={\textquotedbl}phys.atmol.transProb{\textquotedbl};corresponding VAMDC restrictable is {\textquotedbl}RadTransProbabilityA{\textquotedbl}).
+A service \textbf{MAY }implement the \textbf{EINSTEINA} parameter to accept constraints in the 
+transition probability by specifying the minimum and maximum Einstein A, defined as the probability 
+per unit time s\textsuperscript{-1} for spontaneous emission in a bound-bound 
+transition (ucd={\textquotedbl}phys.atmol.transProb{\textquotedbl};corresponding VAMDC restrictable 
+is {\textquotedbl}RadTransProbabilityA{\textquotedbl}).
 
 Transition probability between 1.1E-7 and 1.2E-7 s-1:
 
@@ -856,7 +860,7 @@ in the user query, the complete list of species will be returned.
 
 \subsubsection{ELEMENT\_TYPE}
 
-A service \textbf{SHOULD} implement the parameter \textbf{ELEMENT\_TYPE} to specify
+A service \textbf{SHOULD} implement the \textbf{ELEMENT\_TYPE} parameter to specify
 the type of chemical elements expected in the response. The possible values are {"atom"} and {"molecule"}.
 
 If the parameter is available in the service but not used in the query then both atoms and molecules are returned.
@@ -869,7 +873,8 @@ Returns all the molecules :
 
 \subsubsection{INCHIKEY}
 
-A service \textbf{SHOULD} implement the parameter \textbf{INCHIKEY} to test the existence of a given inchikey in the service data among the data shared by the service.
+A service \textbf{SHOULD} implement the \textbf{INCHIKEY} parameter to test the existence of a given 
+inchikey in the service data among the data shared by the service.
 
 Returns the molecular hydrogen :
 
@@ -878,7 +883,8 @@ Returns the molecular hydrogen :
 
 \subsubsection{CHEMICAL\_ELEMENT\_NAME\_STARTSWITH}
 
-A service \textbf{SHOULD} implement the parameter \textbf{CHEMICAL\_ELEMENT\_NAME\_STARTSWITH}. It defines a list of characters with which the name of the chemical species must start. The search is case-sensitive.
+A service \textbf{SHOULD} implement the \textbf{CHEMICAL\_ELEMENT\_NAME\_STARTSWITH} parameter. 
+It defines a list of characters with which the name of the chemical species must start. The search is case-sensitive.
 
 Returns all the chemical species whose name starts with "CO" :
 
@@ -891,7 +897,9 @@ Returns only the Cobalt atom :
 
 \subsubsection{CHEMICAL\_ELEMENT\_NAME\_CONTAINS}
 
-A service \textbf{SHOULD} implement the parameter \textbf{CHEMICAL\_ELEMENT\_NAME\_CONTAINS}. It defines a list of characters which is contained somewhere in the name of the chemical species must start. The search is case-sensitive.
+A service \textbf{SHOULD} implement the \textbf{CHEMICAL\_ELEMENT\_NAME\_CONTAINS} parameter. It defines 
+a list of characters which is contained somewhere in the name of the chemical species must start. 
+The search is case-sensitive.
 
 Returns all the chemical species whose name contains H2 ( like CH2 ) :
 
@@ -899,9 +907,12 @@ Returns all the chemical species whose name contains H2 ( like CH2 ) :
 
 \subsubsection{STOICHIOMETRIC\_FORMULA\_STARTSWITH}
 
-The stoichiometric formula is a chemical expression that indicates the quantitative composition of atoms that make up the molecule, e.g. CO2, NH3, CH4.
+The stoichiometric formula is a chemical expression that indicates the quantitative composition of 
+atoms that make up the molecule, e.g. CO2, NH3, CH4.
 
-A service \textbf{SHOULD} implement the parameter \textbf{STOICHIOMETRIC\_FORMULA\_STARTSWITH}. It defines a list of characters with which the stoichiometric formula of the chemical species must start. The search is case-sensitive.
+A service \textbf{SHOULD} implement the \textbf{STOICHIOMETRIC\_FORMULA\_STARTSWITH} parameter. 
+It defines a list of characters with which the stoichiometric formula of the chemical species must start. 
+The search is case-sensitive.
 
 Returns all the chemical species whose stoichiometric formula starts with CO :
 
@@ -914,7 +925,9 @@ Returns only the Cobalt atom :
 
 \subsubsection{STOICHIOMETRIC\_FORMULA\_CONTAINS}
 
-A service \textbf{SHOULD} implement the parameter \textbf{STOICHIOMETRIC\_FORMULA\_CONTAINS}. It defines a list of characters which is contained somewhere in stoichiometric formula of the chemical species. The search is case-sensitive.
+A service \textbf{SHOULD} implement the \textbf{STOICHIOMETRIC\_FORMULA\_CONTAINS} parameter. 
+It defines a list of characters which is contained somewhere in stoichiometric formula of the chemical species. 
+The search is case-sensitive.
 
 Returns all the chemical species whose name contains H2 ( like CH2 ) :
 
