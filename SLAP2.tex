@@ -329,23 +329,26 @@ parameters are combined with a logical AND operator. In accordance with these ru
 a query to search lines for both hydrogen and helium atoms at once can be written as follows : \\
 
 CHEMICAL\_ELEMENT=H\&CHEMICAL\_ELEMENT=He \\
-
 Query parameters for text or string fields are always case-sensitive and indicate an exact match. \\
-
 Query parameters for numeric fields accept a single numeric value or a range 
-of values with optional lower and upper bounds separated by a / (slash) character. 
-If  the lower or upper bound is not specified, the range is open-ended. \\ \\
-For example, the interval [300,600] is:\\
-\texttt{300/600} \\
-The open-ended interval [300,infinity) (all values greater than or equal to 300) is:\\
-\texttt{300/} \\
-The open-ended interval (-infinity,600] (all values less than or equal to 600) is:\\
-\texttt{/600}\\
-The open-ended interval (-infinity,infinity) (all values) is:\\
-\texttt{/} \\ \\
-If specified, the boundary value is always included in the interval.
+of values with optional lower and upper bounds. Such range values
+are encoded using the VOTable array serialisation (space separated). If the
+lower or upper bound is not specified, the range is open-ended. In VOTable
+arrays this uses the special values -Inf or +Inf. \\
+For example, the interval [300,600] is: \\
+300 600 \\
+The open-ended interval [300,infinity) (all values greater than or equal to
+300) is: \\
+300 +Inf \\
+The open-ended interval (-infinity,600] (all values less than or equal to 600)
+is: \\
+- Inf 600 \\
+The open-ended interval (-infinity,infinity) (all values) is: \\
+- Inf +Inf\\
 
-The units for numeric values are specified for each parameter and never included in the value. If the separator (/) is not present, the interval is assumed to be a scalar value.
+If specified, the boundary value is always included in the interval. The units
+for numeric values are specified for each parameter and never included in the
+value.
 
 \section{\{lines\} resource}
 \label{sect:lines-res}
@@ -386,7 +389,7 @@ Example
 To query for spectral lines in the wavelength range between 5.1 and 5.6
 micrometers ( both values are included in search ):
 
-\parexample{WAVELENGTH=5.1E-6/5.6E-6}
+\parexample{WAVELENGTH=5.1E-6 5.6E-6}
 
 \subsubsection{MAXREC}
 
@@ -460,7 +463,7 @@ corresponding VAMDC restrictable are {\textquotedbl}AtomMass{\textquotedbl} for 
 
 Filter all atoms chemical species between 0 and 12.011 u:
 
-\parexample{SPECIES\_MASS=0/12.011}
+\parexample{SPECIES\_MASS=0 12.011}
 
 
 \subsubsection{ION\_CHARGE}
@@ -479,11 +482,11 @@ for neutral.
 
 All lines related to Fe+ ion:
 
-\parexample{CHEMICAL\_ELEMENT=Fe\&ION\_CHARGE=1/1}
+\parexample{CHEMICAL\_ELEMENT=Fe\&ION\_CHARGE=1}
 
 All lines related to positively charged Fe ions and excluding the neutral form :
 
-\parexample{CHEMICAL\_ELEMENT=Fe\&ION\_CHARGE=1/}
+\parexample{CHEMICAL\_ELEMENT=Fe\&ION\_CHARGE=1 +Inf}
 
 \subsubsection{LOWER\_LEVEL\_ENERGY}
 
@@ -493,7 +496,7 @@ to be expressed in Joules (ucd={\textquotedbl} phys.energy;phys.atmol.level{\tex
 
 Energy of lower level between 3.93E-18 and 3.94E-18 Joules:
 
-\parexample{LOWER\_LEVEL\_ENERGY=3.93E-18/3.94E-18}
+\parexample{LOWER\_LEVEL\_ENERGY=3.93E-18 3.94E-18}
 
 \subsubsection{UPPER\_LEVEL\_ENERGY}
 
@@ -503,7 +506,7 @@ and maximum energy for the UPPER level of the transition, to be expressed in Jou
 
 Energy of upper level between 3.93E-18 and 3.94E-18 Joules:
 
-\parexample{UPPER\_LEVEL\_ENERGY=3.93E-18/3.94E-18}
+\parexample{UPPER\_LEVEL\_ENERGY=3.93E-18 3.94E-18}
 
 \subsubsection{TEMPERATURE}
 
@@ -515,7 +518,7 @@ using physical models.
 
 Temperature between 10 and 50 Kelvins:
 
-\parexample{TEMPERATURE=10/50}
+\parexample{TEMPERATURE=10 50}
 
 \subsubsection{EINSTEINA}
 
@@ -523,7 +526,7 @@ A service \textbf{MAY }implement the parameter \textbf{EINSTEINA} to accept cons
 
 Transition probability between 1.1E-7 and 1.2E-7 s-1:
 
-\parexample{EINSTEINA=1.1E-7/1.2E-1}
+\parexample{EINSTEINA=1.1E-7 1.2E-1}
 
 \subsubsection{Custom query parameters}
 
