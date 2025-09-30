@@ -68,9 +68,7 @@ service providers. A basic query will be done in a wavelength range for
 the different services, using the \{lines\} resource. The service
 returns a list of spectral lines formatted as a VOTable.  An
 implementation of the service may support additional search parameters
-(some of which may be custom to that particular service) to control more finely the selection of spectral lines. Fully compliant services will
-also provide the \{species\} resource, returning a list of
-all the species for which lines are available.\textbf{\textbf{}}
+(some of which may be custom to that particular service) to control more finely the selection of spectral lines.
 \end{abstract}
 
 \section*{Acknowledgments}
@@ -276,9 +274,8 @@ GET (query string) or POST action.
 \subsection{Resources}
 \label{sect:dali-resources}
 
-Publishers are free to name (set paths) resources whatever they wish;
-clients will find their paths thanks to the VOSI-capabilities
-resource.  The table below shows the list of available resources for a
+Publishers are free to name the {lines} resources whatever they wish.
+The table below shows the list of available resources for a
 service and their mandatory status.
 
 \begin{table}[htbp]
@@ -294,10 +291,10 @@ service and their mandatory status.
  \{lines\} &
  yes\\
  DALI-sync &
- \{species\} &
+ /species &
  yes\\
  VOSI-availability &
- service specific &
+ /availability &
  no\\
  VOSI-capabilities &
  /capabilities &
