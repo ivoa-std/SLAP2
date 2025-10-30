@@ -767,7 +767,7 @@ $$
 Where we have subtracted the closed shell configuration from the enumeration.
 
 There is no required syntax for this string; however, it is recommended
-to use a LaTeX-styled \citep{latexstyle} convention to describe sub-indexes,
+to use a LaTeX-styled \citep{lamport86latex} convention to describe sub-indexes,
 super-indexes, greek characters, etc. That means the previous atomic
 configuration could be serialized as string in the SLAP response in the
 following way:
@@ -787,7 +787,7 @@ would be serialized as
 
 $$\hbox{\^\{2S+1\}{\textbackslash}Lambda \_\{{\textbackslash}Omega \}}$$
 
-See \citep{latexstyle} for a complete reference.
+See \citep{lamport86latex} for a complete reference.
 
 
 \subsubsection{Level quantum state}
@@ -1137,12 +1137,12 @@ of identification. The possible values are:
 \end{itemize}
 
 And the default value MUST be ``CORRECTED''
-(ucd=``em.line;meta.id.cross'')
+(ucd=\ucd{em.line;meta.id.cross})
 
 \item {\bfseries IDENTIFICATION\_STATUS}
 A service \textbf{MAY} have a search parameter called
 IDENTIFICATION\_STATUS. This parameter would constrain the search to
-lines with a certain level of identification. As specified in SSLDM the
+lines with a certain level of identification. The
 possible values are:
 
 \begin{itemize}
@@ -1152,8 +1152,7 @@ possible values are:
 \item IDENTIFIED
 \end{itemize}
 
-(ucd=``em.line;meta.id.cross'';
-corresponding VAMDC restrictable is  ''\textbf{ssldm:Line.identificationStatus''})
+(ucd=\ucd{em.line;meta.id.cross;})
 
 For theoretical line databases, identified will be synonymous to predicted.
 \end{itemize}
@@ -1161,22 +1160,16 @@ For theoretical line databases, identified will be synonymous to predicted.
 For the output:
 
 \begin{itemize}
-\item Exactly one field \textbf{MAY} have
-corresponding VAMDC restrictable is  ''ssldm:Line.correctionStatus'', with
-datatype={\textquotedbl}char{\textquotedbl} and
-ucd=``em.wl.central;meta.id.cross{\textquotedbl}, describing if the
-``ldm:Line.wavelength'' has been calculated.
+\item Exactly one field \textbf{MAY} have name={\textquotedbl}correctionStatus{\textquotedbl}, datatype={\textquotedbl}char{\textquotedbl} and
+ucd=\ucd{em.wl.central;meta.id.cross}, describing if the wavelength has been calculated.
 
-Please note that for uncorrected lines the compulsory field with
-corresponding VAMDC restrictable is  ''\textbf{ldm:Line.wavelength}'' (corrected wavelength in vacuum)
-will contain either the observed wavelength for ``Uncorrected'' or a
+Please note that for uncorrected lines, the compulsory field with name={"\textbf{vacuum\_wavelength}"} (corrected wavelength in vacuum)
+will contain either the observed wavelength for ''Uncorrected'' or a
 provisional assignment value.
 
-\item Exactly one field \textbf{MAY} have
-corresponding VAMDC restrictable is  ''\textbf{ssldm:Line.identificationStatus}'', with
+\item Exactly one field \textbf{MAY} have name={"\textbf{identificationStatus}"}, with
 datatype={\textquotedbl}char{\textquotedbl} and
-ucd=``em.line;meta.id.cross{\textquotedbl}, describing the
-identification status of the line.
+ucd=\ucd{em.line;meta.id.cross}, describing the identification status of the line.
 
 \end{itemize}
 
