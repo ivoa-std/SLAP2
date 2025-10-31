@@ -6,6 +6,8 @@
 \usepackage{supertabular}
 \usepackage{float}
 \usepackage{tabularx}
+\usepackage{enumitem}
+
 
 \lstset{flexiblecolumns=true,showstringspaces=False,
   language={}}
@@ -656,7 +658,13 @@ used in the clients for display. There is no required syntax, but it is
 recommended that common species and transition notation be used when
 applicable.
 
-Examples: \verb|H I|, \verb|N III 992.873 A|
+Examples:
+\begin{itemize}[label={\small$\bullet$}, itemsep=0pt, parsep=0pt]
+  \item \verb|H I|
+  \item \verb|N III 992.873 A|
+  \item \verb|H2 0-0 S(1)|
+  \item \verb|H2 v=1, J=2 -> v=0, J=0|
+\end{itemize}
 
 In case of corrected but unidentified lines, some examples could be:
 
