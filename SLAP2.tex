@@ -204,26 +204,22 @@ endpoint \citep{2017ivoa.spec.0524G}.
 The SLAP protocol aims at covering some classic use cases, some of which
 will be described below.
 
-\subsection{Finding available lines for a given species}
-\label{sect:finding-all}
+\subsection{Discovering the content of a database}
+\label{sect:content-discovery}
 
-Using a mass spectrometer, researchers find a molecule with the sum formula C16H10 in a comet. 
-They now want to figure out whether any line in the spectrum of the coma of the parent object corresponds to some molecule with that sum formula. 
-Conversely, a researcher may want to find lines of Methane or perhaps even Methane with one hydrogen atom being replaced by a deuteron. 
+In the context of a graphical user interface (be it a web interface or a
+local standalone application) able to query SLAP services, an
+application might need to provide the list of species available in a
+service, in which the user could choose what he requires. To achieve
+this, the application can send a query to the \{species\} endpoint of a
+service and build a graphical list object from the content of the
+returned VOTable.
 
-In that case,  a first step could be to search in the list of available species if the \{species\} endpoint is available,
-then using the \{lines\} endpoint with CHEMICAL\_ELEMENT or INCHIKEY parameters.
+By caching locally this list, one might also be able to implement an
+auto-completion feature if the user wants to manually enter the name of
+a species.
 
-\subsection{Getting Properties of Well-Known Lines}
-\label{sect:finding-known-line}
-
-A user wants to display the Lyman series over a plot of a spectrum. Hence, a client needs to discover which service holds such data, 
-select the appropriate records - presumably by their properties, perhaps even by their name -, and retrieve them. 
-If multiple services hold the desired data, it might need to reconcile differing specifications. 
-
-This could be done by defining H as the searched CHEMICAL\_ELEMENT and providing a narrow WAVELENGTH interval corresponding to each lines in the serie.
-
-\subsection[Identifying a Single Line]{Identifying a Single Line}
+\subsection[Identifying a Single Line in a spectrum]{Identifying a Single Line in a spectrum}
 \label{sect:line-id}
 
 A user sees a feature in a spectrum with known (and reliable) spectral
@@ -235,7 +231,25 @@ To select which of the candidate lines are plausible matches, users would
 inspect line metadata such as the originating atom or molecule, the ionisation
 state, oscillator strengths or quantum numbers to identify rotational or vibrational level.
 
-\subsection[Retrieving Spectral Lines for Cross-Identification]{Retrieving Spectral Lines for Cross-Identification}
+\subsection{Restricting the lines search}
+\label{sect:restricting-search}
+
+\subsubsection{Finding available lines for a given species}
+\label{sect:finding-all}
+
+Using a mass spectrometer, researchers find a molecule with the sum formula C16H10 in a comet. They now want to figure out whether any line in the spectrum of the coma of the parent object corresponds to some molecule with that sum formula. Conversely, a researcher may want to find lines of Methane or perhaps even Methane with one hydrogen atom being replaced by a deuteron. 
+
+In that case,  a first step could be to search in the list of available species if the \{species\} endpoint is available,
+then using the \{lines\} endpoint with CHEMICAL\_ELEMENT or INCHIKEY parameters.
+
+\subsubsection{Finding Well-Known Lines}
+\label{sect:finding-known-line}
+
+A user wants to display the Lyman series over a plot of a spectrum. Hence, a client needs to discover which service holds such data, select the appropriate records - presumably by their properties, perhaps even by their name -, and retrieve them. If multiple services hold the desired data, it might need to reconcile differing specifications. 
+
+This could be done by defining H as the searched CHEMICAL\_ELEMENT and providing a narrow WAVELENGTH interval corresponding to each lines in the serie.
+
+\subsubsection[Retrieving Spectral Lines for Cross-Identification]{Retrieving Spectral Lines for Cross-Identification}
 \label{sect:line-cross-id}
 
 Users may have various reasons to retrieve a larger number of spectral lines:
@@ -251,21 +265,6 @@ The challenge in all these cases is that displaying all lines known obviously is
 Selecting the lines before retrieval is a significant optimisation in this case, as in wider spectra at least hundreds of thousands of lines will be within the spectral range, while it probably rarely makes sense to plot more than a hundred or so. Hence, careful selection of lines can reduce the volume of data transferred and processed by the client by several orders of magnitude.
 
 To make good on this promise, the service need to be queryable such that lines suspected to be strong for some combination of chemistry, temperature, and pressure can be filtered out with some accuracy. 
-
-\subsection{Discovering the content of a database}
-\label{sect:content-discovery}
-
-In the context of a graphical user interface (be it a web interface or a
-local standalone application) able to query SLAP services, an
-application might need to provide the list of species available in a
-service, in which the user could choose what he requires. To achieve
-this, the application can send a query to the \{species\} endpoint of a
-service and build a graphical list object from the content of the
-returned VOTable.
-
-By caching locally this list, one might also be able to implement an
-auto-completion feature if the user wants to manually enter the name of
-a species.
 
 \clearpage\section{Query interface}
 \label{sect:query-interface}
