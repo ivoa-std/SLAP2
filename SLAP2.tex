@@ -207,7 +207,9 @@ will be described below.
 \subsection{Finding available lines for a given species}
 \label{sect:finding-all}
 
-Using a mass spectrometer, researchers find a molecule with the sum formula C16H10 in a comet particle. They now want to figure out whether any line in the spectrum of the coma of the parent object corresponds to some molecule with that sum formula. Conversely, a researcher may want to find lines of Methane or perhaps even Methane with one hydrogen atom being replaced by a deuteron. 
+Using a mass spectrometer, researchers find a molecule with the sum formula C16H10 in a comet. 
+They now want to figure out whether any line in the spectrum of the coma of the parent object corresponds to some molecule with that sum formula. 
+Conversely, a researcher may want to find lines of Methane or perhaps even Methane with one hydrogen atom being replaced by a deuteron. 
 
 In that case,  a first step could be to search in the list of available species if the \{species\} endpoint is available,
 then using the \{lines\} endpoint with CHEMICAL\_ELEMENT or INCHIKEY parameters.
@@ -215,7 +217,9 @@ then using the \{lines\} endpoint with CHEMICAL\_ELEMENT or INCHIKEY parameters.
 \subsection{Getting Properties of Well-Known Lines}
 \label{sect:finding-known-line}
 
-A user wants to display the Lyman series over a plot of a spectrum. Hence, a client needs to discover which service holds such data, select the appropriate records - presumably by their properties, perhaps even by their name -, and retrieve them. If multiple services hold the desired data, it might need to reconcile differing specifications. 
+A user wants to display the Lyman series over a plot of a spectrum. Hence, a client needs to discover which service holds such data, 
+select the appropriate records - presumably by their properties, perhaps even by their name -, and retrieve them. 
+If multiple services hold the desired data, it might need to reconcile differing specifications. 
 
 This could be done by defining H as the searched CHEMICAL\_ELEMENT and providing a narrow WAVELENGTH interval corresponding to each lines in the serie.
 
@@ -583,50 +587,40 @@ to {\textquotedbl}OVERFLOW{\textquotedbl}.
 <INFO name="QUERY_STATUS" value="OK" />
 \end{lstlisting}
 
-\paragraph{REQUEST\_COMPLETED\_TIMESTAMP}
+\paragraph{request\_date}
 
 The RESOURCE element \textbf{SHOULD} contain an INFO with
-name={\textquotedbl}REQUEST\_COMPLETED\_TIMESTAMP{\textquotedbl}. Its
-value attribute should contain the UNIX timestamp in seconds when the
-file was created by the service.
+name={\textquotedbl}request\_date{\textquotedbl}. 
 
 \begin{lstlisting}{language=XML}
-<INFO name="FILE_TIMESTAMP" value="1485360332" />
+<INFO name="request_date" value="2025-10-31T14:57:18+01:00" />
 \end{lstlisting}
 
-\paragraph{SERVICE\_VERSION}
+\paragraph{service\_protocol}
 
 The RESOURCE element \textbf{SHOULD} contain an INFO with
-name={\textquotedbl}SERVICE\_VERSION{\textquotedbl}. Its value attribute
-contains the version of the data in the database on which the service is
-relying, in order to follow data evolution over time. The format of this
-value is managed by the data provider. It must be updated each time the
-database content evolves.
+name={\textquotedbl}service\_protocol{\textquotedbl}. 
 
 \begin{lstlisting}{language=XML}
-<INFO name="SERVICE_VERSION" value="2017_01_25"/>
+<INFO name="service_protocol" value="SLAP 2.0"/>
 \end{lstlisting}
 
-\paragraph{SERVICE\_NAME}
+\paragraph{publisher}
 
 The RESOURCE element \textbf{SHOULD} contain an INFO with
-name={\textquotedbl}SERVICE\_NAME{\textquotedbl}. Its value attribute
-contains the name of the service that was queried. The format of this
-value is managed by the data provider.
+name={\textquotedbl}publisher{\textquotedbl}. 
 
 \begin{lstlisting}{language=XML}
-<INFO name="SERVICE_NAME" value="slap service name"/>
+<INFO name="publisher" value="Data center name"/>
 \end{lstlisting}
 
-\paragraph{REQUEST\_DESCRIPTION}
+\paragraph{last\_update\_date}
 
 The RESOURCE element \textbf{SHOULD} contain an INFO with
-name={\textquotedbl}REQUEST\_DESCRIPTION{\textquotedbl}. Its value
-attribute contains a text representation of the request that has been
-performed to obtain the data ( the list of GET parameters and their respective value ).
+name={\textquotedbl}last\_update\_date{\textquotedbl}.
 
 \begin{lstlisting}{language=XML}
-<INFO name="REQUEST_DESCRIPTION" value="WAVELENGTH=900/1000"/>
+<INFO name="last_update_date" value="2025-09-20T12:00:00+01:00"/>
 \end{lstlisting}
 
 \subsubsection{The TABLE element}
@@ -800,11 +794,11 @@ Exactly one field \textbf{MAY} have name={"lower\_state\_quantum\_numbers"} with
 
 \paragraph{Syntax}
 
-The recommended syntax for the quantum numbers is name:value. Quantum Numbers are separated by the ``;'' character.
+The recommended syntax for the quantum numbers is name:nominator:denominator. Quantum Numbers are separated by the ``;'' character.
 
 To allow for levels needing more than one quantum state to be described, the quantum states would be enclosed by square brackets. 
 
-Example: [J::1;F1::0;F::1]
+Example: [J:1:1;F1:0:1;F:1:1]
 
 As this is a protocol meant to stay simple, the text representation is voluntarily simplified. The user
 is encouraged to use the VAMDC infrastructure to get a more detailed and standardized description of the quantum states.
@@ -1191,7 +1185,7 @@ ucd=\ucd{em.line;meta.id.cross}, describing the identification status of the lin
 			<FIELD ucd="em.wl" name="vacuum_wavelength" datatype="double" unit="m" />
 			<FIELD ucd="meta.title" name="line_title" datatype="char" arraysize="*" />
 			<FIELD ucd="phys.energy;phys.atmol.level" name="lower_level_energy"
-				utype="ssldm:Line.lowerLevel.energy.value" datatype="double" unit="J" />
+				datatype="double" unit="J" />
 			<FIELD ucd="phys.energy;phys.atmol.level" name="upper_level_energy" datatype="double" unit="J" />
 			<FIELD ucd="phys.atmol.level;meta.title" name="lower_level_description" datatype="char" arraysize="*" />
 			<FIELD ucd="phys.atmol.level;meta.title" name="upper_level_description" datatype="char" arraysize="*" />
