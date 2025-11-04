@@ -527,7 +527,7 @@ Temperature between 10 and 50 Kelvins:
 
 \subsubsection{EINSTEINA}
 
-A service \textbf{MAY }implement the \textbf{EINSTEINA} parameter to accept constraints in the 
+A service \textbf{MAY} implement the \textbf{EINSTEINA} parameter to accept constraints in the 
 transition probability by specifying the minimum and maximum Einstein A, defined as the probability 
 per unit time s\textsuperscript{-1} for spontaneous emission in a bound-bound 
 transition (ucd={\textquotedbl}phys.atmol.transProb{\textquotedbl};corresponding VAMDC restrictable 
@@ -635,19 +635,44 @@ defined UCD as described in the next section.
 
 \subsection{Standard output fields}
 
-For a given field, it is allowed to have more than one instance of it,
-with different units in order to preserve the precision of the original
-value prior to unit conversion in the client. If this is the case and a
-default unit is specified in this document, the latter value
-\textbf{MUST} be returned and other fields with the same utype should
-have a different value in the unit field descriptor.
-
 \subsubsection{vacuum\_wavelength}
 
 Exactly one field \textbf{MUST} have name={"vacuum\_wavelength"},
 with datatype={"double"}, unit={"m"} and
 ucd={"em.wl"}, containing the wavelength in
-vacuum of the transition originating the line in meters. The corresponding VAMDC returnable is  {"\textbf{RadTransWavelength"}}.
+vacuum of the transition originating the line in meters. 
+The corresponding VAMDC returnable is  {"\textbf{RadTransWavelength"}}.
+
+\subsubsection{vacuum\_wavelength\_original}
+
+At most one field \textbf{MAY} have name={"vacuum\_wavelength\_original"},
+with datatype={"double"} and ucd={"em.wl"}. If present, this field will contain the wavelength in vacuum 
+of the transition originating the line, expressed in the original unit used in the source database
+(if the value was not originally provided in meters).
+The content of the unit attribute specifies the original unit in accordance with 
+the Units in the VO recommendation \citep{2023ivoa.spec.1215G}.
+
+The corresponding VAMDC returnable is  {"\textbf{RadTransWavelength"}}.
+
+
+\subsubsection{vacuum\_wavelength\_error}
+
+Exactly one field \textbf{SHOULD} have name={"vacuum\_wavelength\_error"},
+with datatype={"double"}, unit={"m"} and
+ucd={"em.wl"}, containing the total error for the wavelength in
+vacuum of the transition originating the line in meters. 
+
+The corresponding VAMDC returnable is  {"\textbf{RadTransWavelengthAccuracy"}}.
+
+\subsubsection{vacuum\_wavelength\_error\_original}
+
+Exactly one field \textbf{SHOULD} have name={"vacuum\_wavelength\_error"},
+with datatype={"double"} and ucd={"em.wl"}, containing the total error for the wavelength in
+vacuum of the transition originating the line. The unit specified in the unit attribute must be 
+identical to the one used in the \textbf{vacuum\_wavelength\_original} field. 
+
+The corresponding VAMDC returnable is  {"\textbf{RadTransWavelengthAccuracy"}}.
+
 
 \subsubsection{line\_title}
 
@@ -735,36 +760,61 @@ for a molecular state.
 \subsubsection{observed\_wavelength}
 
 Exactly one field \textbf{MAY} have name={"observed\_wavelength"}, with
-datatype={"double"} unit={"m"} and ucd={"em.wl"}, containing the observed wavelength in the vacuum of the transition originating the line in meters, as it was observed. This may be used by observational spectral line databases. The corresponding VAMDC returnable is  {"\textbf{RadTransWavelength}"}.
+datatype={"double"} unit={"m"} and ucd={"em.wl"}, containing the observed wavelength in the vacuum of 
+the transition originating the line in meters, as it was observed. 
+This may be used by observational spectral line databases. 
+The corresponding VAMDC returnable is  {"\textbf{RadTransWavelength}"}.
 
 \subsubsection{einstein\_a}
 Exactly one field \textbf{MAY} have name={"einstein\_a"}, with
-datatype={"double"}, unit={"1/s"} and ucd={"phys.atmol.transProb"}, containing Einstein A value, defined as the probability per unit time s\textsuperscript{-1} for spontaneous emission in a bound-bound transition. The corresponding VAMDC returnable is  {"\textbf{RadTransProbabilityA}"}.
+datatype={"double"}, unit={"1/s"} and ucd={"phys.atmol.transProb"}, containing Einstein A value, 
+defined as the probability per unit time s\textsuperscript{-1} for spontaneous emission in a bound-bound transition. 
+The corresponding VAMDC returnable is  {"\textbf{RadTransProbabilityA}"}.
 
 \subsubsection{lower\_level\_energy}
 
 Exactly one field \textbf{MAY} have name={"lower\_level\_energy"}, with
-datatype={"double"}, unit={"J"} and
-ucd={"phys.energy;phys.atmol.level"} describing the energy for the lower level of the transition which originates this line. The value must appear in Joules to unify results.
+datatype={"double"}, unit={"J"} and ucd={"phys.energy;phys.atmol.level"} 
+describing the energy for the lower level of the transition which originates this line. 
+The value must appear in Joules to unify results.
 The corresponding VAMDC returnable is  {"\textbf{StateEnergy}"}.
-It is allowed to have more than one \textbf{lower\_level\_energy} field in different units in order to preserve the precision of the original value prior to unit conversion. If this is the case and to get backwards compatibility with already existing services, there \textbf{MUST} be one field with
-name={"\textbf{lower\_level\_energy}"} where unit={"J"} in the VOTable response. Other fields with the same utype should have a different value in the unit field descriptor.
+
+\subsubsection{lower\_level\_energy\_original}
+
+At most one field \textbf{MAY} have name={"lower\_level\_energy\_original"}, with
+datatype={"double"} and ucd={"phys.energy;phys.atmol.level"},
+describing the energy for the lower level of the transition which originates this line. 
+
+If present, this field will contain the energy for the lower level of the transition which originates this line, 
+expressed in the original unit used in the source database
+(if the value was not originally provided in Joules).
+The content of the unit attribute specifies the original unit in accordance with 
+the Units in the VO recommendation \citep{2023ivoa.spec.1215G}.
+
+The corresponding VAMDC returnable is  {"\textbf{StateEnergy}"}.
+
 
 \subsubsection{upper\_level\_energy}
 
 Exactly one field \textbf{MAY} have name={"upper\_level\_energy"}, corresponding, with
-datatype={"double"}, unit={"J" and
+datatype={"double"}, unit={"J"} and
 ucd={"phys.energy;phys.atmol.level"},
-describing the energy for the upper level of the transition which originates this line. The value must appear in Joules to unify results. The corresponding VAMDC returnable is {"\textbf{StateEnergy}"}
+describing the energy for the upper level of the transition which originates this line. 
+The value must appear in Joules to unify results. The corresponding VAMDC returnable is {"\textbf{StateEnergy}"}
 
-It is allowed to have more than one
-\textbf{upper\_level\_energy} field in different units in order
-to preserve the precision of the original value prior to unit
-conversion. If this is the case and to get backwards compatibility with
-already existing services, there \textbf{MUST} be one field with
-name={"\textbf{upper\_level\_energy}"} where unit={"J"}
-in the VOTable response. Other fields with the same utype should have a
-different value in the unit field descriptor.
+\subsubsection{upper\_level\_energy\_original}
+
+At most one field \textbf{MAY} have name={"upper\_level\_energy\_original"}, with
+datatype={"double"} and ucd={"phys.energy;phys.atmol.level"},
+describing the energy for the upper level of the transition which originates this line. 
+
+If present, this field will contain the energy for the upper level of the transition which originates this line, 
+expressed in the original unit used in the source database
+(if the value was not originally provided in Joules).
+The content of the unit attribute specifies the original unit in accordance with 
+the Units in the VO recommendation \citep{2023ivoa.spec.1215G}.
+
+The corresponding VAMDC returnable is  {"\textbf{StateEnergy}"}.
 
 \subsubsection{Level configuration}
 
@@ -856,8 +906,7 @@ The corresponding VAMDC restrictable is  {"\textbf{SourceURI}"}.
 
 In many occasions, extra scientifically interesting parameters may be
 added to the output. Implementers are encouraged to add descriptions and
-UCDs to the return fields to clarify the meaning of this information and
-utypes to the Line Data Model or other existing IVOA Data Model,
+UCDs to the return fields to clarify the meaning of this information
 whenever possible.
 
 
@@ -899,6 +948,22 @@ inchikey in the service data among the data shared by the service.
 Returns the molecular hydrogen :
 
 \parexample{INCHIKEY=UFHFLCQGNIYNRP-UHFFFAOYSA-N}
+
+
+\subsubsection{ATOMICITY}
+
+A service \textbf{MAY} implement the \textbf{ATOMICITY} parameter to specify the number of atoms in the returned
+species.
+
+There is no equivalent VAMDC restrictable for this parameter.
+
+Di-atomic molecules:
+
+\parexample{ATOMICITY=2}
+
+Molecules containing 2 to five atoms :
+
+\parexample{ATOMICITY=2 5}
 
 
 \subsubsection{CHEMICAL\_ELEMENT\_NAME\_STARTSWITH}
@@ -999,6 +1064,7 @@ The corresponding VAMDC returnable is {"\textbf{MoleculeStoichiometricFormula}"}
 Exactly one field \textbf{SHOULD} have name={"ion\_charge"} with datatype={"int"} and ucd={"phys.atmol.ionization"}, containing the charge of  the considered chemical species.
 The corresponding VAMDC returnable is {"\textbf{{AtomIonCharge}}"} for an atom and  {"\textbf{{MoleculeIonCharge}}"} for a molecule. 
 
+
 \subsubsection{inchikey}
 
 Exactly one field \textbf{SHOULD} have name={"inchikey"}, with
@@ -1012,6 +1078,14 @@ The corresponding VAMDC returnable is  {"\textbf{{AtomInchiKey}}"} for an atom a
 \subsubsection{inchi}
 
 Exactly one field \textbf{MAY} have name={"inchi"}, with datatype={"char"}, arraysize={"*"} and ucd={"phys.atmol.element"}, containing the inchi of the chemical element. The corresponding VAMDC returnable is  {"\textbf{AtomInchi}"} for an atom and {"\textbf{MoleculeInchi}"} for a molecule. 
+
+\subsubsection{atomicity}
+
+Exactly one field \textbf{MAY} have name={"atomicity"}, with  datatype={"int"}. 
+The field contains the number of atoms contained in the considered species.
+There is no equivalent returnable in the VAMDC dictionary.
+
+Example of valid values are : 1 for the hydrogen atom, 3 for the water molecule.
 
 
 \section{VOSI-capabilities }
@@ -1277,6 +1351,7 @@ LOWER\_LEVEL\_ENERGY & StateEnergy                         & MAY  \\
 UPPER\_LEVEL\_ENERGY & StateEnergy                         & MAY  \\
 TEMPERATURE          & EnvironmentTemperature              & MAY  \\
 EINSTEINA            & RadTransProbabilityA                & MAY  \\
+ATOMICITY            & Not available                       & MAY  \\
 MAXREC               & N/A                                 & MUST  \\
 \hline
 \end{tabularx}
@@ -1298,7 +1373,7 @@ chemical\_element\_name      & AtomSymbol, MoleculeChemicalName                 
 chemical\_element\_mass      & AtomMass, MoleculeMolecularWeight                                     & MAY  \\
 inchikey                     & AtomInchiKey, MoleculeInchiKey                                        & SHOULD  \\
 inchi                        & AtomInchi, MoleculeInchi                                              & MAY  \\
-ion\_charge                    & AtomIonCharge, MoleculeIonCharge                                      & SHOULD  \\
+ion\_charge                  & AtomIonCharge, MoleculeIonCharge                                      & SHOULD  \\
 lower\_state\_description    & AtomStateDescription, MoleculeStateDescription                        & SHOULD  \\
 upper\_state\_description    & AtomStateDescription, MoleculeStateDescription                        & SHOULD  \\
 observed\_wavelength         & RadTransWavelength + RadTransWavelengthMethod = observed               & MAY  \\
@@ -1330,6 +1405,8 @@ CHEMICAL\_ELEMENT\_NAME\_STARTSWITH   & AtomSymbol, MoleculeChemicalName    & SH
 CHEMICAL\_ELEMENT\_NAME\_CONTAINS     & AtomSymbol, MoleculeChemicalName    & SHOULD  \\
 STOICHIOMETRIC\_FORMULA\_STARTSWITH   & MoleculeStoichiometricFormula       & SHOULD  \\
 STOICHIOMETRIC\_FORMULA\_CONTAINS     & MoleculeStoichiometricFormula       & SHOULD  \\
+ATOMICITY                             & Not available                       & MAY  \\
+
 \hline
 \end{tabularx}
 \caption{ /species endpoint parameters and VAMDC restrictables mapping table }
@@ -1349,6 +1426,8 @@ chemical\_element\_name & AtomSymbol, MoleculeChemicalName & MUST \\
 ion\_charge             & AtomIonCharge, MoleculeIonCharge & SHOULD \\
 inchikey                & AtomInchiKey, MoleculeInchiKey   & SHOULD \\
 inchi                   & AtomInchi, MoleculeInchi         & MAY \\
+atomicity               & Not available                    & MAY  \\
+
 \hline
 \end{tabularx}
 \caption{/species endpoint output fields and VAMDC returnables mapping table}
