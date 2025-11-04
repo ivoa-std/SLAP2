@@ -771,6 +771,14 @@ datatype={"double"}, unit={"1/s"} and ucd={"phys.atmol.transProb"}, containing E
 defined as the probability per unit time s\textsuperscript{-1} for spontaneous emission in a bound-bound transition. 
 The corresponding VAMDC returnable is  {"\textbf{RadTransProbabilityA}"}.
 
+\subsubsection{process}
+
+At most one field \textbf{MAY} have name={"process"}, with
+datatype={"char"} and arraysize={"*"} 
+describing the process for the considered transition. 
+Possible values are excitation or deexcitation. 
+The corresponding VAMDC returnable is  {"\textbf{RadTransProcess}"}.
+
 \subsubsection{lower\_level\_energy}
 
 Exactly one field \textbf{MAY} have name={"lower\_level\_energy"}, with
@@ -820,11 +828,15 @@ The corresponding VAMDC returnable is  {"\textbf{StateEnergy}"}.
 
 \paragraph{lower\_level\_configuration}
 
-Exactly one field \textbf{MAY} have name={"lower\_level\_configuration"}, with ucd={"phys.atmol.configuration"}, datatype={"char"} and arraysize={"*"} describing the electron configuration of the lower level of the line. The corresponding VAMDC restrictable is  {"\textbf{AtomStateConfigurationLabel}"}.
+Exactly one field \textbf{MAY} have name={"lower\_level\_configuration"}, with ucd={"phys.atmol.configuration"}, 
+datatype={"char"} and arraysize={"*"} describing the electron configuration of the lower level of the line. 
+The corresponding VAMDC restrictable is  {"\textbf{AtomStateConfigurationLabel}"}.
 
 \paragraph{upper\_level\_configuration}
 
-Exactly one field \textbf{MAY} have name={"upper\_level\_configuration"}, with ucd={"phys.atmol.configuration"}, datatype={"char"} and arraysize={"*"} describing the electron configuration of the upper level of the line. The corresponding VAMDC restrictable is  {"\textbf{AtomStateConfigurationLabel}"}.
+Exactly one field \textbf{MAY} have name={"upper\_level\_configuration"}, with ucd={"phys.atmol.configuration"}, 
+datatype={"char"} and arraysize={"*"} describing the electron configuration of the upper level of the line. 
+The corresponding VAMDC restrictable is  {"\textbf{AtomStateConfigurationLabel}"}.
 
 \paragraph{Syntax}
 
@@ -1351,7 +1363,6 @@ LOWER\_LEVEL\_ENERGY & StateEnergy                         & MAY  \\
 UPPER\_LEVEL\_ENERGY & StateEnergy                         & MAY  \\
 TEMPERATURE          & EnvironmentTemperature              & MAY  \\
 EINSTEINA            & RadTransProbabilityA                & MAY  \\
-ATOMICITY            & Not available                       & MAY  \\
 MAXREC               & N/A                                 & MUST  \\
 \hline
 \end{tabularx}
@@ -1367,25 +1378,32 @@ MAXREC               & N/A                                 & MUST  \\
 \hline
 \textbf{SLAP2 field name} & \textbf{VAMDC returnable name} & \textbf{Requirements for compliance in SLAP2} \\
 \hline
-vacuum\_wavelength           & RadTransWavelength                                                      & MUST  \\
-line\_title                  & RadTransComment                                                         & MUST  \\
-chemical\_element\_name      & AtomSymbol, MoleculeChemicalName                                      & SHOULD  \\
-chemical\_element\_mass      & AtomMass, MoleculeMolecularWeight                                     & MAY  \\
-inchikey                     & AtomInchiKey, MoleculeInchiKey                                        & SHOULD  \\
-inchi                        & AtomInchi, MoleculeInchi                                              & MAY  \\
-ion\_charge                  & AtomIonCharge, MoleculeIonCharge                                      & SHOULD  \\
-lower\_state\_description    & AtomStateDescription, MoleculeStateDescription                        & SHOULD  \\
-upper\_state\_description    & AtomStateDescription, MoleculeStateDescription                        & SHOULD  \\
-observed\_wavelength         & RadTransWavelength + RadTransWavelengthMethod = observed               & MAY  \\
-lower\_level\_energy         & StateEnergy                                                            & MAY  \\
-upper\_level\_energy         & StateEnergy                                                            & MAY  \\
-lower\_level\_configuration  & AtomStateConfigurationLabel                                            & MAY  \\
-upper\_level\_configuration  & AtomStateConfigurationLabel                                            & MAY  \\
-lower\_level\_quantum\_numbers & MoleculeStateQuantumNumbers                                         & MAY  \\
-upper\_level\_quantum\_numbers & MoleculeStateQuantumNumbers                                         & MAY  \\
-reference\_doi               & SourceDOI                                                              & SHOULD  \\
-reference\_uri               & SourceURI                                                              & SHOULD  \\
-reference\_additional\_uri   & SourceURI                                                              & MAY  \\
+vacuum\_wavelength                     & RadTransWavelength                                            & MUST  \\
+vacuum\_wavelength\_original           & RadTransWavelength                                            & MAY  \\
+vacuum\_wavelength\_error              & RadTransWavelengthAccuracy                                    & MUST  \\
+vacuum\_wavelength\_error\_original    & RadTransWavelengthAccuracy                                    & MUST  \\
+observed\_wavelength                   & RadTransWavelength + RadTransWavelengthMethod = observed      & MAY  \\
+line\_title                            & RadTransComment                                               & MUST  \\
+chemical\_element\_name                & AtomSymbol, MoleculeChemicalName                              & SHOULD  \\
+chemical\_element\_mass                & AtomMass, MoleculeMolecularWeight                             & MAY  \\
+inchikey                               & AtomInchiKey, MoleculeInchiKey                                & SHOULD  \\
+inchi                                  & AtomInchi, MoleculeInchi                                      & MAY  \\
+ion\_charge                            & AtomIonCharge, MoleculeIonCharge                              & SHOULD  \\
+einstein_a                             & RadTransProbabilityA                                          & MAY  \\
+process                                & RadTransProcess                                               & MAY  \\
+lower\_level\_energy                   & StateEnergy                                                   & MAY  \\
+lower\_level\_energy\_original         & StateEnergy                                                   & MAY  \\
+upper\_level\_energy                   & StateEnergy                                                   & MAY  \\
+upper\_level\_energy\_original         & StateEnergy                                                   & MAY  \\
+lower\_level\_description              & AtomStateDescription, MoleculeStateDescription                & SHOULD  \\
+upper\_level\_description              & AtomStateDescription, MoleculeStateDescription                & SHOULD  \\
+lower\_level\_configuration            & AtomStateConfigurationLabel                                   & MAY  \\
+upper\_level\_configuration            & AtomStateConfigurationLabel                                   & MAY  \\
+lower\_level\_quantum\_numbers         & MoleculeStateQuantumNumbers                                   & MAY  \\
+upper\_level\_quantum\_numbers         & MoleculeStateQuantumNumbers                                   & MAY  \\
+reference\_doi                         & SourceDOI                                                     & SHOULD  \\
+reference\_uri                         & SourceURI                                                     & SHOULD  \\
+reference\_additional\_uri             & SourceURI                                                     & MAY  \\
 \hline
 \end{tabularx}
 \caption{/lines endpoint output fields and VAMDC returnables mapping table}
