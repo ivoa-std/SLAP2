@@ -378,7 +378,7 @@ The service \textbf{MUST} support the \textbf{WAVELENGTH}  parameter, to
 specify the wavelength spectral range, to be specified in meters. This
 wavelength range will be interpreted as the wavelength in the vacuum of
 the transition originating the line
-({ucd={\textquotedbl}em.wl{\textquotedbl}};
+(ucd=\ucd{em.wl};
 corresponding VAMDC restrictable is {\textquotedbl}RadTransWavelength{\textquotedbl} 
 to be specified in Angstroms).
 
@@ -421,7 +421,7 @@ Display only 100 lines:
 A service \textbf{SHOULD} have a search parameter called
 \textbf{CHEMICAL\_ELEMENT}. This parameter would constrain the search to
 the selected chemical element. A list of different chemical elements
-could be queried by specifying this parameter multiple times (ucd={\textquotedbl}phys.atmol.element{\textquotedbl}).
+could be queried by specifying this parameter multiple times (ucd=\ucd{phys.atmol.element}).
 
 Atom can be specified exactly by symbol (corresponding VAMDC restrictable is {\textquotedbl}AtomSymbol{\textquotedbl}). 
 Molecules can be specified by conventional molecular name (formula like CO2, CH4 or names like carbon or water {\dots}) which might not be
@@ -443,7 +443,7 @@ InChIKey is a compact chemical identifier derived from InChI. The InChIKey is al
 only 27-characters long. 
 
 A service \textbf{SHOULD} have a search parameter called
-\textbf{INCHIKEY} (ucd={\textquotedbl}phys.atmol.element{\textquotedbl}; corresponding VAMDC restrictable is {\textquotedbl}InchiKey{\textquotedbl}). This parameter would constrain the search to
+\textbf{INCHIKEY} (ucd=\ucd{phys.atmol.element}; corresponding VAMDC restrictable is {\textquotedbl}InchiKey{\textquotedbl}). This parameter would constrain the search to
 the chemical element corresponding the provided inchikey value. A list of different
 inchikeys could be queried by specifying this parameter multiple times.
 
@@ -463,8 +463,9 @@ A service \textbf{MAY} implement the \textbf{SPECIES\_MASS} parameter to specify
 for the searched species, to be specified in Unified Atomic Mass Unit (u).  
 
 The mass will be a float value greater than 0. The provided range will be interpreted as the 
-mass of the chemical species  (ucd={\textquotedbl}phys.atmol.element, phys.mass {\textquotedbl}; 
-corresponding VAMDC restrictable are {\textquotedbl}AtomMass{\textquotedbl} for atoms and {\textquotedbl}MoleculeMolecularWeight{\textquotedbl} for molecules{\textquotedbl}).
+mass of the chemical species  (ucd=\ucd{phys.atmol.element;phys.mass}; 
+corresponding VAMDC restrictable are {\textquotedbl}AtomMass{\textquotedbl} for atoms and 
+{\textquotedbl}MoleculeMolecularWeight{\textquotedbl} for molecules{\textquotedbl}).
 
 Filter all atoms chemical species between 0 and 12.011 u:
 
@@ -473,7 +474,8 @@ Filter all atoms chemical species between 0 and 12.011 u:
 
 \subsubsection{ION\_CHARGE}
 
-A service \textbf{MAY} implement the \textbf{ION\_CHARGE} parameter to specify the minimum and maximum charge of an ion (ucd={\textquotedbl}phys.atmol.ionization{\textquotedbl}; 
+A service \textbf{MAY} implement the \textbf{ION\_CHARGE} parameter to specify the minimum and maximum charge 
+of an ion (ucd=\ucd{phys.atmol.ionization}; 
 corresponding VAMDC restrictable is {\textquotedbl}IonCharge{\textquotedbl}).
  
 It will look for the ionized forms of the chemical element specified in CHEMICAL\_ELEMENT
@@ -497,7 +499,8 @@ All lines related to positively charged Fe ions and excluding the neutral form :
 
 A service \textbf{MAY} implement the \textbf{LOWER\_LEVEL\_ENERGY} parameter
 to specify the minimum and maximum energy for the LOWER level of the transition, 
-to be expressed in Joules (ucd={\textquotedbl} phys.energy;phys.atmol.level{\textquotedbl}; corresponding VAMDC restrictable is {\textquotedbl}StateEnergy{\textquotedbl}).
+to be expressed in Joules (ucd=\ucd{phys.energy;phys.atmol.level}; corresponding VAMDC restrictable
+ is {\textquotedbl}StateEnergy{\textquotedbl}).
 
 Energy of lower level between 3.93E-18 and 3.94E-18 Joules:
 
@@ -506,7 +509,8 @@ Energy of lower level between 3.93E-18 and 3.94E-18 Joules:
 \subsubsection{UPPER\_LEVEL\_ENERGY}
 
 A service \textbf{MAY}implement the \textbf{UPPER\_LEVEL\_ENERGY} parameter to specify the minimum 
-and maximum energy for the UPPER level of the transition, to be expressed in Joules (ucd={"phys.energy;phys.atmol.level"}; corresponding VAMDC restrictable is {"StateEnergy").
+and maximum energy for the UPPER level of the transition, to be expressed in Joules (ucd=\ucd{"phys.energy;phys.atmol.level"}; 
+corresponding VAMDC restrictable is {"StateEnergy"}).
 
 Energy of upper level between 3.93E-18 and 3.94E-18 Joules:
 
@@ -516,7 +520,7 @@ Energy of upper level between 3.93E-18 and 3.94E-18 Joules:
 
 A service \textbf{MAY} implement the \textbf{TEMPERATURE} parameter to
 specify the minimum and maximum expected temperatures of the object, to
-be specified in Kelvin (ucd={\textquotedbl}phys.temperature{\textquotedbl};corresponding VAMDC restrictable
+be specified in Kelvin (ucd=\ucd{phys.temperature};corresponding VAMDC restrictable
 is {\textquotedbl}EnvironmentTemperature{\textquotedbl}). This parameter would be used (in particular for
 theoretical spectral line databases) to sort the lines in the output
 using physical models.
@@ -530,7 +534,7 @@ Temperature between 10 and 50 Kelvins:
 A service \textbf{MAY} implement the \textbf{EINSTEINA} parameter to accept constraints in the 
 transition probability by specifying the minimum and maximum Einstein A, defined as the probability 
 per unit time s\textsuperscript{-1} for spontaneous emission in a bound-bound 
-transition (ucd={\textquotedbl}phys.atmol.transProb{\textquotedbl};corresponding VAMDC restrictable 
+transition (ucd=\ucd{phys.atmol.transProb};corresponding VAMDC restrictable 
 is {\textquotedbl}RadTransProbabilityA{\textquotedbl}).
 
 Transition probability between 1.1E-7 and 1.2E-7 s-1:
@@ -652,14 +656,14 @@ defined UCD as described in the next section.
 
 Exactly one field \textbf{MUST} have name={"vacuum\_wavelength"},
 with datatype={"double"}, unit={"m"} and
-ucd={"em.wl"}, containing the wavelength in
+ucd=\ucd{"em.wl"}, containing the wavelength in
 vacuum of the transition originating the line in meters. 
 The corresponding VAMDC returnable is  {"\textbf{RadTransWavelength"}}.
 
 \subsubsection{vacuum\_wavelength\_original}
 
 At most one field \textbf{MAY} have name={"vacuum\_wavelength\_original"},
-with datatype={"double"} and ucd={"em.wl"}. If present, this field will contain the wavelength in vacuum 
+with datatype={"double"} and ucd=\ucd{"em.wl"}. If present, this field will contain the wavelength in vacuum 
 of the transition originating the line, expressed in the original unit used in the source database
 (if the value was not originally provided in meters).
 The content of the unit attribute specifies the original unit in accordance with 
@@ -672,7 +676,7 @@ The corresponding VAMDC returnable is  {"\textbf{RadTransWavelength"}}.
 
 Exactly one field \textbf{SHOULD} have name={"vacuum\_wavelength\_error"},
 with datatype={"double"}, unit={"m"} and
-ucd={"em.wl"}, containing the total error for the wavelength in
+ucd=\ucd{"em.wl"}, containing the total error for the wavelength in
 vacuum of the transition originating the line in meters. 
 
 The corresponding VAMDC returnable is  {"\textbf{RadTransWavelengthAccuracy"}}.
@@ -680,7 +684,7 @@ The corresponding VAMDC returnable is  {"\textbf{RadTransWavelengthAccuracy"}}.
 \subsubsection{vacuum\_wavelength\_error\_original}
 
 Exactly one field \textbf{SHOULD} have name={"vacuum\_wavelength\_error"},
-with datatype={"double"} and ucd={"em.wl"}, containing the total error for the wavelength in
+with datatype={"double"} and ucd=\ucd{"em.wl"}, containing the total error for the wavelength in
 vacuum of the transition originating the line. The unit specified in the unit attribute must be 
 identical to the one used in the \textbf{vacuum\_wavelength\_original} field. 
 
@@ -690,7 +694,7 @@ The corresponding VAMDC returnable is  {"\textbf{RadTransWavelengthAccuracy"}}.
 \subsubsection{line\_title}
 
 Exactly one field \textbf{MUST} have name={"line\_title"}, with
-datatype={"char"}, arraysize={"*"} and ucd={"meta.title"}, containing a small description identifying the line.
+datatype={"char"}, arraysize={"*"} and ucd=\ucd{"meta.title"}, containing a small description identifying the line.
 The corresponding VAMDC returnable is {"\textbf{RadTransComment}"}.
 
 Note that this line title is only a short string representation to be
@@ -714,14 +718,14 @@ Examples: \verb|M31 1001.784 A|, \verb|011910191 800.2 A|
 
 Exactly one field \textbf{SHOULD} have 
 name={"chemical\_element\_name"}, with  datatype={"char"}, arraysize={"*"} and
-ucd={"phys.atmol.element"}.
+ucd=\ucd{"phys.atmol.element"}.
 In the case of an atom, the corresponding VAMDC returnable is {"\textbf{AtomSymbol}"}.
 If this is a molecular line, the corresponding VAMDC returnable is  {"\textbf{MoleculeChemicalName}"}.\\
 Example of valid values are : Fe for a iron line or CH4 for a methane line.
 
 \subsubsection{chemical\_element\_mass}
 
-At most one field \textbf{MAY} have name={"chemical\_element\_mass"}, with  datatype={"float"} and ucd={"phys.atmol.element"}. 
+At most one field \textbf{MAY} have name={"chemical\_element\_mass"}, with  datatype={"float"} and ucd=\ucd{"phys.atmol.element"}. 
 The field contains the atom mass or the molecular weight of the species, to be specified in Unified Atomic Mass Unit (u). 
 For an atom, the ccorresponding VAMDC returnable is {"\textbf{AtomMass}"}. 
 If this is a molecular line, the corresponding VAMDC returnable is {"\textbf{MoleculeMolecularWeight}"}.
@@ -729,7 +733,7 @@ If this is a molecular line, the corresponding VAMDC returnable is {"\textbf{Mol
 \subsubsection{inchikey}
 
 Exactly one field \textbf{SHOULD} have name={"inchikey"}, with datatype={"char"}, arraysize={"*"} and
-ucd={"phys.atmol.element"}, containing the inchikey \citep{Heller2015} of
+ucd=\ucd{"phys.atmol.element"}, containing the inchikey \citep{Heller2015} of
 the chemical element of this line. For an atom, the corresponding VAMDC returnable is  {"\textbf{{AtomInchiKey}}"} 
 and {"\textbf{{MoleculeInchiKey}}"} for a molecular line.
 
@@ -737,20 +741,20 @@ and {"\textbf{{MoleculeInchiKey}}"} for a molecular line.
 
 At most one field \textbf{MAY} have name={"inchi"}, with
 datatype={"char"}, arraysize={"*"} and
-ucd={"phys.atmol.element"}, containing the inchi of the
+ucd=\ucd{"phys.atmol.element"}, containing the inchi of the
 chemical element for the lower level of this line. The corresponding VAMDC returnable is  {"\textbf{{AtomInchi}}"} 
 for an atomic line and  {"\textbf{{MoleculeInchi}}"} for a molecular line.
 
 \subsubsection{ion\_charge}
 
 Exactly one field \textbf{SHOULD} have name={"ion\_charge"}, with
-datatype={"int"} and ucd={"phys.atmol.ionization"}, containing the charge of the chemical element origin of the line. 
-The corresponding VAMDC returnable is {"\textbf{AtomIonCharge}"} for an atomic line and {"\textbf{{MoleculeIonCharge}}"}  for a molecular line.
+datatype={"int"} and ucd=\ucd{"phys.atmol.ionization"}, containing the charge of the chemical element origin of the line. 
+The corresponding VAMDC returnable is {"\textbf{AtomIonCharge}"} for an atomic line and {"\textbf{{MoleculeIonCharge}}"} for a molecular line.
 
 \subsubsection{lower\_level\_description}
 
 Exactly one field \textbf{SHOULD} have name={"lower\_level\_description"}, with datatype={"char"}, arraysize={"*"} 
-and ucd={"phys.atmol.level;meta.title"}, containing a full description of the lower level of the transition originating the line. 
+and ucd=\ucd{"phys.atmol.level;meta.title"}, containing a full description of the lower level of the transition originating the line. 
 The corresponding VAMDC returnable is  {"\textbf{AtomStateDescription}"} for an atomic state and {"\textbf{MoleculeStateDescription}"} 
 for a molecular state.
 
@@ -762,7 +766,7 @@ Examples:
 \subsubsection{upper\_level\_description}
 
 Exactly one field \textbf{SHOULD} have name={"upper\_level\_description"}, with datatype={"char"}, arraysize={"*"} 
-and ucd={"phys.atmol.level;meta.title"}, containing a full description of the upper level of the transition originating the line. 
+and ucd=\ucd{"phys.atmol.level;meta.title"}, containing a full description of the upper level of the transition originating the line. 
 The corresponding VAMDC returnable is  {"\textbf{AtomStateDescription}"} for an atomic state and  {"\textbf{MoleculeStateDescription}"} 
 for a molecular state.
 
@@ -773,14 +777,14 @@ for a molecular state.
 \subsubsection{observed\_wavelength}
 
 At most one field \textbf{MAY} have name={"observed\_wavelength"}, with
-datatype={"double"} unit={"m"} and ucd={"em.wl"}, containing the observed wavelength in the vacuum of 
+datatype={"double"} unit={"m"} and ucd=\ucd{"em.wl"}, containing the observed wavelength in the vacuum of 
 the transition originating the line in meters, as it was observed. 
 This may be used by observational spectral line databases. 
 The corresponding VAMDC returnable is  {"\textbf{RadTransWavelength}"}.
 
 \subsubsection{einstein\_a}
 At most one field \textbf{MAY} have name={"einstein\_a"}, with
-datatype={"double"}, unit={"1/s"} and ucd={"phys.atmol.transProb"}, containing Einstein A value, 
+datatype={"double"}, unit={"1/s"} and ucd=\ucd{"phys.atmol.transProb"}, containing Einstein A value, 
 defined as the probability per unit time s\textsuperscript{-1} for spontaneous emission in a bound-bound transition. 
 The corresponding VAMDC returnable is  {"\textbf{RadTransProbabilityA}"}.
 
@@ -795,7 +799,7 @@ The corresponding VAMDC returnable is  {"\textbf{RadTransProcess}"}.
 \subsubsection{lower\_level\_energy}
 
 At most one field \textbf{MAY} have name={"lower\_level\_energy"}, with
-datatype={"double"}, unit={"J"} and ucd={"phys.energy;phys.atmol.level"} 
+datatype={"double"}, unit={"J"} and ucd=\ucd{"phys.energy;phys.atmol.level"} 
 describing the energy for the lower level of the transition which originates this line. 
 The value must appear in Joules to unify results.
 The corresponding VAMDC returnable is  {"\textbf{StateEnergy}"}.
@@ -803,7 +807,7 @@ The corresponding VAMDC returnable is  {"\textbf{StateEnergy}"}.
 \subsubsection{lower\_level\_energy\_original}
 
 At most one field \textbf{MAY} have name={"lower\_level\_energy\_original"}, with
-datatype={"double"} and ucd={"phys.energy;phys.atmol.level"},
+datatype={"double"} and ucd=\ucd{"phys.energy;phys.atmol.level"},
 describing the energy for the lower level of the transition which originates this line. 
 
 If present, this field will contain the energy for the lower level of the transition which originates this line, 
@@ -819,14 +823,14 @@ The corresponding VAMDC returnable is  {"\textbf{StateEnergy}"}.
 
 At most one field \textbf{MAY} have name={"upper\_level\_energy"}, corresponding, with
 datatype={"double"}, unit={"J"} and
-ucd={"phys.energy;phys.atmol.level"},
+ucd=\ucd{"phys.energy;phys.atmol.level"},
 describing the energy for the upper level of the transition which originates this line. 
 The value must appear in Joules to unify results. The corresponding VAMDC returnable is {"\textbf{StateEnergy}"}
 
 \subsubsection{upper\_level\_energy\_original}
 
 At most one field \textbf{MAY} have name={"upper\_level\_energy\_original"}, with
-datatype={"double"} and ucd={"phys.energy;phys.atmol.level"},
+datatype={"double"} and ucd=\ucd{"phys.energy;phys.atmol.level"},
 describing the energy for the upper level of the transition which originates this line. 
 
 If present, this field will contain the energy for the upper level of the transition which originates this line, 
@@ -841,13 +845,13 @@ The corresponding VAMDC returnable is  {"\textbf{StateEnergy}"}.
 
 \paragraph{lower\_level\_configuration}
 
-At most one field \textbf{MAY} have name={"lower\_level\_configuration"}, with ucd={"phys.atmol.configuration"}, 
+At most one field \textbf{MAY} have name={"lower\_level\_configuration"}, with ucd=\ucd{"phys.atmol.configuration"}, 
 datatype={"char"} and arraysize={"*"} describing the electron configuration of the lower level of the line. 
 The corresponding VAMDC restrictable is  {"\textbf{AtomStateConfigurationLabel}"}.
 
 \paragraph{upper\_level\_configuration}
 
-At most one field \textbf{MAY} have name={"upper\_level\_configuration"}, with ucd={"phys.atmol.configuration"}, 
+At most one field \textbf{MAY} have name={"upper\_level\_configuration"}, with ucd=\ucd{"phys.atmol.configuration"}, 
 datatype={"char"} and arraysize={"*"} describing the electron configuration of the upper level of the line. 
 The corresponding VAMDC restrictable is  {"\textbf{AtomStateConfigurationLabel}"}.
 
@@ -914,20 +918,20 @@ is encouraged to use the VAMDC infrastructure to get a more detailed and standar
 
 \subsubsection{reference\_doi}
 
-One or more fields \textbf{SHOULD} have name={"reference\_doi"}, with ucd={"meta.ref.doi"}, datatype={"char"} and
+One or more fields \textbf{SHOULD} have name={"reference\_doi"}, with ucd=\ucd{"meta.ref.doi"}, datatype={"char"} and
 arraysize={"*"}, to specify a digital object identifier
 attached to this reference. The corresponding VAMDC returnable is  {"\textbf{SourceDOI}"}.
 
 \subsubsection{reference\_uri}
 
 One or more fields \textbf{SHOULD} have name={"reference\_uri"},
-with ucd={"meta.ref.uri"}, datatype={"char"} and
+with ucd=\ucd{"meta.ref.uri"}, datatype={"char"} and
 arraysize={"*"}, to specify an http link that contains a scientific publication related to the spectral line. Since the URL will often contain metacharacters, the URL is normally enclosed in an XML CDATA section ({\textless}![CDATA[...]]{\textgreater}) or otherwise encoded to escape any embedded metacharacters. The corresponding VAMDC returnable is {"\textbf{SourceURI}"}.
 
 
 \subsubsection{reference\_additional\_uri}
 
-One or more fields \textbf{MAY} have name={"reference\_additional\_uri"} with ucd={"meta.ref.uri"}, datatype={"char"}, arraysize={"*"} and free names, to specify URLs that contains extra information related to the spectral line. Same criteria than before about the CDATA section.
+One or more fields \textbf{MAY} have name={"reference\_additional\_uri"} with ucd=\ucd{"meta.ref.uri"}, datatype={"char"}, arraysize={"*"} and free names, to specify URLs that contains extra information related to the spectral line. Same criteria than before about the CDATA section.
 The corresponding VAMDC restrictable is  {"\textbf{SourceURI}"}.
 
 \subsection{Non-standard output fields}
@@ -1067,7 +1071,7 @@ This is the conventional molecule name, e.g. CO2, NH3, FeH, Carbon, Methane ... 
 
 In both cases, datatype={"char"},
 arraysize={"*"} and
-ucd={"phys.atmol.element"}, containing the name of a
+ucd=\ucd{"phys.atmol.element"}, containing the name of a
 chemical element for which at least one spectral line is available in
 the service.
 
@@ -1083,14 +1087,14 @@ arraysize={"*"}. It will describe the type of chemical element, possible values 
 Exactly one field \textbf{SHOULD} have
 name={"chemical\_element\_stoichiometric\_formula"}, datatype={"char"},
 arraysize={"*"} and
-ucd={"phys.atmol.element"}, containing the stoichiometric formula of a chemical element for which at least one spectral line is available in the service. For an atom, the atom symbol can be used as a value.
+ucd=\ucd{"phys.atmol.element"}, containing the stoichiometric formula of a chemical element for which at least one spectral line is available in the service. For an atom, the atom symbol can be used as a value.
 
 The corresponding VAMDC returnable is {"\textbf{MoleculeStoichiometricFormula}"} in the case of a molecule. The value is not defined for an atom.
 
 
 \subsubsection{ion\_charge}
 
-Exactly one field \textbf{SHOULD} have name={"ion\_charge"} with datatype={"int"} and ucd={"phys.atmol.ionization"}, containing the charge of  the considered chemical species.
+Exactly one field \textbf{SHOULD} have name={"ion\_charge"} with datatype={"int"} and ucd=\ucd{"phys.atmol.ionization"}, containing the charge of  the considered chemical species.
 The corresponding VAMDC returnable is {"\textbf{{AtomIonCharge}}"} for an atom and  {"\textbf{{MoleculeIonCharge}}"} for a molecule. 
 
 
@@ -1099,14 +1103,14 @@ The corresponding VAMDC returnable is {"\textbf{{AtomIonCharge}}"} for an atom a
 Exactly one field \textbf{SHOULD} have name={"inchikey"}, with
 datatype={"char"},
 arraysize={"*"} and
-ucd={"phys.atmol.element"}, containing the inchikey 
+ucd=\ucd{"phys.atmol.element"}, containing the inchikey 
 of the chemical element.
 
 The corresponding VAMDC returnable is  {"\textbf{{AtomInchiKey}}"} for an atom and {"\textbf{{MoleculeInchiKey}}"} for a molecule.
 
 \subsubsection{inchi}
 
-At most one field \textbf{MAY} have name={"inchi"}, with datatype={"char"}, arraysize={"*"} and ucd={"phys.atmol.element"}, containing the inchi of the chemical element. The corresponding VAMDC returnable is  {"\textbf{AtomInchi}"} for an atom and {"\textbf{MoleculeInchi}"} for a molecule. 
+At most one field \textbf{MAY} have name={"inchi"}, with datatype={"char"}, arraysize={"*"} and ucd=\ucd{"phys.atmol.element"}, containing the inchi of the chemical element. The corresponding VAMDC returnable is  {"\textbf{AtomInchi}"} for an atom and {"\textbf{MoleculeInchi}"} for a molecule. 
 
 \subsubsection{atomicity}
 
