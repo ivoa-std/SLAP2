@@ -721,7 +721,7 @@ Example of valid values are : Fe for a iron line or CH4 for a methane line.
 
 \subsubsection{chemical\_element\_mass}
 
-Exactly one field \textbf{MAY} have name={"chemical\_element\_mass"}, with  datatype={"float"} and ucd={"phys.atmol.element"}. 
+At most one field \textbf{MAY} have name={"chemical\_element\_mass"}, with  datatype={"float"} and ucd={"phys.atmol.element"}. 
 The field contains the atom mass or the molecular weight of the species, to be specified in Unified Atomic Mass Unit (u). 
 For an atom, the ccorresponding VAMDC returnable is {"\textbf{AtomMass}"}. 
 If this is a molecular line, the corresponding VAMDC returnable is {"\textbf{MoleculeMolecularWeight}"}.
@@ -735,7 +735,7 @@ and {"\textbf{{MoleculeInchiKey}}"} for a molecular line.
 
 \subsubsection{inchi}
 
-Exactly one field \textbf{MAY} have name={"inchi"}, with
+At most one field \textbf{MAY} have name={"inchi"}, with
 datatype={"char"}, arraysize={"*"} and
 ucd={"phys.atmol.element"}, containing the inchi of the
 chemical element for the lower level of this line. The corresponding VAMDC returnable is  {"\textbf{{AtomInchi}}"} 
@@ -772,14 +772,14 @@ for a molecular state.
 
 \subsubsection{observed\_wavelength}
 
-Exactly one field \textbf{MAY} have name={"observed\_wavelength"}, with
+At most one field \textbf{MAY} have name={"observed\_wavelength"}, with
 datatype={"double"} unit={"m"} and ucd={"em.wl"}, containing the observed wavelength in the vacuum of 
 the transition originating the line in meters, as it was observed. 
 This may be used by observational spectral line databases. 
 The corresponding VAMDC returnable is  {"\textbf{RadTransWavelength}"}.
 
 \subsubsection{einstein\_a}
-Exactly one field \textbf{MAY} have name={"einstein\_a"}, with
+At most one field \textbf{MAY} have name={"einstein\_a"}, with
 datatype={"double"}, unit={"1/s"} and ucd={"phys.atmol.transProb"}, containing Einstein A value, 
 defined as the probability per unit time s\textsuperscript{-1} for spontaneous emission in a bound-bound transition. 
 The corresponding VAMDC returnable is  {"\textbf{RadTransProbabilityA}"}.
@@ -794,7 +794,7 @@ The corresponding VAMDC returnable is  {"\textbf{RadTransProcess}"}.
 
 \subsubsection{lower\_level\_energy}
 
-Exactly one field \textbf{MAY} have name={"lower\_level\_energy"}, with
+At most one field \textbf{MAY} have name={"lower\_level\_energy"}, with
 datatype={"double"}, unit={"J"} and ucd={"phys.energy;phys.atmol.level"} 
 describing the energy for the lower level of the transition which originates this line. 
 The value must appear in Joules to unify results.
@@ -817,7 +817,7 @@ The corresponding VAMDC returnable is  {"\textbf{StateEnergy}"}.
 
 \subsubsection{upper\_level\_energy}
 
-Exactly one field \textbf{MAY} have name={"upper\_level\_energy"}, corresponding, with
+At most one field \textbf{MAY} have name={"upper\_level\_energy"}, corresponding, with
 datatype={"double"}, unit={"J"} and
 ucd={"phys.energy;phys.atmol.level"},
 describing the energy for the upper level of the transition which originates this line. 
@@ -841,13 +841,13 @@ The corresponding VAMDC returnable is  {"\textbf{StateEnergy}"}.
 
 \paragraph{lower\_level\_configuration}
 
-Exactly one field \textbf{MAY} have name={"lower\_level\_configuration"}, with ucd={"phys.atmol.configuration"}, 
+At most one field \textbf{MAY} have name={"lower\_level\_configuration"}, with ucd={"phys.atmol.configuration"}, 
 datatype={"char"} and arraysize={"*"} describing the electron configuration of the lower level of the line. 
 The corresponding VAMDC restrictable is  {"\textbf{AtomStateConfigurationLabel}"}.
 
 \paragraph{upper\_level\_configuration}
 
-Exactly one field \textbf{MAY} have name={"upper\_level\_configuration"}, with ucd={"phys.atmol.configuration"}, 
+At most one field \textbf{MAY} have name={"upper\_level\_configuration"}, with ucd={"phys.atmol.configuration"}, 
 datatype={"char"} and arraysize={"*"} describing the electron configuration of the upper level of the line. 
 The corresponding VAMDC restrictable is  {"\textbf{AtomStateConfigurationLabel}"}.
 
@@ -892,12 +892,12 @@ See \citep{lamport86latex} for a complete reference.
 \subsubsection{Level quantum state}
 
 \paragraph{lower\_state\_quantum\_numbers}
-Exactly one field \textbf{MAY} have name={"lower\_state\_quantum\_numbers"} with datatype={"char"} and arraysize={"*"} 
+At most one field \textbf{MAY} have name={"lower\_state\_quantum\_numbers"} with datatype={"char"} and arraysize={"*"} 
 describing the quantum state of the lower in a string representation.
 The corresponding VAMDC returnable is  {"\textbf{MoleculeStateQuantumNumbers}"}.
 
 \paragraph{Upper state}
-Exactly one field \textbf{MAY} have name={"lower\_state\_quantum\_numbers"} with datatype={"char"} and arraysize={"*"} 
+At most one field \textbf{MAY} have name={"lower\_state\_quantum\_numbers"} with datatype={"char"} and arraysize={"*"} 
 describing the quantum state of the lower in a string representation. 
 The corresponding VAMDC returnable is {"\textbf{MoleculeStateQuantumNumbers}"}, 
 
@@ -1106,11 +1106,11 @@ The corresponding VAMDC returnable is  {"\textbf{{AtomInchiKey}}"} for an atom a
 
 \subsubsection{inchi}
 
-Exactly one field \textbf{MAY} have name={"inchi"}, with datatype={"char"}, arraysize={"*"} and ucd={"phys.atmol.element"}, containing the inchi of the chemical element. The corresponding VAMDC returnable is  {"\textbf{AtomInchi}"} for an atom and {"\textbf{MoleculeInchi}"} for a molecule. 
+At most one field \textbf{MAY} have name={"inchi"}, with datatype={"char"}, arraysize={"*"} and ucd={"phys.atmol.element"}, containing the inchi of the chemical element. The corresponding VAMDC returnable is  {"\textbf{AtomInchi}"} for an atom and {"\textbf{MoleculeInchi}"} for a molecule. 
 
 \subsubsection{atomicity}
 
-Exactly one field \textbf{MAY} have name={"atomicity"}, with  datatype={"int"}. 
+At most one field \textbf{MAY} have name={"atomicity"}, with  datatype={"int"}. 
 The field contains the number of atoms contained in the considered species.
 There is no equivalent returnable in the VAMDC dictionary.
 
