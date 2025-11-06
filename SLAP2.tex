@@ -572,9 +572,12 @@ SLAP, Characterization, etc.
 \subsubsection[RESOURCE element]{RESOURCE element}
 \label{sect:resource-element}
 
-The RESOURCE element contains several INFO elements storing metadata
-about the request execution and the queried service, as described in the
-following sections.
+The RESOURCE element contains several INFO elements that store metadata 
+about the request execution and the queried service. 
+These metadata facilitate the identification of the data provenance and enable the reproducibility 
+of the query on the service. 
+They are originally described in the Data Origin document \citep{ivoaDataOrigin1.1}, 
+with the exception of QUERY\_STATUS, which is described in DALI 1.1 \citep{2017ivoa.spec.0517D}.
 
 \paragraph{QUERY\_STATUS}\label{par:QUERY_STATUS}
 
@@ -596,6 +599,16 @@ name={\textquotedbl}request\_date{\textquotedbl}.
 
 \begin{lstlisting}{language=XML}
 <INFO name="request_date" value="2025-10-31T14:57:18+01:00" />
+\end{lstlisting}
+
+\paragraph{request}
+
+The RESOURCE element \textbf{SHOULD} contain an INFO with
+name={\textquotedbl}request{\textquotedbl} containing the application/x-www-form-urlencoded 
+form of the query parameters in the query part of the URL. 
+
+\begin{lstlisting}{language=XML}
+<INFO name="request" value="https://sesam.obspm.fr/25.02/vamdc/slap/lines?WAVELENGTH=9e-8+9.1e-8"/>
 \end{lstlisting}
 
 \paragraph{service\_protocol}
@@ -879,10 +892,14 @@ See \citep{lamport86latex} for a complete reference.
 \subsubsection{Level quantum state}
 
 \paragraph{lower\_state\_quantum\_numbers}
-Exactly one field \textbf{MAY} have name={"lower\_state\_quantum\_numbers"} with datatype={"char"} and arraysize={"*"} describing the quantum state of the lower in a string representation. The corresponding VAMDC returnable is  {"\textbf{MoleculeStateQuantumNumbers}"}.
+Exactly one field \textbf{MAY} have name={"lower\_state\_quantum\_numbers"} with datatype={"char"} and arraysize={"*"} 
+describing the quantum state of the lower in a string representation.
+The corresponding VAMDC returnable is  {"\textbf{MoleculeStateQuantumNumbers}"}.
 
 \paragraph{Upper state}
-Exactly one field \textbf{MAY} have name={"lower\_state\_quantum\_numbers"} with datatype={"char"} and arraysize={"*"} describing the quantum state of the lower in a string representation. The corresponding VAMDC returnable is {"\textbf{MoleculeStateQuantumNumbers}"}, 
+Exactly one field \textbf{MAY} have name={"lower\_state\_quantum\_numbers"} with datatype={"char"} and arraysize={"*"} 
+describing the quantum state of the lower in a string representation. 
+The corresponding VAMDC returnable is {"\textbf{MoleculeStateQuantumNumbers}"}, 
 
 \paragraph{Syntax}
 
@@ -1389,7 +1406,7 @@ chemical\_element\_mass                & AtomMass, MoleculeMolecularWeight      
 inchikey                               & AtomInchiKey, MoleculeInchiKey                                & SHOULD  \\
 inchi                                  & AtomInchi, MoleculeInchi                                      & MAY  \\
 ion\_charge                            & AtomIonCharge, MoleculeIonCharge                              & SHOULD  \\
-einstein_a                             & RadTransProbabilityA                                          & MAY  \\
+einstein\_a                             & RadTransProbabilityA                                          & MAY  \\
 process                                & RadTransProcess                                               & MAY  \\
 lower\_level\_energy                   & StateEnergy                                                   & MAY  \\
 lower\_level\_energy\_original         & StateEnergy                                                   & MAY  \\
