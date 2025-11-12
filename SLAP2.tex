@@ -7,10 +7,12 @@
 \usepackage{float}
 \usepackage{tabularx}
 \usepackage{enumitem}
+\usepackage{url}
+
 
 
 \lstset{flexiblecolumns=true,showstringspaces=False,
-  language={}}
+  language={},breaklines=true,breakatwhitespace=true}
 
 \newcommand{\parexample}[1]{\noindent\quad\texttt{#1}}
 
@@ -424,16 +426,18 @@ the selected chemical element. A list of different chemical elements
 could be queried by specifying this parameter multiple times (ucd=\ucd{phys.atmol.element}).
 
 Atom can be specified exactly by symbol (corresponding VAMDC restrictable is {\textquotedbl}AtomSymbol{\textquotedbl}). 
-Molecules can be specified by conventional molecular name (formula like CO2, CH4 or names like carbon or water {\dots}) which might not be
-unique (corresponding VAMDC restrictable is {\textquotedbl}MoleculeChemicalName{\textquotedbl}). The \{species\} 
-endpoint is the recommended place to discover the correct syntax of a given species in a particular service.
+Molecules can be specified by conventional molecular name (formula like CO2, CH4 or names like carbon or water {\dots}) 
+which might not be unique (corresponding VAMDC restrictable is {\textquotedbl}MoleculeChemicalName{\textquotedbl}). 
+The \{species\} endpoint is the recommended place to discover the correct syntax of a given species in a particular service.
 
 Filter results for Iron only : 
+
 \parexample{CHEMICAL\_ELEMENT=Fe}
 
 Filter results for Carbon Dioxide molecule only:
 
 \parexample{CHEMICAL\_ELEMENT=CO2}
+
 
 \subsubsection{INCHIKEY}
 
@@ -1148,7 +1152,7 @@ be identified through the standardID attribute:
 
 An example of such a document could be:
 
-\begin{lstlisting}[language=XML]
+\begin{lstlisting}[language=XML,basicstyle=\small\ttfamily]
 <vosi:capabilities
   xmlns:vosi="http://www.ivoa.net/xml/VOSICapabilities/v1.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -1230,13 +1234,9 @@ schema \citep{2017ivoa.spec.0530P}.
 \section{SLAP services for uncorrected and unidentified lines}
 \label{app:unidentified}
 
-One important constraint for observational line databases in the SLAP
-definition is to limit the lines in the SLAP output to corrected lines,
-i.e. only the lines that have been corrected from wavelength shifts
-(including not only the astrophysical redshift, but also any process
-that could produce a line peak displacement).
-Note that unidentified lines can be distributed as long as these lines could be corrected in
-wavelength. 
+In the specific case where services wish to make available line lists derived from observations 
+(for example, a list of unidentified lines), the wavelengths of these lines must be corrected for 
+any possible shifts (for example, redshift) before being made accessible via SLAP.
 
 The reason for that is, if a user wants to compare two different SLAP
 service outputs or to compare one SLAP service output to one SSAP
@@ -1306,7 +1306,7 @@ ucd=\ucd{em.line;meta.id.cross}, describing the identification status of the lin
 
 \section{SLAP valid response example}
 
-\begin{lstlisting}[language=XML]
+\begin{lstlisting}[language=XML,basicstyle=\small\ttfamily]
 <VOTABLE version="1.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://www.ivoa.net/xml/VOTable/v1.3"
 	xsi:schemaLocation="http://www.ivoa.net/xml/VOTable/v1.3 http://www.ivoa.net/xml/VOTable/VOTable-1.3.xsd"
@@ -1370,7 +1370,8 @@ ucd=\ucd{em.line;meta.id.cross}, describing the identification status of the lin
 
 \begin{table}[H]
 \centering
-\begin{tabularx}{\textwidth}{|l|X|p{2.5cm}|}
+\small
+\begin{tabularx}{\textwidth}{|p{4.5cm}|>{\raggedright\arraybackslash}X|p{2.5cm}|}
 \hline
 \textbf{SLAP2 parameter name} & \textbf{VAMDC restrictable name} & \textbf{Requirements for compliance in SLAP2} \\
 \hline
@@ -1395,7 +1396,8 @@ MAXREC               & N/A                                 & MUST  \\
 
 \begin{table}[H]
 \centering
-\begin{tabularx}{\textwidth}{|l|X|p{2.5cm}|}
+\small
+\begin{tabularx}{\textwidth}{|p{5.5cm}|>{\raggedright\arraybackslash}X|p{2.3cm}|}
 \hline
 \textbf{SLAP2 field name} & \textbf{VAMDC returnable name} & \textbf{Requirements for compliance in SLAP2} \\
 \hline
@@ -1418,10 +1420,10 @@ upper\_level\_energy                   & StateEnergy                            
 upper\_level\_energy\_original         & StateEnergy                                                   & MAY  \\
 lower\_level\_description              & AtomStateDescription, MoleculeStateDescription                & SHOULD  \\
 upper\_level\_description              & AtomStateDescription, MoleculeStateDescription                & SHOULD  \\
-lower\_level\_configuration            & AtomStateConfigurationLabel                                   & MAY  \\
-upper\_level\_configuration            & AtomStateConfigurationLabel                                   & MAY  \\
-lower\_level\_quantum\_numbers         & MoleculeStateQuantumNumbers                                   & MAY  \\
-upper\_level\_quantum\_numbers         & MoleculeStateQuantumNumbers                                   & MAY  \\
+lower\_level\_configuration            & AtomState\-ConfigurationLabel                                   & MAY  \\
+upper\_level\_configuration            & AtomState\-ConfigurationLabel                                   & MAY  \\
+lower\_level\_quantum\_numbers         & MoleculeState\-QuantumNumbers                                   & MAY  \\
+upper\_level\_quantum\_numbers         & MoleculeState\-QuantumNumbers                                   & MAY  \\
 reference\_doi                         & SourceDOI                                                     & SHOULD  \\
 reference\_uri                         & SourceURI                                                     & SHOULD  \\
 reference\_additional\_uri             & SourceURI                                                     & MAY  \\
@@ -1434,16 +1436,17 @@ reference\_additional\_uri             & SourceURI                              
 
 \begin{table}[H]
 \centering
-\begin{tabularx}{\textwidth}{|l|X|p{2.5cm}|}
+\footnotesize
+\begin{tabularx}{\textwidth}{|p{5.8cm}|>{\raggedright\arraybackslash}X|p{2cm}|}
 \hline
-\textbf{SLAP2 parameter name} & \textbf{VAMDC restrictable name} & \textbf{Requirements for compliance in SLAP2} \\
+\textbf{SLAP2 parameter name} & \textbf{VAMDC restrictable name} & \textbf{Requirements} \\
 \hline
-ELEMENT\_TYPE                         & N/A                                 & SHOULD  \\
+ELEMENT\_TYPE                         & Not available                       & SHOULD  \\
 INCHIKEY                              & InchiKey                            & SHOULD  \\
-CHEMICAL\_ELEMENT\_NAME\_STARTSWITH   & AtomSymbol, MoleculeChemicalName    & SHOULD  \\
-CHEMICAL\_ELEMENT\_NAME\_CONTAINS     & AtomSymbol, MoleculeChemicalName    & SHOULD  \\
-STOICHIOMETRIC\_FORMULA\_STARTSWITH   & MoleculeStoichiometricFormula       & SHOULD  \\
-STOICHIOMETRIC\_FORMULA\_CONTAINS     & MoleculeStoichiometricFormula       & SHOULD  \\
+CHEMICAL\_ELEMENT\_NAME\_\allowbreak STARTSWITH   & AtomSymbol, MoleculeChemicalName    & SHOULD  \\
+CHEMICAL\_ELEMENT\_NAME\_\allowbreak CONTAINS     & AtomSymbol, MoleculeChemicalName    & SHOULD  \\
+STOICHIOMETRIC\_FORMULA\_\allowbreak STARTSWITH   & MoleculeStoichiometric\-Formula       & SHOULD  \\
+STOICHIOMETRIC\_FORMULA\_\allowbreak CONTAINS     & MoleculeStoichiometric\-Formula       & SHOULD  \\
 ATOMICITY                             & Not available                       & MAY  \\
 
 \hline
@@ -1457,7 +1460,8 @@ ATOMICITY                             & Not available                       & MA
 
 \begin{table}[H]
 \centering
-\begin{tabularx}{\textwidth}{|l|X|p{2.5cm}|}
+\small
+\begin{tabularx}{\textwidth}{|p{5cm}|>{\raggedright\arraybackslash}X|p{2.5cm}|}
 \hline
 \textbf{SLAP2 field name} & \textbf{VAMDC returnable name} & \textbf{Requirements for compliance} \\
 \hline
