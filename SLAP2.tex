@@ -145,6 +145,29 @@ because When the output table contains a DOI it can be cited along the data to e
 Fig.~\ref{fig:archdiag} shows the role this document plays within the
 IVOA architecture \citep{ivoaArchitecture}.
 
+\subsection{Link with VAMDC standards}
+
+
+The VAMDC Consortium is a consortium of Institutes and Research Institutions that share a common technical and political framework
+ for the distribution and curation of atomic and molecular data. It developed a set of standards to enable the exchange
+ of data within its infrastructure.
+
+Among them, the \textit{VAMDC XSAMS schema 12.07} \citep{std:XSAMS12.07} provides a structured presentation of 
+Atomic, Molecular, Particle and Surface Interaction data in an XML file. It is based on the physical representation of interaction
+between various objects through description of the physical states and interaction characteristics. 
+
+This data model has been used to build the \href{https://dictionary.vamdc.eu/}{VAMDC dictionary}. This is a list of keywords, with their definition, 
+that can be used when writing queries in the VAMDC variant of the TAP protocol called 
+VSS2 \href{https://standards.vamdc.eu/queryLanguage/vss2.html#introduction}.
+This list of keywords can be considered as a view on the VAMDC data model and avoid the need to use the FROM clause in queries.
+
+There are different types of keywords in the dictionary that will be used in this document :
+\begin{enumerate}
+\item Restrictables : the criteria that can be used to filter out data in VAMDC queries
+\item Returnables : the data fields that will be contained in the output
+\end{enumerate}
+
+In the SLAP2 protocol, the query parameters are mapped to VAMDC restrictables and the output fields to VAMDC returnables.
 
 \section{Spectral line service type}
 \label{sect:service-type}
@@ -479,7 +502,7 @@ Filter all atoms chemical species between 0 and 12.011 u:
 \subsubsection{ION\_CHARGE}
 
 A service \textbf{MAY} implement the \textbf{ION\_CHARGE} parameter to specify the minimum and maximum charge 
-of an ion (ucd=\ucd{phys.atmol.ionization}; 
+of an ion (ucd=\ucd{phys.atmol.element;phys.atmol.ionization}; 
 corresponding VAMDC restrictable is {\textquotedbl}IonCharge{\textquotedbl}).
  
 It will look for the ionized forms of the chemical element specified in CHEMICAL\_ELEMENT
@@ -513,7 +536,7 @@ Energy of lower level between 3.93E-18 and 3.94E-18 Joules:
 \subsubsection{UPPER\_LEVEL\_ENERGY}
 
 A service \textbf{MAY}implement the \textbf{UPPER\_LEVEL\_ENERGY} parameter to specify the minimum 
-and maximum energy for the UPPER level of the transition, to be expressed in Joules (ucd=\ucd{"phys.energy;phys.atmol.level"}; 
+and maximum energy for the UPPER level of the transition, to be expressed in Joules (ucd=\ucd{phys.energy;phys.atmol.level}; 
 corresponding VAMDC restrictable is {"StateEnergy"}).
 
 Energy of upper level between 3.93E-18 and 3.94E-18 Joules:
@@ -752,13 +775,13 @@ for an atomic line and  {"\textbf{{MoleculeInchi}}"} for a molecular line.
 \subsubsection{ion\_charge}
 
 Exactly one field \textbf{SHOULD} have name={"ion\_charge"}, with
-datatype={"int"} and ucd=\ucd{"phys.atmol.ionization"}, containing the charge of the chemical element origin of the line. 
+datatype={"int"} and ucd=\ucd{"phys.atmol.element;phys.atmol.ionization"}, containing the charge of the chemical element origin of the line. 
 The corresponding VAMDC returnable is {"\textbf{AtomIonCharge}"} for an atomic line and {"\textbf{{MoleculeIonCharge}}"} for a molecular line.
 
 \subsubsection{lower\_level\_description}
 
 Exactly one field \textbf{SHOULD} have name={"lower\_level\_description"}, with datatype={"char"}, arraysize={"*"} 
-and ucd=\ucd{"phys.atmol.level;meta.title"}, containing a full description of the lower level of the transition originating the line. 
+and ucd=\ucd{"meta.title;phys.atmol.level"}, containing a full description of the lower level of the transition originating the line. 
 The corresponding VAMDC returnable is  {"\textbf{AtomStateDescription}"} for an atomic state and {"\textbf{MoleculeStateDescription}"} 
 for a molecular state.
 
@@ -770,7 +793,7 @@ Examples:
 \subsubsection{upper\_level\_description}
 
 Exactly one field \textbf{SHOULD} have name={"upper\_level\_description"}, with datatype={"char"}, arraysize={"*"} 
-and ucd=\ucd{"phys.atmol.level;meta.title"}, containing a full description of the upper level of the transition originating the line. 
+and ucd=\ucd{"meta.title;phys.atmol.level"}, containing a full description of the upper level of the transition originating the line. 
 The corresponding VAMDC returnable is  {"\textbf{AtomStateDescription}"} for an atomic state and  {"\textbf{MoleculeStateDescription}"} 
 for a molecular state.
 
@@ -1098,7 +1121,7 @@ The corresponding VAMDC returnable is {"\textbf{MoleculeStoichiometricFormula}"}
 
 \subsubsection{ion\_charge}
 
-Exactly one field \textbf{SHOULD} have name={"ion\_charge"} with datatype={"int"} and ucd=\ucd{"phys.atmol.ionization"}, containing the charge of  the considered chemical species.
+Exactly one field \textbf{SHOULD} have name={"ion\_charge"} with datatype={"int"} and ucd=\ucd{"phys.atmol.element;phys.atmol.ionization"}, containing the charge of  the considered chemical species.
 The corresponding VAMDC returnable is {"\textbf{{AtomIonCharge}}"} for an atom and  {"\textbf{{MoleculeIonCharge}}"} for a molecule. 
 
 
@@ -1207,7 +1230,7 @@ An example of such a document could be:
       <param std="true">
         <name>ion_charge</name>
         <description>Minimum and maximum charge of an ion</description>
-        <ucd>phys.atmol.ionization</ucd>
+        <ucd>phys.atmol.element;phys.atmol.ionization</ucd>
         <dataType arraysize="2">integer</dataType>
       </param>
       <!-- custom service parameter -->
@@ -1267,7 +1290,7 @@ of identification. The possible values are:
 \end{itemize}
 
 And the default value MUST be ``CORRECTED''
-(ucd=\ucd{em.line;meta.id.cross})
+(ucd=\ucd{meta.id.cross;em.line})
 
 \item {\bfseries IDENTIFICATION\_STATUS}
 A service \textbf{MAY} have a search parameter called
@@ -1282,7 +1305,7 @@ possible values are:
 \item IDENTIFIED
 \end{itemize}
 
-(ucd=\ucd{em.line;meta.id.cross;})
+(ucd=\ucd{meta.id.cross;em.line})
 
 For theoretical line databases, identified will be synonymous to predicted.
 \end{itemize}
@@ -1291,7 +1314,7 @@ For the output:
 
 \begin{itemize}
 \item Exactly one field \textbf{MAY} have name={\textquotedbl}correctionStatus{\textquotedbl}, datatype={\textquotedbl}char{\textquotedbl} and
-ucd=\ucd{em.wl.central;meta.id.cross}, describing if the wavelength has been calculated.
+ucd=\ucd{meta.id.cross;em.wl.central}, describing if the wavelength has been calculated.
 
 Please note that for uncorrected lines, the compulsory field with name={"\textbf{vacuum\_wavelength}"} (corrected wavelength in vacuum)
 will contain either the observed wavelength for ''Uncorrected'' or a
@@ -1299,7 +1322,7 @@ provisional assignment value.
 
 \item Exactly one field \textbf{MAY} have name={"\textbf{identificationStatus}"}, with
 datatype={\textquotedbl}char{\textquotedbl} and
-ucd=\ucd{em.line;meta.id.cross}, describing the identification status of the line.
+ucd=\ucd{meta.id.cross;em.line}, describing the identification status of the line.
 
 \end{itemize}
 
@@ -1323,11 +1346,11 @@ ucd=\ucd{em.line;meta.id.cross}, describing the identification status of the lin
 			<FIELD ucd="phys.energy;phys.atmol.level" name="lower_level_energy"
 				datatype="double" unit="J" />
 			<FIELD ucd="phys.energy;phys.atmol.level" name="upper_level_energy" datatype="double" unit="J" />
-			<FIELD ucd="phys.atmol.level;meta.title" name="lower_level_description" datatype="char" arraysize="*" />
-			<FIELD ucd="phys.atmol.level;meta.title" name="upper_level_description" datatype="char" arraysize="*" />
+			<FIELD ucd="meta.title;phys.atmol.level" name="lower_level_description" datatype="char" arraysize="*" />
+			<FIELD ucd="meta.title;phys.atmol.level" name="upper_level_description" datatype="char" arraysize="*" />
 			<FIELD ucd="phys.atmol.transProb" name="einstein_a" datatype="double" unit="1/s" />
 			<FIELD ucd="phys.atmol.element" name="chemical_element_name" datatype="char" arraysize="*" />
-			<FIELD ucd="phys.atmol.ionization" name="ion_charge" datatype="int" />
+			<FIELD ucd="phys.atmol.element;phys.atmol.ionization" name="ion_charge" datatype="int" />
 			<FIELD ucd="phys.atmol.element" name="inchikey" datatype="char" arraysize="*" />
 			<FIELD ucd="meta.ref.doi" name="reference_doi" datatype="char" arraysize="*" />
 			<DATA>
