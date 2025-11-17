@@ -639,7 +639,17 @@ name={\textquotedbl}request{\textquotedbl} containing the application/x-www-form
 form of the query parameters in the query part of the URL. 
 
 \begin{lstlisting}{language=XML}
-<INFO name="request" value="https://sesam.obspm.fr/25.02/vamdc/slap/lines?WAVELENGTH=9e-8+9.1e-8"/>
+<INFO name="request" value="https://myvo.org/slap2/lines?WAVELENGTH=9e-8+9.1e-8"/>
+\end{lstlisting}
+
+\paragraph{service\_ivoid}
+
+The RESOURCE element \textbf{SHOULD} contain an INFO with
+name={\textquotedbl}service\_ivoid{\textquotedbl} containing the ivoid 
+of the service that executed the query. 
+
+\begin{lstlisting}{language=XML}
+<INFO name="service_ivoid" value="ivo://myvo.org/slap2"/>
 \end{lstlisting}
 
 \paragraph{service\_protocol}
@@ -1337,8 +1347,9 @@ ucd=\ucd{meta.id.cross;em.line}, describing the identification status of the lin
 	<RESOURCE type="results">
 		<INFO name="QUERY_STATUS" value="OK" />
 		<INFO name="request_date" value="2025-10-31T14:57:18+01:00" />
+		<INFO name="service_ivoid" value="ivo://myvo.org/slap2" />
 		<INFO name="service_protocol" value="ivo://ivoa.net/std/SLAP#lines-2.0" />
-		<INFO name="publisher" value="sesam.obspm.fr" />
+		<INFO name="publisher" value="myvo.org" />
 		<INFO name="last_update_date" value="2025-05-31T10:05:00+01:00" />
 		<TABLE>
 			<FIELD ucd="em.wl" name="vacuum_wavelength" datatype="double" unit="m" />
