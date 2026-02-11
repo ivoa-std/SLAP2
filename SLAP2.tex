@@ -304,7 +304,6 @@ GET (query string) or POST action.
 \subsection{Resources}
 \label{sect:dali-resources}
 
-Publishers are free to name the {lines} resources whatever they wish.
 The table below shows the list of available resources for a
 service and their mandatory status.
 
@@ -318,7 +317,7 @@ service and their mandatory status.
 \textbf{Required}\\
 \sptablerule
  DALI-sync &
- \{lines\} &
+ /lines &
  yes\\
  DALI-sync &
  /species &
@@ -389,13 +388,16 @@ by a SLAP service. The most basic query parameters will be the minimum
 and maximum value for the wavelength range. Additional parameters may be
 used to refine the search or to model physical scenarios.
 
-\subsection{Required parameters}
+\subsection{Parameters}
 \label{sect:lines-pars}
 
-A service must support the input parameters described in this section.
+A service must support all the input parameters described in this section.
 That means that the service must accept them as valid ones without
 raising an error, and the parameters must be properly used to constrain
 the query.
+
+If one or several parameters can not be implemented in the context of a service, 
+an error must be raised when the parameter is received in a query (see \ref{par:QUERY_STATUS} for the appropriate syntax).
 
 \subsubsection{WAVELENGTH}
 
@@ -438,8 +440,6 @@ the request includes multiple values for it.\\
 Display only 100 lines:
 
 \parexample{MAXREC=100}
-
-\subsection{Non-compulsory parameters}
 
 \subsubsection{CHEMICAL\_ELEMENT}
 
@@ -617,10 +617,16 @@ name={\textquotedbl}QUERY\_STATUS{\textquotedbl}. Its value attribute
 MUST be set to {\textquotedbl}OK{\textquotedbl} if the query is executed successfully,
 regardless of whether any matching spectral lines were found. \ If an
 overflow occurs (result exceeds MAXREC) the value attribute will be set
-to {\textquotedbl}OVERFLOW{\textquotedbl}.
+to {\textquotedbl}OVERFLOW{\textquotedbl}. \\
 
+Successful query example : 
 \begin{lstlisting}{language=XML}
 <INFO name="QUERY_STATUS" value="OK" />
+\end{lstlisting} 
+
+Error example :
+\begin{lstlisting}{language=XML}
+<INFO name="QUERY_STATUS" value="ERROR">Parameter TEMPERATURE is not supported</INFO>
 \end{lstlisting}
 
 \paragraph{request\_date}
@@ -688,6 +694,8 @@ Each table row represents a different spectral line. A standard column \textbf{M
 defined UCD as described in the next section.
 
 \subsection{Standard output fields}
+
+Suggested UCDs are given but services are allowed to use other UCDs if more appropriate.
 
 \subsubsection{vacuum\_wavelength}
 
@@ -1020,20 +1028,19 @@ Returns the molecular hydrogen :
 \parexample{INCHIKEY=UFHFLCQGNIYNRP-UHFFFAOYSA-N}
 
 
-\subsubsection{ATOMICITY}
+\subsubsection{NUMBER\_OF\_ATOMS}
 
-A service \textbf{MAY} implement the \textbf{ATOMICITY} parameter to specify the number of atoms in the returned
-species.
+A service \textbf{MAY} implement the \textbf{NUMBER\_OF\_ATOMS} parameter to specify the number of atoms in the returned species.
 
 There is no equivalent VAMDC restrictable for this parameter.
 
 Di-atomic molecules:
 
-\parexample{ATOMICITY=2}
+\parexample{NUMBER\_OF\_ATOMS=2}
 
 Molecules containing 2 to five atoms :
 
-\parexample{ATOMICITY=2 5}
+\parexample{NUMBER\_OF\_ATOMS=2 5}
 
 
 \subsubsection{CHEMICAL\_ELEMENT\_NAME\_STARTSWITH}
@@ -1522,3 +1529,4 @@ atomicity               & Not available                    & MAY  \\
 \bibliography{bibliography/ivoabib,bibliography/docrepo,bibliography/other.bib}
 
 \end{document}
+\textbf{}
