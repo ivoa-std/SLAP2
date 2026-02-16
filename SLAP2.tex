@@ -777,7 +777,7 @@ The NULL value is not authorized.
 
 \subsubsection{inchi}
 
-At most one field \textbf{MUST} have name={"inchi"}, with
+Exactly one field \textbf{MUST} have name={"inchi"}, with
 datatype={"char"}, arraysize={"*"} and
 ucd=\ucd{"phys.atmol.element"}, containing the inchi of the
 chemical element for the lower level of this line. The corresponding VAMDC returnable is  {"\textbf{{AtomInchi}}"} 
@@ -804,7 +804,7 @@ Examples:
 
 \subsubsection{upper\_level\_description}
 
-Exactly one field \textbf{SHOULD} have name={"upper\_level\_description"}, with datatype={"char"}, arraysize={"*"} 
+Exactly one field \textbf{MUST} have name={"upper\_level\_description"}, with datatype={"char"}, arraysize={"*"} 
 and ucd=\ucd{"meta.title;phys.atmol.level"}, containing a full description of the upper level of the transition originating the line. 
 The corresponding VAMDC returnable is  {"\textbf{AtomStateDescription}"} for an atomic state and  {"\textbf{MoleculeStateDescription}"}  for a molecular state.
 The NULL value is authorized.
@@ -882,8 +882,8 @@ The corresponding VAMDC returnable is  {"\textbf{StateEnergy}"}.
 
 \subsubsection{transition}
 
-At most one field \textbf{MUST} have name={"transition"}, with
-datatype={"char"}, unit={"*"} and ucd=\ucd{"phys.atmol.transition"},
+At most one field \textbf{MAY} have name={"transition"}, with
+datatype={"char"}, arraysize={"*"} and ucd=\ucd{"phys.atmol.transition"},
 
 If present, this field will contain a human readable description of the transition in terms of electron configurations
 and/or quantum states before and after. A syntax suggestion is provided in the following paragraphs. 
@@ -1127,7 +1127,7 @@ An example of such a document could be:
   xmlns:vosi="http://www.ivoa.net/xml/VOSICapabilities/v1.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:vs="http://www.ivoa.net/xml/VODataService/v1.1">
-  <capability standardID="ivo://ivoa.net/std/VOSI#availability">
+  <capability standardID="ivo://ivoa.net/std/VOSI#capabilities">
     <interface xsi:type="vs:ParamHTTP" role="std">
       <accessURL use="full">
         http://example.com/slap2/capabilities
@@ -1139,12 +1139,6 @@ An example of such a document could be:
       <accessURL use="full">
         http://example.com/slap2/availability
       </accessURL>
-      <!-- non-compulsory parameters -->
-      <param std="true">
-        <name>inchikey</name>
-        <description>Inchikey of the searched chemical element</description>
-        <dataType arraysize="*">char</dataType>
-      </param>
     </interface>
   </capability>
   <capability standardID="ivo://ivoa.net/std/SLAP#species-2.0">
@@ -1159,33 +1153,38 @@ An example of such a document could be:
       <accessURL use="base">http://example.com/slap2/lines?</accessURL>
       <queryType>GET</queryType>
       <resultType>application/x-votable+xml</resultType>
-      <!-- mandatory parameter -->
-      <param use="required" std="true">
+      <param std="true" use="optional">
         <name>wavelength</name>
         <description>wavelength in the vacuum of the transition originating in the line</description>
         <unit>m</unit>
         <ucd>em.wl</ucd>
         <dataType arraysize="2">real</dataType>
       </param>
-      <!-- non-compulsory parameters -->
-      <param std="true">
+      <param std="true" use="optional">
+        <name>inchikey</name>
+        <description>Inchikey of the searched chemical element</description>
+        <ucd>phys.atmol.element</ucd>
+        <dataType arraysize="*">char</dataType>        
+      </param>
+      <param std="true" use="optional">
         <name>chemical_element</name>
         <description>Name of the searched chemical element</description>
         <ucd>phys.atmol.element</ucd>
         <dataType arraysize="*">char</dataType>
       </param>
-      <param std="true">
+      <param std="true" use="optional">
         <name>ion_charge</name>
         <description>Minimum and maximum charge of an ion</description>
         <ucd>phys.atmol.element;phys.atmol.ionization</ucd>
         <dataType arraysize="2">integer</dataType>
       </param>
       <!-- custom service parameter -->
-      <param std="false">
+      <param std="false" use="optional">
         <name>wavenumber</name>
         <description>Minimum and maximum wavenumber of the line</description>
         <ucd>em.wavenumber</ucd>
-        <dataType arraysize="2">integer</dataType>
+        <unit>m**-1</unit>
+        <dataType arraysize="2">real</dataType>
       </param>
     </interface>
   </capability>
@@ -1290,6 +1289,7 @@ ucd=\ucd{meta.id.cross;em.line}, describing the identification status of the lin
 		<INFO name="last_update_date" value="2025-05-31T10:05:00+01:00" />
 		<TABLE>
 			<FIELD ucd="em.wl" name="vacuum_wavelength" datatype="double" unit="m" />
+      <FIELD ucd="em.wl" name="vacuum_wavelength_error" datatype="double" unit="m" />
 			<FIELD ucd="meta.title" name="line_title" datatype="char" arraysize="*" />
 			<FIELD ucd="phys.energy;phys.atmol.level" name="lower_level_energy"
 				datatype="double" unit="J" />
@@ -1300,11 +1300,13 @@ ucd=\ucd{meta.id.cross;em.line}, describing the identification status of the lin
 			<FIELD ucd="phys.atmol.element" name="chemical_element_name" datatype="char" arraysize="*" />
 			<FIELD ucd="phys.atmol.element;phys.atmol.ionization" name="ion_charge" datatype="int" />
 			<FIELD ucd="phys.atmol.element" name="inchikey" datatype="char" arraysize="*" />
+			<FIELD ucd="phys.atmol.element" name="inchi" datatype="char" arraysize="*" />
 			<FIELD ucd="meta.ref.doi" name="reference_doi" datatype="char" arraysize="*" />
 			<DATA>
 				<TABLEDATA>
 					<TR>
 						<TD>9.0001e-08</TD>
+            <TD></TD>
 						<TD>element : Molecular deuterium, upper energy : 2.3505030918e-18 , lower energy : 1.43849952e-19 </TD>
 						<TD>1.43849952e-19</TD>
 						<TD>2.3505030918e-18</TD>
@@ -1314,10 +1316,12 @@ ucd=\ucd{meta.id.cross;em.line}, describing the identification status of the lin
 						<TD>Molecular deuterium</TD>
 						<TD>0</TD>
 						<TD>UFHFLCQGNIYNRP-VVKOMZTBSA-N</TD>
+						<TD>InChI=1S/H2/h1H/i1+1D</TD>
 						<TD>10.1088/0953-4075/32/15/313</TD>
 					</TR>
 					<TR>
 						<TD>9.0001e-08</TD>
+            <TD></TD>
 						<TD>element : Molecular deuterium, upper energy : 2.2695378438e-18 , lower energy : 6.288390960000001e-20 </TD>
 						<TD>6.288390960000001e-20</TD>
 						<TD>2.2695378438e-18</TD>
@@ -1327,6 +1331,7 @@ ucd=\ucd{meta.id.cross;em.line}, describing the identification status of the lin
 						<TD>Molecular deuterium</TD>
 						<TD>0</TD>
 						<TD>UFHFLCQGNIYNRP-VVKOMZTBSA-N</TD>
+						<TD>InChI=1S/H2/h1H/i1+1D</TD>
 						<TD>10.1088/0953-4075/32/15/313</TD>
 					</TR>
 				</TABLEDATA>
