@@ -55,13 +55,13 @@ spectra.
 
 It makes use of the \href{https://dictionary.vamdc.eu/}{VAMDC dictionary} to define the query parameters and the returned data. This dictionary is actually the equivalent of a 
 relational database view built on top of the data model defined in the \textit{VAMDC XSAMS schema 12.07}
-\citep{std:XSAMS12.07}. The primary objective of this schema is to set up a framework for the correct exchange of atomic, molecular and particle-surface interaction processes data. It has been developped and is currently maintained by the \href{https://vamdc.org/structure/presentation/}{VAMDC Consortium}. Each quantity defined in the dictionary is clearly defined and related to a field in the VAMDC schema.
+\citep{std:XSAMS12.07}. The primary objective of this schema is to set up a framework for the correct exchange of atomic, molecular and particle-surface interaction processes data. It has been developed and is currently maintained by the \href{https://vamdc.org/structure/presentation/}{VAMDC Consortium}. Each quantity defined in the dictionary is clearly defined and related to a field in the VAMDC schema.
 
-Physical quantities of units are described by using the standard VO Units syntax \citep{2014ivoa.spec.0523D}.
+Physical units are described by using the standard VO Units syntax \citep{2014ivoa.spec.0523D}.
 
 SLAP services can be registered in an IVOA \textit{Registry of Resources}
 where they have a unique \textit{ResourceIdentifier}
-\citep{2016ivoa.spec.0523D}
+\citep{2016ivoa.spec.0523D}.
 They will be described using the Simple Line Access extension
 \citep{2017ivoa.spec.0530P} of VOResource to specify their
 compliance level with the SLAP standard and the accepted query
@@ -101,7 +101,7 @@ infrastructure that enable VO applications.
 
 This Simple Line Access Protocol (SLAP henceforth) in its first version \citep{2010ivoa.specQ1209O} made
 use of the work done in the Simple Spectral Lines Data Model definition \citep{2010ivoa.spec.1209O}, as the source of the abstract representation of
-a spectral line. This second version now rely on the standardization work made by 
+a spectral line. This second version now relies on the standardization work made by 
 the VAMDC Consortium in the XSAMS data model to describe quantities \citep{std:XSAMS12.07}.
 
 Web services in the Virtual Observatory infrastructure share a common
@@ -115,14 +115,14 @@ implemented by all services concerning for example :
 \item the retrieval of service metadata.
 \end{itemize}
 
-Following this specifications, the SLAP interface is in many ways
+Following these specifications, the SLAP interface is in many ways
 similar to that of SSAP \citep{2012ivoa.spec.0210T} and SIAP (v2.0)
 \citep{2015ivoa.spec.1223D}.  However, SIAP and SSAP protocols are
 two-step processes. In the first step, the VO client application
 requests metadata from the server. These metadata include links to
 images or spectra. In the second step, the VO client application
 requests the data from the server. In the particular case of Simple Line
-Access Services, \ service will be, in essence, a one-step process,
+Access Services, a service will be, in essence, a one-step process,
 i.e., only one request is needed whose result includes both data and metadata and from that point
 of view it looks more like the Simple Cone Search protocol
 \citep{2008ivoa.specQ0222P}.
@@ -130,7 +130,7 @@ of view it looks more like the Simple Cone Search protocol
 Even if no link to astronomical products is expected because of the
 nature of the service, the metadata associated to each line could contain reference 
 links to html pages, spectra files, spectral line profiles, etc. This is particularly useful for data citation
-because When the output table contains a DOI it can be cited along the data to ensure proper credit to data provider.
+because when the output table contains a DOI it can be cited along the data to ensure proper credit to data provider.
 
 
 \subsection{Role within the VO Architecture}
@@ -371,9 +371,9 @@ The open-ended interval [300,infinity) (all values greater than or equal to
 300 +Inf \\
 The open-ended interval (-infinity,600] (all values less than or equal to 600)
 is: \\
-- Inf 600 \\
+-Inf 600 \\
 The open-ended interval (-infinity,infinity) (all values) is: \\
-- Inf +Inf\\
+-Inf +Inf\\
 
 If specified, the boundary value is always included in the interval. The units
 for numeric values are specified for each parameter and never included in the
@@ -423,11 +423,11 @@ micrometers ( both values are included in search ):
 \subsubsection{MAXREC}
 
 The MAXREC parameter, defined in DALI, allows the client to
-limit the number or records in the response. A service implementation
+limit the number of records in the response. A service implementation
 may also impose default and maximum values for this limit. However the
 limit is determined, if the output is truncated due to the limit, the
 server must indicate this using an overflow indicator (\ref{par:QUERY_STATUS}) except in the special
-case of MAXREC=0 where the service respond with metadata-only (normal
+case of MAXREC=0 where the service responds with metadata-only (normal
 output document with no records).
 
 This parameter is single valued and services must respond with an error if 
@@ -480,13 +480,13 @@ Filter results for neutral Iron atom (InChI=1S/Fe) only :
 
 \subsubsection{SPECIES\_MASS}
 
-The \textbf{SPECIES\_MASS} parameter to specifies the minimum and maximum possible mass value 
+The \textbf{SPECIES\_MASS} parameter specifies the minimum and maximum possible mass value 
 for the searched species, to be specified in Unified Atomic Mass Unit (u).  
 
 The mass will be a float value greater than 0. The provided range will be interpreted as the 
 mass of the chemical species  (ucd=\ucd{phys.atmol.element;phys.mass}; 
 corresponding VAMDC restrictable are {\textquotedbl}AtomMass{\textquotedbl} for atoms and 
-{\textquotedbl}MoleculeMolecularWeight{\textquotedbl} for molecules{\textquotedbl}).
+{\textquotedbl}MoleculeMolecularWeight{\textquotedbl} for molecules).
 
 Filter all atoms chemical species between 0 and 12.011 u:
 
@@ -558,7 +558,7 @@ is {\textquotedbl}RadTransProbabilityA{\textquotedbl}).
 
 Transition probability between 1.1E-7 and 1.2E-7 s-1:
 
-\parexample{EINSTEINA=1.1E-7 1.2E-1}
+\parexample{EINSTEINA=1.1E-7 1.2E-7}
 
 \subsubsection{Custom query parameters}
 
@@ -719,7 +719,7 @@ The NULL value is authorized if the value is unknown.
 
 \subsubsection{vacuum\_wavelength\_error\_original}
 
-Exactly one field \textbf{SHOULD} have name={"vacuum\_wavelength\_error"},
+Exactly one field \textbf{MAY} have name={"vacuum\_wavelength\_error\_original"},
 with datatype={"double"} and ucd=\ucd{"em.wl"}, containing the total error for the wavelength in
 vacuum of the transition originating the line. The unit specified in the unit attribute must be 
 identical to the one used in the \textbf{vacuum\_wavelength\_original} field. 
@@ -764,7 +764,7 @@ The NULL value is not authorized.
 
 At most one field \textbf{MAY} have name={"chemical\_element\_mass"}, with  datatype={"float"} and ucd=\ucd{"phys.atmol.element"}. 
 The field contains the atom mass or the molecular weight of the species, to be specified in Unified Atomic Mass Unit (u). 
-For an atom, the ccorresponding VAMDC returnable is {"\textbf{AtomMass}"}. 
+For an atom, the corresponding VAMDC returnable is {"\textbf{AtomMass}"}. 
 If this is a molecular line, the corresponding VAMDC returnable is {"\textbf{MoleculeMolecularWeight}"}.
 
 \subsubsection{inchikey}
@@ -780,7 +780,7 @@ The NULL value is not authorized.
 Exactly one field \textbf{MUST} have name={"inchi"}, with
 datatype={"char"}, arraysize={"*"} and
 ucd=\ucd{"phys.atmol.element"}, containing the inchi of the
-chemical element for the lower level of this line. The corresponding VAMDC returnable is  {"\textbf{{AtomInchi}}"} 
+chemical element of this line. The corresponding VAMDC returnable is  {"\textbf{{AtomInchi}}"} 
 for an atomic line and  {"\textbf{{MoleculeInchi}}"} for a molecular line.
 The NULL value is not authorized.
 
@@ -816,7 +816,7 @@ The NULL value is authorized.
 \subsubsection{observed\_wavelength}
 
 At most one field \textbf{MAY} have name={"observed\_wavelength"}, with
-datatype={"double"} unit={"m"} and ucd=\ucd{"em.wl"}, containing the observed wavelength in the vacuum of 
+datatype={"double"}, unit={"m"} and ucd=\ucd{"em.wl"}, containing the observed wavelength in the vacuum of 
 the transition originating the line in meters, as it was observed. 
 This may be used by observational spectral line databases. 
 The corresponding VAMDC returnable is  {"\textbf{RadTransWavelength}"}.
@@ -860,7 +860,7 @@ The corresponding VAMDC returnable is  {"\textbf{StateEnergy}"}.
 
 \subsubsection{upper\_level\_energy}
 
-At most one field \textbf{MAY} have name={"upper\_level\_energy"}, corresponding, with
+At most one field \textbf{MAY} have name={"upper\_level\_energy"}, with
 datatype={"double"}, unit={"J"} and
 ucd=\ucd{"phys.energy;phys.atmol.level"},
 describing the energy for the upper level of the transition which originates this line. 
@@ -883,8 +883,7 @@ The corresponding VAMDC returnable is  {"\textbf{StateEnergy}"}.
 \subsubsection{transition}
 
 At most one field \textbf{MAY} have name={"transition"}, with
-datatype={"char"}, arraysize={"*"} and ucd=\ucd{"phys.atmol.transition"},
-
+datatype={"char"}, arraysize={"*"} and ucd=\ucd{"phys.atmol.transition"}.
 If present, this field will contain a human readable description of the transition in terms of electron configurations
 and/or quantum states before and after. A syntax suggestion is provided in the following paragraphs. 
 As this is a protocol meant to stay simple, the text representation is voluntarily simplified. The user
@@ -916,7 +915,7 @@ See \citep{lamport86latex} for a complete reference.
 
 \paragraph{Molecular level quantum states}
 
-The recommended syntax for the quantum numbers is name:nominator:denominator. Quantum Numbers are separated by the ``;'' character.
+The recommended syntax for the quantum numbers is name:numerator:denominator. Quantum Numbers are separated by the ``;'' character.
 To allow for levels needing more than one quantum state to be described, the quantum states would be enclosed by square brackets. 
 Example: [J:1:1;F1:0:1;F:1:1]
 
@@ -936,7 +935,7 @@ arraysize={"*"}, to specify an http link that contains a scientific publication 
 \subsubsection{reference\_additional\_uri}
 
 One or more fields \textbf{MAY} have name={"reference\_additional\_uri"} with ucd=\ucd{"meta.ref.uri"}, datatype={"char"}, arraysize={"*"} and free names, to specify URLs that contains extra information related to the spectral line. Same criteria than before about the CDATA section.
-The corresponding VAMDC restrictable is  {"\textbf{SourceURI}"}.
+The corresponding VAMDC returnable is  {"\textbf{SourceURI}"}.
 
 \subsection{Non-standard output fields}
 \label{sect:lines-nonstd}
@@ -961,7 +960,12 @@ Several restriction parameters are defined to perform some
 search operations on the species list. If none of those parameter is used 
 in the user query, the complete list of species will be returned.
 
-A service must support all the input parameters described in this section. That means that the service must accept them as valid ones without raising an error, and the parameters must be properly used to constrain the query. If one or several parameters can not be implemented in the context of a service, an error must be raised when the parameter is received in a query(see 5.2.1 for the appropriate syntax).
+A service must support all the input parameters described in this section. 
+That means that the service must accept them as valid ones without raising an error, 
+and the parameters must be properly used to constrain the query. 
+If one or several parameters can not be implemented in the context of a service, 
+an error must be raised when the parameter is received in a query 
+(see \ref{par:QUERY_STATUS} for the appropriate syntax).
 
 \subsection{Parameters}
 \label{sect:species-optional-parameters}
@@ -1068,7 +1072,7 @@ The corresponding VAMDC returnable is  {"\textbf{{AtomInchiKey}}"} for an atom a
 
 \subsubsection{inchi}
 
-At most one field \textbf{MUST} have name={"inchi"}, with datatype={"char"}, arraysize={"*"} and ucd=\ucd{"phys.atmol.element"}, containing the inchi of the chemical element. The corresponding VAMDC returnable is  {"\textbf{AtomInchi}"} for an atom and {"\textbf{MoleculeInchi}"} for a molecule. The NULL value is not authorized.
+Exactly one field \textbf{MUST} have name={"inchi"}, with datatype={"char"}, arraysize={"*"} and ucd=\ucd{"phys.atmol.element"}, containing the inchi of the chemical element. The corresponding VAMDC returnable is  {"\textbf{AtomInchi}"} for an atom and {"\textbf{MoleculeInchi}"} for a molecule. The NULL value is not authorized.
 
 \subsubsection{chemical\_element\_stoichiometric\_formula}
 
@@ -1086,16 +1090,16 @@ name={"chemical\_element\_type"}, datatype={"char"},
 arraysize={"*"}. It will describe the type of chemical element, possible values are
 {"atom"} or {"molecule"}
 
-\subsubsection{number_of_elements}
+\subsubsection{number\_of\_elements}
 
-At most one field \textbf{SHOULD} have name={"number_of_elements"}, with  datatype={"int"}. 
+At most one field \textbf{SHOULD} have name={"number\_of\_elements"}, with  datatype={"int"}. 
 The field contains the number of atoms contained in the considered species.
 There is no equivalent returnable in the VAMDC dictionary.
 
 Example of valid values are : 1 for the hydrogen atom, 3 for the water molecule.
 
 
-\section{VOSI-capabilities }
+\section{VOSI-capabilities}
 
 A compliant simple spectral line service \textbf{MUST} provide a
 \{capabilities\} resource used to query the service metadata:
@@ -1194,7 +1198,7 @@ An example of such a document could be:
 \section{Registration and discovering of SLAP resources}
 
 Users can discover a service instance through an IVOA-compliant
-registry. \ The description is recognized as an instance of a SLAP
+registry. The description is recognized as an instance of a SLAP
 service when it complies with the SLAP VOResource metadata extension
 schema \citep{2017ivoa.spec.0530P}.
 
@@ -1227,7 +1231,7 @@ parameter could be used to select other types of lines.
 \begin{itemize}
 \item {\bfseries CORRECTION\_STATUS}
 A service MAY have a search parameter called CORRECTION\_STATUS.
-This parameter would constraint the search to lines with a certain level
+This parameter constrains the search to lines with a certain level
 of identification. The possible values are:
 
 \begin{itemize}
@@ -1347,21 +1351,20 @@ ucd=\ucd{meta.id.cross;em.line}, describing the identification status of the lin
 \begin{table}[H]
 \centering
 \small
-\begin{tabularx}{\textwidth}{|p{4.5cm}|>{\raggedright\arraybackslash}X|p{2.5cm}|}
+\begin{tabularx}{\textwidth}{|p{4.5cm}|>{\raggedright\arraybackslash}X|}
 \hline
-\textbf{SLAP2 parameter name} & \textbf{VAMDC restrictable name} & \textbf{Requirements for compliance in SLAP2} \\
+\textbf{SLAP2 parameter name} & \textbf{VAMDC restrictable name} \\
 \hline
-WAVELENGTH           & RadTransWavelength                  & MUST  \\
-CHEMICAL\_ELEMENT    & AtomSymbol, MoleculeChemicalName    & SHOULD  \\
-INCHIKEY             & InchiKey                            & SHOULD  \\
-SPECIES\_MASS        & AtomMass, MoleculeMolecularWeight   & MAY  \\
-ION\_CHARGE          & IonCharge                           & MAY  \\
-LEVEL\_ENERGY        & StateEnergy                         & MAY  \\
-LOWER\_LEVEL\_ENERGY & StateEnergy                         & MAY  \\
-UPPER\_LEVEL\_ENERGY & StateEnergy                         & MAY  \\
-TEMPERATURE          & EnvironmentTemperature              & MAY  \\
-EINSTEINA            & RadTransProbabilityA                & MAY  \\
-MAXREC               & N/A                                 & MUST  \\
+WAVELENGTH           & RadTransWavelength                  \\
+CHEMICAL\_ELEMENT    & AtomSymbol, MoleculeChemicalName    \\
+INCHIKEY             & InchiKey                            \\
+SPECIES\_MASS        & AtomMass, MoleculeMolecularWeight   \\
+ION\_CHARGE          & IonCharge                           \\
+LOWER\_LEVEL\_ENERGY & StateEnergy                         \\
+UPPER\_LEVEL\_ENERGY & StateEnergy                         \\
+TEMPERATURE          & EnvironmentTemperature              \\
+EINSTEINA            & RadTransProbabilityA                \\
+MAXREC               & N/A                                 \\
 \hline
 \end{tabularx}
 \caption{ /lines endpoint parameters and VAMDC restrictables mapping table }
@@ -1373,33 +1376,33 @@ MAXREC               & N/A                                 & MUST  \\
 \begin{table}[H]
 \centering
 \small
-\begin{tabularx}{\textwidth}{|p{5.5cm}|>{\raggedright\arraybackslash}X|p{2.3cm}|}
+\begin{tabularx}{\textwidth}{|p{5.5cm}|>{\raggedright\arraybackslash}X|p{2.3cm}|p{1.5cm}|}
 \hline
-\textbf{SLAP2 field name} & \textbf{VAMDC returnable name} & \textbf{Requirements for compliance in SLAP2} \\
+\textbf{SLAP2 field name} & \textbf{VAMDC returnable name} & \textbf{Requirements for compliance in SLAP2} & \textbf{Nullable} \\
 \hline
-vacuum\_wavelength                     & RadTransWavelength                                            & MUST  \\
-vacuum\_wavelength\_original           & RadTransWavelength                                            & MAY  \\
-vacuum\_wavelength\_error              & RadTransWavelengthAccuracy                                    & MUST  \\
-vacuum\_wavelength\_error\_original    & RadTransWavelengthAccuracy                                    & MUST  \\
-observed\_wavelength                   & RadTransWavelength + RadTransWavelengthMethod = observed      & MAY  \\
-line\_title                            & RadTransComment                                               & MUST  \\
-chemical\_element\_name                & AtomSymbol, MoleculeChemicalName                              & SHOULD  \\
-chemical\_element\_mass                & AtomMass, MoleculeMolecularWeight                             & MAY  \\
-inchikey                               & AtomInchiKey, MoleculeInchiKey                                & SHOULD  \\
-inchi                                  & AtomInchi, MoleculeInchi                                      & MAY  \\
-ion\_charge                            & AtomIonCharge, MoleculeIonCharge                              & SHOULD  \\
-einstein\_a                             & RadTransProbabilityA                                          & MAY  \\
-process                                & RadTransProcess                                               & MAY  \\
-lower\_level\_energy                   & StateEnergy                                                   & MAY  \\
-lower\_level\_energy\_original         & StateEnergy                                                   & MAY  \\
-upper\_level\_energy                   & StateEnergy                                                   & MAY  \\
-upper\_level\_energy\_original         & StateEnergy                                                   & MAY  \\
-lower\_level\_description              & AtomStateDescription, MoleculeStateDescription                & SHOULD  \\
-upper\_level\_description              & AtomStateDescription, MoleculeStateDescription                & SHOULD  \\
-transition                             &                                                               & MAY  \\
-reference\_doi                         & SourceDOI                                                     & SHOULD  \\
-reference\_uri                         & SourceURI                                                     & SHOULD  \\
-reference\_additional\_uri             & SourceURI                                                     & MAY  \\
+vacuum\_wavelength                     & RadTransWavelength                                            & MUST    &  NO   \\
+vacuum\_wavelength\_original           & RadTransWavelength                                            & MAY     &  YES  \\
+vacuum\_wavelength\_error              & RadTransWavelengthAccuracy                                    & MUST    &  YES  \\
+vacuum\_wavelength\_error\_original    & RadTransWavelengthAccuracy                                    & MAY     &  YES  \\
+line\_title                            & RadTransComment                                               & MUST    &  NO   \\
+chemical\_element\_name                & AtomSymbol, MoleculeChemicalName                              & MUST    &  NO   \\
+chemical\_element\_mass                & AtomMass, MoleculeMolecularWeight                             & MAY     &  YES  \\
+inchikey                               & AtomInchiKey, MoleculeInchiKey                                & MUST    &  NO   \\
+inchi                                  & AtomInchi, MoleculeInchi                                      & MUST    &  NO   \\
+ion\_charge                            & AtomIonCharge, MoleculeIonCharge                              & MUST    &  NO   \\
+lower\_level\_description              & AtomStateDescription, MoleculeStateDescription                & MUST    &  YES  \\
+upper\_level\_description              & AtomStateDescription, MoleculeStateDescription                & MUST    &  YES  \\
+observed\_wavelength                   & RadTransWavelength + RadTransWavelengthMethod = observed      & MAY     &  YES  \\
+einstein\_a                            & RadTransProbabilityA                                          & MAY     &  YES  \\
+process                                & RadTransProcess                                               & MAY     &  YES  \\
+lower\_level\_energy                   & StateEnergy                                                   & MAY     &  YES  \\
+lower\_level\_energy\_original         & StateEnergy                                                   & MAY     &  YES  \\
+upper\_level\_energy                   & StateEnergy                                                   & MAY     &  YES  \\
+upper\_level\_energy\_original         & StateEnergy                                                   & MAY     &  YES  \\
+transition                             & Not available                                                 & MAY     &  YES  \\
+reference\_doi                         & SourceDOI                                                     & SHOULD  &  YES  \\
+reference\_uri                         & SourceURI                                                     & SHOULD  &  YES  \\
+reference\_additional\_uri             & SourceURI                                                     & MAY     &  YES  \\
 \hline
 \end{tabularx}
 \caption{/lines endpoint output fields and VAMDC returnables mapping table}
@@ -1410,15 +1413,15 @@ reference\_additional\_uri             & SourceURI                              
 \begin{table}[H]
 \centering
 \footnotesize
-\begin{tabularx}{\textwidth}{|p{5.8cm}|>{\raggedright\arraybackslash}X|p{2cm}|}
+\begin{tabularx}{\textwidth}{|p{5.8cm}|>{\raggedright\arraybackslash}X|}
 \hline
-\textbf{SLAP2 parameter name} & \textbf{VAMDC restrictable name} & \textbf{Requirements} \\
+\textbf{SLAP2 parameter name} & \textbf{VAMDC restrictable name}\\
 \hline
-ELEMENT\_TYPE                         & Not available                       & SHOULD  \\
-INCHIKEY                              & InchiKey                            & SHOULD  \\
-CHEMICAL\_ELEMENT                     & AtomSymbol, MoleculeChemicalName    & SHOULD  \\
-STOICHIOMETRIC\_FORMULA               & MoleculeStoichiometric\-Formula       & SHOULD  \\
-NUMBER_OF_ELEMENTS                    & Not available                       & MAY  \\
+ELEMENT\_TYPE                         & Not available                       \\
+INCHIKEY                              & InchiKey                            \\
+CHEMICAL\_ELEMENT                     & AtomSymbol, MoleculeChemicalName    \\
+STOICHIOMETRIC\_FORMULA               & MoleculeStoichiometric\-Formula     \\
+NUMBER\_OF\_ELEMENTS                  & Not available                       \\
 
 \hline
 \end{tabularx}
@@ -1432,15 +1435,17 @@ NUMBER_OF_ELEMENTS                    & Not available                       & MA
 \begin{table}[H]
 \centering
 \small
-\begin{tabularx}{\textwidth}{|p{5cm}|>{\raggedright\arraybackslash}X|p{2.5cm}|}
+\begin{tabularx}{\textwidth}{|p{5cm}|>{\raggedright\arraybackslash}X|p{2.5cm}|p{1.5cm}|}
 \hline
-\textbf{SLAP2 field name} & \textbf{VAMDC returnable name} & \textbf{Requirements for compliance} \\
+\textbf{SLAP2 field name} & \textbf{VAMDC returnable name} & \textbf{Requirements for compliance}  & \textbf{Nullable}  \\
 \hline
-chemical\_element\_name & AtomSymbol, MoleculeChemicalName & MUST \\
-ion\_charge             & AtomIonCharge, MoleculeIonCharge & SHOULD \\
-inchikey                & AtomInchiKey, MoleculeInchiKey   & SHOULD \\
-inchi                   & AtomInchi, MoleculeInchi         & MAY \\
-atomicity               & Not available                    & MAY  \\
+chemical\_element\_name                     & AtomSymbol, MoleculeChemicalName & MUST     &  NO   \\
+ion\_charge                                 & AtomIonCharge, MoleculeIonCharge & MUST     &  NO   \\
+inchikey                                    & AtomInchiKey, MoleculeInchiKey   & MUST     &  NO   \\
+inchi                                       & AtomInchi, MoleculeInchi         & MUST     &  NO   \\
+chemical\_element\_stoichiometric\_formula  & MoleculeStoichiometricFormula    & MUST     &  YES  \\
+chemical\_element\_type                     & Not available                    & SHOULD   &  YES  \\
+number\_of\_elements                        & Not available                    & SHOULD   &  YES  \\
 
 \hline
 \end{tabularx}
@@ -1453,10 +1458,7 @@ atomicity               & Not available                    & MAY  \\
 \todo{fill in}
 % these would be subsections "Changes from v. WD-..."
 % Use itemize environments.
-\appendix
-
 
 \bibliography{bibliography/ivoabib,bibliography/docrepo,bibliography/other.bib}
 
 \end{document}
-\textbf{}
