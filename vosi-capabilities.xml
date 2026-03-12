@@ -1,0 +1,66 @@
+<vosi:capabilities
+  xmlns:vosi="http://www.ivoa.net/xml/VOSICapabilities/v1.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:vs="http://www.ivoa.net/xml/VODataService/v1.1">
+  <capability standardID="ivo://ivoa.net/std/VOSI#capabilities">
+    <interface xsi:type="vs:ParamHTTP" role="std">
+      <accessURL use="full">
+        http://example.com/slap2/capabilities
+     </accessURL>
+    </interface>
+  </capability>
+  <capability standardID="ivo://ivoa.net/std/VOSI#availability">
+    <interface xsi:type="vs:ParamHTTP" role="std">
+      <accessURL use="full">
+        http://example.com/slap2/availability
+      </accessURL>
+    </interface>
+  </capability>
+  <capability standardID="ivo://ivoa.net/std/SLAP#species-2.0">
+    <interface xsi:type="vs:ParamHTTP" role="std" version="2.0">
+      <accessURL>
+        http://example.com/slap2/species
+      </accessURL>
+    </interface>
+  </capability>
+  <capability standardID="ivo://ivoa.net/std/SLAP#lines-2.0">
+    <interface role="std" version="2.0" xsi:type="vs:ParamHTTP">
+      <accessURL use="base">http://example.com/slap2/lines?</accessURL>
+      <queryType>GET</queryType>
+      <resultType>application/x-votable+xml</resultType>
+      <param std="true" use="optional">
+        <name>wavelength</name>
+        <description>wavelength in the vacuum of the transition originating in the line</description>
+        <unit>m</unit>
+        <ucd>em.wl</ucd>
+        <dataType arraysize="2">real</dataType>
+      </param>
+      <param std="true" use="optional">
+        <name>inchikey</name>
+        <description>Inchikey of the searched chemical element</description>
+        <ucd>phys.atmol.element</ucd>
+        <dataType arraysize="*">char</dataType>        
+      </param>
+      <param std="true" use="optional">
+        <name>chemical_element</name>
+        <description>Name of the searched chemical element</description>
+        <ucd>phys.atmol.element</ucd>
+        <dataType arraysize="*">char</dataType>
+      </param>
+      <param std="true" use="optional">
+        <name>ion_charge</name>
+        <description>Minimum and maximum charge of an ion</description>
+        <ucd>phys.atmol.element;phys.atmol.ionization</ucd>
+        <dataType arraysize="2">integer</dataType>
+      </param>
+      <!-- custom service parameter -->
+      <param std="false" use="optional">
+        <name>wavenumber</name>
+        <description>Minimum and maximum wavenumber of the line</description>
+        <ucd>em.wavenumber</ucd>
+        <unit>m**-1</unit>
+        <dataType arraysize="2">real</dataType>
+      </param>
+    </interface>
+  </capability>
+</vosi:capabilities>

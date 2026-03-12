@@ -34,10 +34,7 @@
 
 \previousversion[https://ivoa.net/documents/SLAP/20101209/]{REC-1.0}
 
-\def\ivoaDocdatecode{20250627} 
 \def\ivoaDocname{SLAP2}
-\def\ivoaDocversion{1.0}
-\def\ivoaDocdate{2025-06-17}
 \def\ivoaDocauthors{Nicolas Moreau} 
 \def\ivoaDocstatus{WD} 
 \def\ivoaDocid{IVOA-SLAP2-1.0}
@@ -1124,76 +1121,9 @@ be identified through the standardID attribute:
 \end{tabular}
 \end{inlinetable}
 
-An example of such a document could be:
+An example of such a document could be: 
 
-\begin{lstlisting}[language=XML,basicstyle=\small\ttfamily]
-<vosi:capabilities
-  xmlns:vosi="http://www.ivoa.net/xml/VOSICapabilities/v1.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:vs="http://www.ivoa.net/xml/VODataService/v1.1">
-  <capability standardID="ivo://ivoa.net/std/VOSI#capabilities">
-    <interface xsi:type="vs:ParamHTTP" role="std">
-      <accessURL use="full">
-        http://example.com/slap2/capabilities
-     </accessURL>
-    </interface>
-  </capability>
-  <capability standardID="ivo://ivoa.net/std/VOSI#availability">
-    <interface xsi:type="vs:ParamHTTP" role="std">
-      <accessURL use="full">
-        http://example.com/slap2/availability
-      </accessURL>
-    </interface>
-  </capability>
-  <capability standardID="ivo://ivoa.net/std/SLAP#species-2.0">
-    <interface xsi:type="vs:ParamHTTP" role="std" version="2.0">
-      <accessURL>
-        http://example.com/slap2/species
-      </accessURL>
-    </interface>
-  </capability>
-  <capability standardID="ivo://ivoa.net/std/SLAP#lines-2.0">
-    <interface role="std" version="2.0" xsi:type="vs:ParamHTTP">
-      <accessURL use="base">http://example.com/slap2/lines?</accessURL>
-      <queryType>GET</queryType>
-      <resultType>application/x-votable+xml</resultType>
-      <param std="true" use="optional">
-        <name>wavelength</name>
-        <description>wavelength in the vacuum of the transition originating in the line</description>
-        <unit>m</unit>
-        <ucd>em.wl</ucd>
-        <dataType arraysize="2">real</dataType>
-      </param>
-      <param std="true" use="optional">
-        <name>inchikey</name>
-        <description>Inchikey of the searched chemical element</description>
-        <ucd>phys.atmol.element</ucd>
-        <dataType arraysize="*">char</dataType>        
-      </param>
-      <param std="true" use="optional">
-        <name>chemical_element</name>
-        <description>Name of the searched chemical element</description>
-        <ucd>phys.atmol.element</ucd>
-        <dataType arraysize="*">char</dataType>
-      </param>
-      <param std="true" use="optional">
-        <name>ion_charge</name>
-        <description>Minimum and maximum charge of an ion</description>
-        <ucd>phys.atmol.element;phys.atmol.ionization</ucd>
-        <dataType arraysize="2">integer</dataType>
-      </param>
-      <!-- custom service parameter -->
-      <param std="false" use="optional">
-        <name>wavenumber</name>
-        <description>Minimum and maximum wavenumber of the line</description>
-        <ucd>em.wavenumber</ucd>
-        <unit>m**-1</unit>
-        <dataType arraysize="2">real</dataType>
-      </param>
-    </interface>
-  </capability>
-</vosi:capabilities>
-\end{lstlisting}
+\auxiliaryurl{vosi-capabilities.xml}
 
 \section{Registration and discovering of SLAP resources}
 
@@ -1279,72 +1209,7 @@ ucd=\ucd{meta.id.cross;em.line}, describing the identification status of the lin
 
 \section{SLAP valid response example}
 
-\begin{lstlisting}[language=XML,basicstyle=\small\ttfamily]
-<VOTABLE version="1.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://www.ivoa.net/xml/VOTable/v1.3"
-	xsi:schemaLocation="http://www.ivoa.net/xml/VOTable/v1.3 http://www.ivoa.net/xml/VOTable/VOTable-1.3.xsd"
-	xmlns:ssldm="http://www.ivoa.net/xml/SimpleSpectralLineDM/v2.0">
-	<RESOURCE type="results">
-		<INFO name="QUERY_STATUS" value="OK" />
-		<INFO name="request_date" value="2025-10-31T14:57:18+01:00" />
-		<INFO name="service_ivoid" value="ivo://myvo.org/slap2" />
-		<INFO name="service_protocol" value="ivo://ivoa.net/std/SLAP#lines-2.0" />
-		<INFO name="publisher" value="myvo.org" />
-		<INFO name="last_update_date" value="2025-05-31T10:05:00+01:00" />
-		<TABLE>
-			<FIELD ucd="em.wl" name="vacuum_wavelength" datatype="double" unit="m" />
-      <FIELD ucd="em.wl" name="vacuum_wavelength_error" datatype="double" unit="m" />
-			<FIELD ucd="meta.title" name="line_title" datatype="char" arraysize="*" />
-			<FIELD ucd="phys.energy;phys.atmol.level" name="lower_level_energy"
-				datatype="double" unit="J" />
-			<FIELD ucd="phys.energy;phys.atmol.level" name="upper_level_energy" datatype="double" unit="J" />
-			<FIELD ucd="meta.title;phys.atmol.level" name="lower_level_description" datatype="char" arraysize="*" />
-			<FIELD ucd="meta.title;phys.atmol.level" name="upper_level_description" datatype="char" arraysize="*" />
-			<FIELD ucd="phys.atmol.transProb" name="einstein_a" datatype="double" unit="1/s" />
-			<FIELD ucd="phys.atmol.element" name="chemical_element_name" datatype="char" arraysize="*" />
-			<FIELD ucd="phys.atmol.element;phys.atmol.ionization" name="ion_charge" datatype="int" />
-			<FIELD ucd="phys.atmol.element" name="inchikey" datatype="char" arraysize="*" />
-			<FIELD ucd="phys.atmol.element" name="inchi" datatype="char" arraysize="*" />
-			<FIELD ucd="meta.ref.doi" name="reference_doi" datatype="char" arraysize="*" />
-			<DATA>
-				<TABLEDATA>
-					<TR>
-						<TD>9.0001e-08</TD>
-            <TD></TD>
-						<TD>element : Molecular deuterium, upper energy : 2.3505030918e-18 , lower energy : 1.43849952e-19 </TD>
-						<TD>1.43849952e-19</TD>
-						<TD>2.3505030918e-18</TD>
-						<TD>ElecStateLabel=X  J=12  v=1 </TD>
-						<TD>ElecStateLabel=B'  J=13  v=5  elecInv=u  elecRefl=+  Lambda=0  S=0  KronigParity=e </TD>
-						<TD>11629800.0</TD>
-						<TD>Molecular deuterium</TD>
-						<TD>0</TD>
-						<TD>UFHFLCQGNIYNRP-VVKOMZTBSA-N</TD>
-						<TD>InChI=1S/H2/h1H/i1+1D</TD>
-						<TD>10.1088/0953-4075/32/15/313</TD>
-					</TR>
-					<TR>
-						<TD>9.0001e-08</TD>
-            <TD></TD>
-						<TD>element : Molecular deuterium, upper energy : 2.2695378438e-18 , lower energy : 6.288390960000001e-20 </TD>
-						<TD>6.288390960000001e-20</TD>
-						<TD>2.2695378438e-18</TD>
-						<TD>ElecStateLabel=X  J=2  v=1 </TD>
-						<TD>ElecStateLabel=B  J=1  v=35  elecInv=u  elecRefl=+  Lambda=0  S=0  KronigParity=e </TD>
-						<TD>14548700.0</TD>
-						<TD>Molecular deuterium</TD>
-						<TD>0</TD>
-						<TD>UFHFLCQGNIYNRP-VVKOMZTBSA-N</TD>
-						<TD>InChI=1S/H2/h1H/i1+1D</TD>
-						<TD>10.1088/0953-4075/32/15/313</TD>
-					</TR>
-				</TABLEDATA>
-			</DATA>
-		</TABLE>
-	</RESOURCE>
-</VOTABLE>
-
-\end{lstlisting}
+\auxiliaryurl{lines-response-example.vot}
 
 \section{Mapping between /lines endpoint parameters and VAMDC restrictables}
 

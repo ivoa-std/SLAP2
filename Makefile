@@ -30,7 +30,7 @@ FIGURES = role_diagram.svg
 VECTORFIGURES =
 
 # Additional files to distribute (e.g., CSS, schema files, examples...)
-AUX_FILES =
+AUX_FILES = vosi-capabilities.xml, lines-response-example.vot
 
 -include ivoatex/Makefile
 
@@ -39,5 +39,14 @@ ivoatex/Makefile:
 	@echo
 	git submodule update --init
 
+STILTS ?= stilts
+
 test:
-	@echo "No tests defined yet"
+	@$(STILTS) xsdvalidate \
+		schemaloc="http://www.ivoa.net/xml/VOSICapabilities/v1.0 \
+		           http://www.ivoa.net/xml/VOSICapabilities/v1.0" \
+		vosi-capabilities.xml
+	@$(STILTS) xsdvalidate \
+		schemaloc="http://www.ivoa.net/xml/VOTable/v1.3 \
+		           http://www.ivoa.net/xml/VOTable/VOTable-1.3.xsd" \
+		lines-response-example.vot
