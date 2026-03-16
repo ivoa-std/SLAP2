@@ -34,11 +34,7 @@
 
 \previousversion[https://ivoa.net/documents/SLAP/20101209/]{REC-1.0}
 
-\def\ivoaDocname{SLAP2}
 \def\ivoaDocauthors{Nicolas Moreau} 
-\def\ivoaDocstatus{WD} 
-\def\ivoaDocid{IVOA-SLAP2-1.0}
-\def\ivoaDoctype{WD}
 
 \begin{document}
 \begin{abstract}
@@ -264,14 +260,14 @@ state, oscillator strengths or quantum numbers to identify rotational or vibrati
 Using a mass spectrometer, researchers find a molecule with the sum formula C16H10 in a comet. They now want to figure out whether any line in the spectrum of the coma of the parent object corresponds to some molecule with that sum formula. Conversely, a researcher may want to find lines of Methane or perhaps even Methane with one hydrogen atom being replaced by a deuteron. 
 
 In that case,  a first step could be to search in the list of available species if the \{species\} endpoint is available,
-then using the \{lines\} endpoint with CHEMICAL\_ELEMENT or INCHIKEY parameters.
+then using the \{lines\} endpoint with SPECIES or INCHIKEY parameters.
 
 \subsubsection{Finding Well-Known Lines}
 \label{sect:finding-known-line}
 
 A user wants to display the Lyman series over a plot of a spectrum. Hence, a client needs to discover which service holds such data, select the appropriate records - presumably by their properties, perhaps even by their name -, and retrieve them. If multiple services hold the desired data, it might need to reconcile differing specifications. 
 
-This could be done by defining H as the searched CHEMICAL\_ELEMENT and providing a narrow WAVELENGTH interval corresponding to each lines in the serie.
+This could be done by defining H as the searched SPECIES and providing a narrow WAVELENGTH interval corresponding to each lines in the serie.
 
 \subsubsection[Retrieving Spectral Lines for Cross-Identification]{Retrieving Spectral Lines for Cross-Identification}
 \label{sect:line-cross-id}
@@ -354,27 +350,16 @@ combined with a logical OR operator. The constraints from different
 parameters are combined with a logical AND operator. In accordance with these rules, 
 a query to search lines for both hydrogen and helium atoms at once can be written as follows : \\
 
-CHEMICAL\_ELEMENT=H\&CHEMICAL\_ELEMENT=He \\
+SPECIES=H\&SPECIES=He \\
 Query parameters for text or string fields are always case-sensitive and indicate an exact match. \\
 Query parameters for numeric fields accept a single numeric value or a range 
-of values with optional lower and upper bounds. Such range values
-are encoded using the VOTable array serialisation (space separated). If the
-lower or upper bound is not specified, the range is open-ended. In VOTable
-arrays this uses the special values -Inf or +Inf. \\
+of values with optional lower and upper bounds such as defined in the DALI specification \citep{2017ivoa.spec.0517D}. 
+
 For example, the interval [300,600] is: \\
 300 600 \\
 The open-ended interval [300,infinity) (all values greater than or equal to
 300) is: \\
 300 +Inf \\
-The open-ended interval (-infinity,600] (all values less than or equal to 600)
-is: \\
--Inf 600 \\
-The open-ended interval (-infinity,infinity) (all values) is: \\
--Inf +Inf\\
-
-If specified, the boundary value is always included in the interval. The units
-for numeric values are specified for each parameter and never included in the
-value.
 
 \section{\{lines\} resource}
 \label{sect:lines-res}
@@ -434,24 +419,25 @@ Display only 100 lines:
 
 \parexample{MAXREC=100}
 
-\subsubsection{CHEMICAL\_ELEMENT}
+\subsubsection{SPECIES}
 
-The \textbf{CHEMICAL\_ELEMENT} parameter would constrain the search to
-the selected chemical element. A list of different chemical elements
+The \textbf{SPECIES} parameter would constrain the search to
+the selected species. A list of different species
 could be queried by specifying this parameter multiple times (ucd=\ucd{phys.atmol.element}).
 
-Atom can be specified exactly by symbol (corresponding VAMDC restrictable is {\textquotedbl}AtomSymbol{\textquotedbl}). 
-Molecules can be specified by conventional molecular name (formula like CO2, CH4 or names like carbon or water {\dots}) 
+Atom can be specified exactly by symbol (corresponding VAMDC restrictable is {\textquotedbl}AtomSymbol{\textquotedbl}) or names
+like carbon or iron. 
+Molecules can be specified by conventional molecular name (formula like CO2, CH4 or names like carbon dioxyde or water {\dots}) 
 which might not be unique (corresponding VAMDC restrictable is {\textquotedbl}MoleculeChemicalName{\textquotedbl}). 
 The \{species\} endpoint is the recommended place to discover the correct syntax of a given species in a particular service.
 
 Filter results for Iron only : 
 
-\parexample{CHEMICAL\_ELEMENT=Fe}
+\parexample{SPECIES=Fe}
 
 Filter results for Carbon Dioxide molecule only:
 
-\parexample{CHEMICAL\_ELEMENT=CO2}
+\parexample{SPECIES=CO2}
 
 
 \subsubsection{INCHIKEY}
@@ -462,17 +448,28 @@ InChIKey is a compact chemical identifier derived from InChI. The InChIKey is al
 only 27-characters long. 
 
 The \textbf{INCHIKEY} parameter (ucd=\ucd{phys.atmol.element}; corresponding VAMDC restrictable is {\textquotedbl}InchiKey{\textquotedbl}) 
-constrains the search to the chemical element corresponding the provided inchikey value. A list of different
+constrains the search to the species corresponding the provided inchikey value. A list of different
 inchikeys could be queried by specifying this parameter multiple times.
 
 The \{species\} 
 endpoint is the recommended place to discover the InChIkey of a given species in a particular service. You can also 
 use the dedicated \href{https://species.vamdc.org/}{VAMDC Species service}. This service relies on the VAMDC Species
-Database  \citep{Zwölf2024} that regularly harvest the species for which data are available within the VAMDC infrastructure.
+Database \citep{Zwölf2024} that regularly harvest the species for which data are available within the VAMDC infrastructure.
 
 Filter results for neutral Iron atom (InChI=1S/Fe) only : 
 
-\parexample{INCHIKEY=XEEYBQQBJWHFJM-UHFFFAOYSA-N}
+\parexample{INCHIKEY=XEEYBQQBJWHFJM-UHFFFAOYSA-N} \\
+
+When using this parameter, the user must pay attention to isotopes. 
+The InChIKey is generated from the InChI which can contain isotope information. 
+For example, the standard carbon monoxide CO, CO with $^{17}$O and CO with $^{18}$O 
+each have a distinct InChIKey. A query using the InChIKey of CO will therefore 
+not return lines of CO-17 or CO-18, and vice versa. \\
+
+Some examples : \\ 
+\parexample{CO : InChI=1S/CO/c1-2, InChIKey=UGFAIRIUMAVXCW-UHFFFAOYSA-N} \\
+\parexample{CO-17       : InChI=1S/CO/c1-2/i2+1, InChIKey=UGFAIRIUMAVXCW-VQEHIDDOSA-N} \\
+\parexample{CO-18       : InChI=1S/CO/c1-2/i2+2, InChIKey=UGFAIRIUMAVXCW-HQMMCQRPSA-N}
 
 
 \subsubsection{SPECIES\_MASS}
@@ -496,9 +493,9 @@ The \textbf{ION\_CHARGE} parameter specifies the minimum and maximum charge
 of an ion (ucd=\ucd{phys.atmol.element;phys.atmol.ionization}; 
 corresponding VAMDC restrictable is {\textquotedbl}IonCharge{\textquotedbl}).
  
-It will look for the ionized forms of the chemical element specified in CHEMICAL\_ELEMENT
+It will look for the ionized forms of the species specified in SPECIES
 parameter. If it is not defined, the restriction will be applied to all
-the ions available. If several CHEMICAL\_ELEMENT values have been
+the ions available. If several SPECIES values have been
 provided, the ion charge values will be applied to each one of them.
 
 The charge will be an integer value greater than 0 for ionized species
@@ -507,11 +504,11 @@ for neutral.
 
 All lines related to Fe+ ion:
 
-\parexample{CHEMICAL\_ELEMENT=Fe\&ION\_CHARGE=1}
+\parexample{SPECIES=Fe\&ION\_CHARGE=1}
 
 All lines related to positively charged Fe ions and excluding the neutral form :
 
-\parexample{CHEMICAL\_ELEMENT=Fe\&ION\_CHARGE=1 +Inf}
+\parexample{SPECIES=Fe\&ION\_CHARGE=1 +Inf}
 
 \subsubsection{LOWER\_LEVEL\_ENERGY}
 
@@ -690,7 +687,7 @@ with datatype={"double"}, unit={"m"} and
 ucd=\ucd{"em.wl"}, containing the wavelength in
 vacuum of the transition originating the line in meters. 
 The corresponding VAMDC returnable is  {"\textbf{RadTransWavelength"}}.
-The NULL value is not authorized.
+This value must not be NULL.
 
 \subsubsection{vacuum\_wavelength\_original}
 
@@ -712,7 +709,7 @@ ucd=\ucd{"em.wl"}, containing the total error for the wavelength in
 vacuum of the transition originating the line in meters. 
 
 The corresponding VAMDC returnable is  {"\textbf{RadTransWavelengthAccuracy"}}.
-The NULL value is authorized if the value is unknown.
+This value may be NULL if the value is unknown.
 
 \subsubsection{vacuum\_wavelength\_error\_original}
 
@@ -722,6 +719,14 @@ vacuum of the transition originating the line. The unit specified in the unit at
 identical to the one used in the \textbf{vacuum\_wavelength\_original} field. 
 
 The corresponding VAMDC returnable is  {"\textbf{RadTransWavelengthAccuracy"}}.
+
+\subsubsection{observed\_wavelength}
+
+At most one field \textbf{MAY} have name={"observed\_wavelength"}, with
+datatype={"double"}, unit={"m"} and ucd=\ucd{"em.wl"}, containing the observed wavelength in the vacuum of 
+the transition originating the line in meters, as it was observed. 
+This may be used by observational spectral line databases. 
+The corresponding VAMDC returnable is  {"\textbf{RadTransWavelength}"}.
 
 
 \subsubsection{line\_title}
@@ -733,7 +738,7 @@ The corresponding VAMDC returnable is {"\textbf{RadTransComment}"}.
 Note that this line title is only a short string representation to be
 used in the clients for display. There is no required syntax, but it is
 recommended that common species and transition notation be used when
-applicable. The NULL value is not authorized.
+applicable. This value must not be NULL.
 
 Examples:
 \begin{itemize}[label={\small$\bullet$}, itemsep=0pt, parsep=0pt]
@@ -741,25 +746,39 @@ Examples:
   \item \verb|N III 992.873 A|
   \item \verb|H2 0-0 S(1)|
   \item \verb|H2 v=1, J=2 -> v=0, J=0|
+  \item \verb|H Lyman alpha|
+  \item \verb|H I, 2p 2P0 1/2 -> 1s 2S 1/2|
+  \item \verb|N III 23.79941 nm|
+  \item \verb|N III 2s 2p (3P0) 6p, 2P, J=3/2 -> 2s2 2p, 2P0, J=1/2|
+  \item \verb|OH 2509.9 GHz|
+  \item \verb|OH X2Pi, v=0, J=5/2, +, F2 -> X2Pi, v=0, J=3/2, F2, -|
+  \item \verb|CO 115.27 GHz|
+  \item \verb|CO v=0, J=1 -> v=0, J=0|
+  \item \verb|H2 1-0 S(0)|
+  \item \verb|H2 v=1, J=2 -> v=0, J=0|
+  \item \verb|H2 1Sigma_g+ v=1, J=2 -> 1Sigma_g+ v=0, J=0|
 \end{itemize}
+
+
+
 
 In case of corrected but unidentified lines, some examples could be:
 
 Examples: \verb|M31 1001.784 A|, \verb|011910191 800.2 A|
 
-\subsubsection{chemical\_element\_name}
+\subsubsection{species\_name}
 
 Exactly one field \textbf{MUST} have 
-name={"chemical\_element\_name"}, with  datatype={"char"}, arraysize={"*"} and
+name={"species\_name"}, with  datatype={"char"}, arraysize={"*"} and
 ucd=\ucd{"phys.atmol.element"}.
 In the case of an atom, the corresponding VAMDC returnable is {"\textbf{AtomSymbol}"}.
 If this is a molecular line, the corresponding VAMDC returnable is  {"\textbf{MoleculeChemicalName}"}.\\
 Example of valid values are : Fe for a iron line or CH4 for a methane line.
-The NULL value is not authorized.
+This value must not be NULL.
 
-\subsubsection{chemical\_element\_mass}
+\subsubsection{species\_mass}
 
-At most one field \textbf{MAY} have name={"chemical\_element\_mass"}, with  datatype={"float"} and ucd=\ucd{"phys.atmol.element"}. 
+At most one field \textbf{MAY} have name={"species\_mass"}, with  datatype={"float"} and ucd=\ucd{"phys.atmol.element"}. 
 The field contains the atom mass or the molecular weight of the species, to be specified in Unified Atomic Mass Unit (u). 
 For an atom, the corresponding VAMDC returnable is {"\textbf{AtomMass}"}. 
 If this is a molecular line, the corresponding VAMDC returnable is {"\textbf{MoleculeMolecularWeight}"}.
@@ -768,31 +787,31 @@ If this is a molecular line, the corresponding VAMDC returnable is {"\textbf{Mol
 
 Exactly one field \textbf{MUST} have name={"inchikey"}, with datatype={"char"}, arraysize={"*"} and
 ucd=\ucd{"phys.atmol.element"}, containing the inchikey \citep{Heller2015} of
-the chemical element of this line. For an atom, the corresponding VAMDC returnable is  {"\textbf{{AtomInchiKey}}"} 
+the species of this line. For an atom, the corresponding VAMDC returnable is  {"\textbf{{AtomInchiKey}}"} 
 and {"\textbf{{MoleculeInchiKey}}"} for a molecular line.
-The NULL value is not authorized.
+This value must not be NULL.
 
 \subsubsection{inchi}
 
 Exactly one field \textbf{MUST} have name={"inchi"}, with
 datatype={"char"}, arraysize={"*"} and
 ucd=\ucd{"phys.atmol.element"}, containing the inchi of the
-chemical element of this line. The corresponding VAMDC returnable is  {"\textbf{{AtomInchi}}"} 
+species of this line. The corresponding VAMDC returnable is  {"\textbf{{AtomInchi}}"} 
 for an atomic line and  {"\textbf{{MoleculeInchi}}"} for a molecular line.
-The NULL value is not authorized.
+This value must not be NULL.
 
 \subsubsection{ion\_charge}
 
 Exactly one field \textbf{MUST} have name={"ion\_charge"}, with
-datatype={"int"} and ucd=\ucd{"phys.atmol.element;phys.atmol.ionization"}, containing the charge of the chemical element origin of the line. 
-The corresponding VAMDC returnable is {"\textbf{AtomIonCharge}"} for an atomic line and {"\textbf{{MoleculeIonCharge}}"} for a molecular line. The NULL value is not authorized.
+datatype={"int"} and ucd=\ucd{"phys.atmol.element;phys.atmol.ionization"}, containing the charge of the species origin of the line. 
+The corresponding VAMDC returnable is {"\textbf{AtomIonCharge}"} for an atomic line and {"\textbf{{MoleculeIonCharge}}"} for a molecular line. This value must not be NULL.
 
 \subsubsection{lower\_level\_description}
 
 Exactly one field \textbf{MUST} have name={"lower\_level\_description"}, with datatype={"char"}, arraysize={"*"} 
 and ucd=\ucd{"meta.title;phys.atmol.level"}, containing a full description of the lower level of the transition originating the line. 
 The corresponding VAMDC returnable is  {"\textbf{AtomStateDescription}"} for an atomic state and {"\textbf{MoleculeStateDescription}"} for a molecular state.
-The NULL value is authorized.
+This value may be NULL.
 
 Examples:
 \begin{itemize}[label={\small$\bullet$}, itemsep=0pt, parsep=0pt]
@@ -804,19 +823,11 @@ Examples:
 Exactly one field \textbf{MUST} have name={"upper\_level\_description"}, with datatype={"char"}, arraysize={"*"} 
 and ucd=\ucd{"meta.title;phys.atmol.level"}, containing a full description of the upper level of the transition originating the line. 
 The corresponding VAMDC returnable is  {"\textbf{AtomStateDescription}"} for an atomic state and  {"\textbf{MoleculeStateDescription}"}  for a molecular state.
-The NULL value is authorized.
+This value may be NULL.
 
 \begin{itemize}[label={\small$\bullet$}, itemsep=0pt, parsep=0pt]
   \item \verb|H2 v=1, J=2|
 \end{itemize}
-
-\subsubsection{observed\_wavelength}
-
-At most one field \textbf{MAY} have name={"observed\_wavelength"}, with
-datatype={"double"}, unit={"m"} and ucd=\ucd{"em.wl"}, containing the observed wavelength in the vacuum of 
-the transition originating the line in meters, as it was observed. 
-This may be used by observational spectral line databases. 
-The corresponding VAMDC returnable is  {"\textbf{RadTransWavelength}"}.
 
 \subsubsection{einstein\_a}
 At most one field \textbf{MAY} have name={"einstein\_a"}, with
@@ -877,45 +888,6 @@ the Units in the VO recommendation \citep{2023ivoa.spec.1215G}.
 
 The corresponding VAMDC returnable is  {"\textbf{StateEnergy}"}.
 
-\subsubsection{transition}
-
-At most one field \textbf{MAY} have name={"transition"}, with
-datatype={"char"}, arraysize={"*"} and ucd=\ucd{"phys.atmol.transition"}.
-If present, this field will contain a human readable description of the transition in terms of electron configurations
-and/or quantum states before and after. A syntax suggestion is provided in the following paragraphs. 
-As this is a protocol meant to stay simple, the text representation is voluntarily simplified. The user
-is encouraged to use the VAMDC infrastructure to get a more detailed and standardized description of the levels.
-
-\paragraph{Atomic configuration}
-
-It is recommended to use a LaTeX-styled \citep{lamport86latex} convention to describe sub-indexes,
-super-indexes, greek characters, etc. That means the previous atomic
-configuration could be serialized as string in the SLAP response in the
-following way:
-
-$$\hbox{3d\textasciicircum6 4s\textasciicircum2}$$
-
-In the case of molecular levels, we usually need to use Greek symbols,
-so, e.g.,
-
-$$
-\textrm{\textsuperscript{2}}\textrm{\textit{\textsuperscript{S}}}\textrm{\textsuperscript{
-+ 1}}\textrm{$\Lambda $}\textrm{\textsubscript{$\Omega
-$}}\textrm{ }
-$$
-
-would be serialized as
-
-$$\hbox{\^\{2S+1\}{\textbackslash}Lambda \_\{{\textbackslash}Omega \}}$$
-
-See \citep{lamport86latex} for a complete reference.
-
-\paragraph{Molecular level quantum states}
-
-The recommended syntax for the quantum numbers is name:numerator:denominator. Quantum Numbers are separated by the ``;'' character.
-To allow for levels needing more than one quantum state to be described, the quantum states would be enclosed by square brackets. 
-Example: [J:1:1;F1:0:1;F:1:1]
-
 \subsubsection{reference\_doi}
 
 One or more fields \textbf{SHOULD} have name={"reference\_doi"}, with ucd=\ucd{"meta.ref.doi"}, datatype={"char"} and
@@ -948,7 +920,7 @@ whenever possible.
 
 A simple spectral service \textbf{MUST} support a resource listing all
 the species for which lines are available. This operation returns the
-complete list of the chemical elements available in the service. The
+complete list of species available in the service. The
 output returned by the service is a VOTable, an XML table format,
 returned with a MIME-type of
 {"application/x-votable+xml"}.
@@ -967,15 +939,15 @@ an error must be raised when the parameter is received in a query
 \subsection{Parameters}
 \label{sect:species-optional-parameters}
 
-\subsubsection{ELEMENT\_TYPE}
+\subsubsection{SPECIES\_TYPE}
 
-The \textbf{ELEMENT\_TYPE} parameter specifies the type of chemical elements expected in the response. 
+The \textbf{SPECIES\_TYPE} parameter specifies the type of species expected in the response. 
 The possible values are {"atom"} and {"molecule"}. 
 If the parameter is not used in the query then both atoms and molecules are returned.
 
 Returns all the molecules :
 
-\parexample{ELEMENT\_TYPE=molecule}
+\parexample{SPECIES\_TYPE=molecule}
 
 
 \subsubsection{INCHIKEY}
@@ -983,9 +955,22 @@ Returns all the molecules :
 The \textbf{INCHIKEY} parameter tests the existence of a given 
 inchikey in the service data among the data shared by the service.
 
-Returns the molecular hydrogen :
+Returns the molecular hydrogen : \\
+\parexample{INCHIKEY=UFHFLCQGNIYNRP-UHFFFAOYSA-N} \\
 
-\parexample{INCHIKEY=UFHFLCQGNIYNRP-UHFFFAOYSA-N}
+
+
+\subsubsection{INCHI}
+
+The \textbf{INCHI} parameter defines an expression using the SQL LIKE syntax 
+to search for species by their InChI identifier. The search is case sensitive. 
+This allows searching easily for isotopologues of a given species.
+
+Examples: \\
+Returns the molecular hydrogen, exact match : \\
+\parexample{INCHI=1S/H2/h1H} \\
+Look for CO molecule isotopologues, InChI starting with the given chain : \\
+\parexample{INCHI=1S/CO/c1-2\%}
 
 
 \subsubsection{NUMBER\_OF\_ATOMS}
@@ -1002,20 +987,22 @@ Molecules containing 2 to five atoms :
 
 \parexample{NUMBER\_OF\_ATOMS=2 5}
 
-\subsubsection{CHEMICAL\_ELEMENT}
+\subsubsection{SPECIES}
 
-The \textbf{CHEMICAL\_ELEMENT} parameter defines an expression using the SQL LIKE syntax to perform
-a search in the list of chemical elements provided by the service. The search is case-sensitive.
+The \textbf{SPECIES} parameter defines an expression using the SQL LIKE syntax to perform
+a search in the list of species provided by the service. The search is case-sensitive.
 
 Returns carbon monoxide and carbon dioxide :
-\parexample{CHEMICAL\_ELEMENT=CO\_}
+\parexample{SPECIES=CO\_}
 
 Returns Cobalt atom :
-\parexample{CHEMICAL\_ELEMENT=Co}
+\parexample{SPECIES=Co}
 
-Returns all the chemical species whose formula ends with "OH" :
-\parexample{CHEMICAL\_ELEMENT=\%OH}
+Returns all the species whose formula ends with "OH" :
+\parexample{SPECIES=\%OH}
 
+Look for HCN and HCCN molecules, whose formula starts with "HC" and ends with "N" :
+\parexample{SPECIES=H[C]+N}
 
 \subsubsection{STOICHIOMETRIC\_FORMULA}
 
@@ -1039,10 +1026,10 @@ resource are identical to the output of the \{lines\} resource (see section~\ref
 \subsection{Standard output fields}
 \label{species-fields}
 
-\subsubsection{chemical\_element\_name}
+\subsubsection{species\_name}
 
 Exactly one field \textbf{MUST} have
-name={"chemical\_element\_name"}. The
+name={"species\_name"}. The
 corresponding VAMDC returnable is  {"\textbf{AtomSymbol}"} for an atom
 and {"\textbf{MoleculeChemicalName}"} for a molecule.
 
@@ -1051,40 +1038,44 @@ This is the conventional molecule name, e.g. CO2, NH3, FeH, Carbon, Methane ... 
 In both cases, datatype={"char"},
 arraysize={"*"} and
 ucd=\ucd{"phys.atmol.element"}, containing the name of a
-chemical element for which at least one spectral line is available in
-the service. The NULL value is not authorized.
+species for which at least one spectral line is available in
+the service. This value must not be NULL.
 
 \subsubsection{ion\_charge}
 
-Exactly one field \textbf{MUST} have name={"ion\_charge"} with datatype={"int"} and ucd=\ucd{"phys.atmol.element;phys.atmol.ionization"}, containing the charge of  the considered chemical species.
-The corresponding VAMDC returnable is {"\textbf{{AtomIonCharge}}"} for an atom and  {"\textbf{{MoleculeIonCharge}}"} for a molecule. The NULL value is not authorized.
+Exactly one field \textbf{MUST} have name={"ion\_charge"} with datatype={"int"} and ucd=\ucd{"phys.atmol.element;phys.atmol.ionization"}, 
+containing the charge of  the considered chemical species. The corresponding VAMDC returnable is {"\textbf{{AtomIonCharge}}"} 
+for an atom and  {"\textbf{{MoleculeIonCharge}}"} for a molecule. This value must not be NULL.
 
 \subsubsection{inchikey}
 
 Exactly one field \textbf{MUST} have name={"inchikey"}, with
 datatype={"char"}, arraysize={"*"} and ucd=\ucd{"phys.atmol.element"}, containing the inchikey 
-of the chemical element.
+of the chemical species.
 
-The corresponding VAMDC returnable is  {"\textbf{{AtomInchiKey}}"} for an atom and {"\textbf{{MoleculeInchiKey}}"} for a molecule. The NULL value is not authorized.
+The corresponding VAMDC returnable is  {"\textbf{{AtomInchiKey}}"} for an atom and {"\textbf{{MoleculeInchiKey}}"} for a molecule. 
+This value must not be NULL.
 
 \subsubsection{inchi}
 
-Exactly one field \textbf{MUST} have name={"inchi"}, with datatype={"char"}, arraysize={"*"} and ucd=\ucd{"phys.atmol.element"}, containing the inchi of the chemical element. The corresponding VAMDC returnable is  {"\textbf{AtomInchi}"} for an atom and {"\textbf{MoleculeInchi}"} for a molecule. The NULL value is not authorized.
+Exactly one field \textbf{MUST} have name={"inchi"}, with datatype={"char"}, arraysize={"*"} and ucd=\ucd{"phys.atmol.element"}, 
+containing the inchi of the species. The corresponding VAMDC returnable is {"\textbf{AtomInchi}"} for an atom 
+and {"\textbf{MoleculeInchi}"} for a molecule. This value must not be NULL.
 
-\subsubsection{chemical\_element\_stoichiometric\_formula}
+\subsubsection{species\_stoichiometric\_formula}
 
 Exactly one field \textbf{MUST} have
-name={"chemical\_element\_stoichiometric\_formula"}, datatype={"char"},
+name={"species\_stoichiometric\_formula"}, datatype={"char"},
 arraysize={"*"} and
-ucd=\ucd{"phys.atmol.element"}, containing the stoichiometric formula of a chemical element for which at least one spectral line is available in the service. For an atom, the atom symbol can be used as a value.
+ucd=\ucd{"phys.atmol.element"}, containing the stoichiometric formula of a species for which at least one spectral line is available in the service. For an atom, the atom symbol can be used as a value.
 
-The corresponding VAMDC returnable is {"\textbf{MoleculeStoichiometricFormula}"} in the case of a molecule. The value is not defined for an atom. The NULL value is authorized.
+The corresponding VAMDC returnable is {"\textbf{MoleculeStoichiometricFormula}"} in the case of a molecule. The value is not defined for an atom. This value may be NULL.
 
-\subsubsection{chemical\_element\_type}
+\subsubsection{species\_type}
 
 Exactly one field \textbf{SHOULD} have
-name={"chemical\_element\_type"}, datatype={"char"},
-arraysize={"*"}. It will describe the type of chemical element, possible values are
+name={"species\_type"}, datatype={"char"},
+arraysize={"*"}. It will describe the type of species, possible values are
 {"atom"} or {"molecule"}
 
 \subsubsection{number\_of\_atoms}
@@ -1221,7 +1212,7 @@ ucd=\ucd{meta.id.cross;em.line}, describing the identification status of the lin
 \textbf{SLAP2 parameter name} & \textbf{VAMDC restrictable name} \\
 \hline
 WAVELENGTH           & RadTransWavelength                  \\
-CHEMICAL\_ELEMENT    & AtomSymbol, MoleculeChemicalName    \\
+SPECIES              & AtomSymbol, MoleculeChemicalName    \\
 INCHIKEY             & InchiKey                            \\
 SPECIES\_MASS        & AtomMass, MoleculeMolecularWeight   \\
 ION\_CHARGE          & IonCharge                           \\
@@ -1250,8 +1241,8 @@ vacuum\_wavelength\_original           & RadTransWavelength                     
 vacuum\_wavelength\_error              & RadTransWavelengthAccuracy                                    & MUST    &  YES  \\
 vacuum\_wavelength\_error\_original    & RadTransWavelengthAccuracy                                    & MAY     &  YES  \\
 line\_title                            & RadTransComment                                               & MUST    &  NO   \\
-chemical\_element\_name                & AtomSymbol, MoleculeChemicalName                              & MUST    &  NO   \\
-chemical\_element\_mass                & AtomMass, MoleculeMolecularWeight                             & MAY     &  YES  \\
+species\_name                          & AtomSymbol, MoleculeChemicalName                              & MUST    &  NO   \\
+species\_mass                          & AtomMass, MoleculeMolecularWeight                             & MAY     &  YES  \\
 inchikey                               & AtomInchiKey, MoleculeInchiKey                                & MUST    &  NO   \\
 inchi                                  & AtomInchi, MoleculeInchi                                      & MUST    &  NO   \\
 ion\_charge                            & AtomIonCharge, MoleculeIonCharge                              & MUST    &  NO   \\
@@ -1282,11 +1273,12 @@ reference\_additional\_uri             & SourceURI                              
 \hline
 \textbf{SLAP2 parameter name} & \textbf{VAMDC restrictable name}\\
 \hline
-ELEMENT\_TYPE                         & Not available                       \\
+SPECIES\_TYPE                         & Not available                       \\
 INCHIKEY                              & InchiKey                            \\
-CHEMICAL\_ELEMENT                     & AtomSymbol, MoleculeChemicalName    \\
+INCHI                                 & Inchi                               \\
+SPECIES                               & AtomSymbol, MoleculeChemicalName    \\
 STOICHIOMETRIC\_FORMULA               & MoleculeStoichiometric\-Formula     \\
-NUMBER\_OF\_ELEMENTS                  & Not available                       \\
+NUMBER\_OF\_ATOMS                     & Not available                       \\
 
 \hline
 \end{tabularx}
@@ -1304,13 +1296,13 @@ NUMBER\_OF\_ELEMENTS                  & Not available                       \\
 \hline
 \textbf{SLAP2 field name} & \textbf{VAMDC returnable name} & \textbf{Requirements for compliance}  & \textbf{Nullable}  \\
 \hline
-chemical\_element\_name                     & AtomSymbol, MoleculeChemicalName & MUST     &  NO   \\
-ion\_charge                                 & AtomIonCharge, MoleculeIonCharge & MUST     &  NO   \\
-inchikey                                    & AtomInchiKey, MoleculeInchiKey   & MUST     &  NO   \\
-inchi                                       & AtomInchi, MoleculeInchi         & MUST     &  NO   \\
-chemical\_element\_stoichiometric\_formula  & MoleculeStoichiometricFormula    & MUST     &  YES  \\
-chemical\_element\_type                     & Not available                    & SHOULD   &  YES  \\
-number\_of\_elements                        & Not available                    & SHOULD   &  YES  \\
+species\_name                     & AtomSymbol, MoleculeChemicalName & MUST     &  NO   \\
+ion\_charge                       & AtomIonCharge, MoleculeIonCharge & MUST     &  NO   \\
+inchikey                          & AtomInchiKey, MoleculeInchiKey   & MUST     &  NO   \\
+inchi                             & AtomInchi, MoleculeInchi         & MUST     &  NO   \\
+species\_stoichiometric\_formula  & MoleculeStoichiometricFormula    & MUST     &  YES  \\
+species\_type                     & Not available                    & SHOULD   &  YES  \\
+number\_of\_atoms                 & Not available                    & SHOULD   &  YES  \\
 
 \hline
 \end{tabularx}
@@ -1324,6 +1316,6 @@ number\_of\_elements                        & Not available                    &
 % these would be subsections "Changes from v. WD-..."
 % Use itemize environments.
 
-\bibliography{bibliography/ivoabib,bibliography/docrepo,bibliography/other.bib}
+\bibliography{bibliography/ivoabib,bibliography/docrepo,bibliography/other}
 
 \end{document}
