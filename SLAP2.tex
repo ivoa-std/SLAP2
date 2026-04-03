@@ -334,7 +334,7 @@ a registry, the following standardIds will be used :
 \begin{itemize}
   \item \{lines\} : ivo://ivoa.net/std/SLAP\#lines-2.0
   \item \{species\} : ivo://ivoa.net/std/SLAP\#species-2.0
-\end{itemize}
+  \end{itemize}
 
 \subsection{Input parameters}
 \label{sect:input-pars}
@@ -360,6 +360,31 @@ For example, the interval [300,600] is: \\
 The open-ended interval [300,infinity) (all values greater than or equal to
 300) is: \\
 300 +Inf \\
+
+\subsection{Pattern matching}
+\label{sect:pattern-matching}
+
+Some query parameters accept wildcards in order to provide extended search features. 
+In that case, the shell wildcards will be used :
+
+\begin{itemize}
+  \item \textbf{*} matches any sequence of characters (including the empty one)
+  \item \textbf{?} matches any single character
+  \item \textbf{[seq]} matches the character set defined by seq. The sequence can contain either 
+                       a list of characters ( e.g [abc] ) or an interval (e.g [a-c], [1-5])
+\end{itemize}
+
+All the wildcards are case-sensitive.
+
+Examples : 
+\parexample{SPECIES=CO*}  : all species starting with CO \\
+\parexample{SPECIES=*OH} : all species ending with OH \\
+\parexample{SPECIES=CO[2-3]} : CO2 and CO3 \\
+\parexample{SPECIES=CH3?H} : CH3OH and CH3SH \\
+
+At the moment, pattern matching is not used in any other IVOA protocol. If an IVOA standardized
+way to do pattern matching were introduced in the future and it was not compatible with 
+the current specification, this section would be updated in a future release of the standard.
 
 \section{\{lines\} resource}
 \label{sect:lines-res}
@@ -429,7 +454,8 @@ Atom can be specified exactly by symbol (corresponding VAMDC restrictable is {\t
 like carbon or iron. 
 Molecules can be specified by conventional molecular name (formula like CO2, CH4 or names like carbon dioxyde or water {\dots}) 
 which might not be unique (corresponding VAMDC restrictable is {\textquotedbl}MoleculeChemicalName{\textquotedbl}). 
-The \{species\} endpoint is the recommended place to discover the correct syntax of a given species in a particular service.
+The \{species\} endpoint is the recommended place to discover the correct syntax of a given species in a particular service, 
+providing a pattern matching syntax.
 
 Filter results for Iron only : 
 
@@ -536,7 +562,7 @@ The \textbf{TEMPERATURE} parameter specifies the minimum and maximum expected te
 be specified in Kelvin (ucd=\ucd{phys.temperature};corresponding VAMDC restrictable
 is {\textquotedbl}EnvironmentTemperature{\textquotedbl}). This parameter would be used (in particular for
 theoretical spectral line databases) to sort the lines in the output
-using physical models.
+using physical models. 
 
 Temperature between 10 and 50 Kelvins:
 
@@ -679,6 +705,31 @@ Suggested UCDs are given for every columns but services are allowed to use other
 
 \subsection{Standard output fields}
 
+\paragraph{Canonical and Original Units}
+
+The current specification requires a specific unit for each column containing
+numerical values (for example, the wavelength in vacuum must be given in meters). 
+However, the original unit in which the value was provided in the source database may be
+different. To allow the user to know the original unit and the original value
+before conversion, the service MAY provide an additional column where data
+will be provided in the original unit.
+
+The column name is formed by appending the \_original suffix to the
+canonical column name. The ucd suggested for the canonical column is left
+unchanged.
+
+Examples :
+
+\begin{itemize}
+  \item \textbf{Canonical column} :
+    \begin{lstlisting}[basicstyle=\small\ttfamily]
+<FIELD datatype="double" unit="m" name="vacuum_wavelength" ucd="em.wl" />
+    \end{lstlisting}
+  \item \textbf{Column in original unit} :
+    \begin{lstlisting}[basicstyle=\small\ttfamily]
+<FIELD datatype="double" unit="nm" name="vacuum_wavelength_original" ucd="em.wl" />
+    \end{lstlisting}
+\end{itemize}
 
 \subsubsection{vacuum\_wavelength}
 
@@ -688,18 +739,6 @@ ucd=\ucd{"em.wl"}, containing the wavelength in
 vacuum of the transition originating the line in meters. 
 The corresponding VAMDC returnable is  {"\textbf{RadTransWavelength"}}.
 This value must not be NULL.
-
-\subsubsection{vacuum\_wavelength\_original}
-
-At most one field \textbf{MAY} have name={"vacuum\_wavelength\_original"},
-with datatype={"double"} and ucd=\ucd{"em.wl"}. If present, this field will contain the wavelength in vacuum 
-of the transition originating the line, expressed in the original unit used in the source database
-(if the value was not originally provided in meters).
-The content of the unit attribute specifies the original unit in accordance with 
-the Units in the VO recommendation \citep{2023ivoa.spec.1215G}.
-
-The corresponding VAMDC returnable is  {"\textbf{RadTransWavelength"}}.
-
 
 \subsubsection{vacuum\_wavelength\_error}
 
@@ -711,14 +750,6 @@ vacuum of the transition originating the line in meters.
 The corresponding VAMDC returnable is  {"\textbf{RadTransWavelengthAccuracy"}}.
 This value may be NULL if the value is unknown.
 
-\subsubsection{vacuum\_wavelength\_error\_original}
-
-Exactly one field \textbf{MAY} have name={"vacuum\_wavelength\_error\_original"},
-with datatype={"double"} and ucd=\ucd{"em.wl"}, containing the total error for the wavelength in
-vacuum of the transition originating the line. The unit specified in the unit attribute must be 
-identical to the one used in the \textbf{vacuum\_wavelength\_original} field. 
-
-The corresponding VAMDC returnable is  {"\textbf{RadTransWavelengthAccuracy"}}.
 
 \subsubsection{observed\_wavelength}
 
@@ -758,9 +789,6 @@ Examples:
   \item \verb|H2 v=1, J=2 -> v=0, J=0|
   \item \verb|H2 1Sigma_g+ v=1, J=2 -> 1Sigma_g+ v=0, J=0|
 \end{itemize}
-
-
-
 
 In case of corrected but unidentified lines, some examples could be:
 
@@ -851,21 +879,6 @@ describing the energy for the lower level of the transition which originates thi
 The value must appear in Joules to unify results.
 The corresponding VAMDC returnable is  {"\textbf{StateEnergy}"}.
 
-\subsubsection{lower\_level\_energy\_original}
-
-At most one field \textbf{MAY} have name={"lower\_level\_energy\_original"}, with
-datatype={"double"} and ucd=\ucd{"phys.energy;phys.atmol.level"},
-describing the energy for the lower level of the transition which originates this line. 
-
-If present, this field will contain the energy for the lower level of the transition which originates this line, 
-expressed in the original unit used in the source database
-(if the value was not originally provided in Joules).
-The content of the unit attribute specifies the original unit in accordance with 
-the Units in the VO recommendation \citep{2023ivoa.spec.1215G}.
-
-The corresponding VAMDC returnable is  {"\textbf{StateEnergy}"}.
-
-
 \subsubsection{upper\_level\_energy}
 
 At most one field \textbf{MAY} have name={"upper\_level\_energy"}, with
@@ -873,20 +886,6 @@ datatype={"double"}, unit={"J"} and
 ucd=\ucd{"phys.energy;phys.atmol.level"},
 describing the energy for the upper level of the transition which originates this line. 
 The value must appear in Joules to unify results. The corresponding VAMDC returnable is {"\textbf{StateEnergy}"}
-
-\subsubsection{upper\_level\_energy\_original}
-
-At most one field \textbf{MAY} have name={"upper\_level\_energy\_original"}, with
-datatype={"double"} and ucd=\ucd{"phys.energy;phys.atmol.level"},
-describing the energy for the upper level of the transition which originates this line. 
-
-If present, this field will contain the energy for the upper level of the transition which originates this line, 
-expressed in the original unit used in the source database
-(if the value was not originally provided in Joules).
-The content of the unit attribute specifies the original unit in accordance with 
-the Units in the VO recommendation \citep{2023ivoa.spec.1215G}.
-
-The corresponding VAMDC returnable is  {"\textbf{StateEnergy}"}.
 
 \subsubsection{reference\_doi}
 
@@ -962,15 +961,15 @@ Returns the molecular hydrogen : \\
 
 \subsubsection{INCHI}
 
-The \textbf{INCHI} parameter defines an expression using the SQL LIKE syntax 
-to search for species by their InChI identifier. The search is case sensitive. 
+The \textbf{INCHI} parameter defines an expression accepting pattern matching 
+(see \ref{sect:pattern-matching} for exact syntax) to search for species by their InChI identifier. 
 This allows searching easily for isotopologues of a given species.
 
 Examples: \\
 Returns the molecular hydrogen, exact match : \\
 \parexample{INCHI=1S/H2/h1H} \\
 Look for CO molecule isotopologues, InChI starting with the given chain : \\
-\parexample{INCHI=1S/CO/c1-2\%}
+\parexample{INCHI=1S/CO/c1-2*}
 
 
 \subsubsection{NUMBER\_OF\_ATOMS}
@@ -989,33 +988,31 @@ Molecules containing 2 to five atoms :
 
 \subsubsection{SPECIES}
 
-The \textbf{SPECIES} parameter defines an expression using the SQL LIKE syntax to perform
-a search in the list of species provided by the service. The search is case-sensitive.
+The \textbf{SPECIES} parameter defines an expression accepting pattern matching 
+(see \ref{sect:pattern-matching} for exact syntax) to perform a search 
+in the list of species provided by the service.
 
 Returns carbon monoxide and carbon dioxide :
-\parexample{SPECIES=CO\_}
+\parexample{SPECIES=CO*}
 
 Returns Cobalt atom :
 \parexample{SPECIES=Co}
 
 Returns all the species whose formula ends with "OH" :
-\parexample{SPECIES=\%OH}
-
-Look for HCN and HCCN molecules, whose formula starts with "HC" and ends with "N" :
-\parexample{SPECIES=H[C]+N}
+\parexample{SPECIES=*OH}
 
 \subsubsection{STOICHIOMETRIC\_FORMULA}
 
 The stoichiometric formula is a chemical expression that indicates the quantitative composition of 
 atoms that make up the molecule, e.g. CO2, NH3, CH4.
 
-The \textbf{STOICHIOMETRIC\_FORMULA} parameter defines an expression using the SQL LIKE syntax to perform
-a search in the list of stoichiometric formula provided by the service.The search is case-sensitive.
+The \textbf{STOICHIOMETRIC\_FORMULA} parameter defines an expression accepting pattern matching 
+(see \ref{sect:pattern-matching} for exact syntax) to perform
+a search in the list of stoichiometric formula provided by the service.
 
 Returns all the chemical species whose stoichiometric formula starts with CO :
 
-\parexample{STOICHIOMETRIC\_FORMULA=CO\%}
-
+\parexample{STOICHIOMETRIC\_FORMULA=CO*}
 
 \subsection{Successful output}
 \label{species-output}
@@ -1079,7 +1076,6 @@ arraysize={"*"}. It will describe the type of species, possible values are
 {"atom"} or {"molecule"}
 
 \subsubsection{number\_of\_atoms}
-oms
 At most one field \textbf{SHOULD} have name={"number\_of\_atoms"}, with  datatype={"int"}. 
 The field contains the number of atoms contained in the considered species.
 There is no equivalent returnable in the VAMDC dictionary.
@@ -1237,9 +1233,7 @@ MAXREC               & N/A                                 \\
 \textbf{SLAP2 field name} & \textbf{VAMDC returnable name} & \textbf{Requirements for compliance in SLAP2} & \textbf{Nullable} \\
 \hline
 vacuum\_wavelength                     & RadTransWavelength                                            & MUST    &  NO   \\
-vacuum\_wavelength\_original           & RadTransWavelength                                            & MAY     &  YES  \\
 vacuum\_wavelength\_error              & RadTransWavelengthAccuracy                                    & MUST    &  YES  \\
-vacuum\_wavelength\_error\_original    & RadTransWavelengthAccuracy                                    & MAY     &  YES  \\
 line\_title                            & RadTransComment                                               & MUST    &  NO   \\
 species\_name                          & AtomSymbol, MoleculeChemicalName                              & MUST    &  NO   \\
 species\_mass                          & AtomMass, MoleculeMolecularWeight                             & MAY     &  YES  \\
@@ -1252,9 +1246,7 @@ observed\_wavelength                   & RadTransWavelength + RadTransWavelength
 einstein\_a                            & RadTransProbabilityA                                          & MAY     &  YES  \\
 process                                & RadTransProcess                                               & MAY     &  YES  \\
 lower\_level\_energy                   & StateEnergy                                                   & MAY     &  YES  \\
-lower\_level\_energy\_original         & StateEnergy                                                   & MAY     &  YES  \\
 upper\_level\_energy                   & StateEnergy                                                   & MAY     &  YES  \\
-upper\_level\_energy\_original         & StateEnergy                                                   & MAY     &  YES  \\
 transition                             & Not available                                                 & MAY     &  YES  \\
 reference\_doi                         & SourceDOI                                                     & SHOULD  &  YES  \\
 reference\_uri                         & SourceURI                                                     & SHOULD  &  YES  \\
