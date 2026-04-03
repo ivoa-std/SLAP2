@@ -636,7 +636,7 @@ Successful query example :
 <INFO name="QUERY_STATUS" value="OK" />
 \end{lstlisting} 
 
-Error example :
+Error example for a standard parameter :
 \begin{lstlisting}{language=XML}
 <INFO name="QUERY_STATUS" value="ERROR">Parameter TEMPERATURE is not supported</INFO>
 \end{lstlisting}
@@ -862,14 +862,6 @@ At most one field \textbf{MAY} have name={"einstein\_a"}, with
 datatype={"double"}, unit={"1/s"} and ucd=\ucd{"phys.atmol.transProb"}, containing Einstein A value, 
 defined as the probability per unit time s\textsuperscript{-1} for spontaneous emission in a bound-bound transition. 
 The corresponding VAMDC returnable is  {"\textbf{RadTransProbabilityA}"}.
-
-\subsubsection{process}
-
-At most one field \textbf{MAY} have name={"process"}, with
-datatype={"char"} and arraysize={"*"} 
-describing the process for the considered transition. 
-Possible values are excitation or deexcitation. 
-The corresponding VAMDC returnable is  {"\textbf{RadTransProcess}"}.
 
 \subsubsection{lower\_level\_energy}
 
