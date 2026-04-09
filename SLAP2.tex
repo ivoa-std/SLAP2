@@ -427,23 +427,6 @@ micrometers ( both values are included in search ):
 
 \parexample{WAVELENGTH=5.1E-6 5.6E-6}
 
-\subsubsection{MAXREC}
-
-The MAXREC parameter, defined in DALI, allows the client to
-limit the number of records in the response. A service implementation
-may also impose default and maximum values for this limit. However the
-limit is determined, if the output is truncated due to the limit, the
-server must indicate this using an overflow indicator (\ref{par:QUERY_STATUS}) except in the special
-case of MAXREC=0 where the service responds with metadata-only (normal
-output document with no records).
-
-This parameter is single valued and services must respond with an error if 
-the request includes multiple values for it.\\
-
-Display only 100 lines:
-
-\parexample{MAXREC=100}
-
 \subsubsection{SPECIES}
 
 The \textbf{SPECIES} parameter would constrain the search to
@@ -465,6 +448,19 @@ Filter results for Carbon Dioxide molecule only:
 
 \parexample{SPECIES=CO2}
 
+\subsubsection{SPECIES\_MASS}
+
+The \textbf{SPECIES\_MASS} parameter specifies the minimum and maximum possible mass value 
+for the searched species, to be specified in Unified Atomic Mass Unit (u).  
+
+The mass will be a float value greater than 0. The provided range will be interpreted as the 
+mass of the chemical species  (ucd=\ucd{phys.atmol.element;phys.mass}; 
+corresponding VAMDC restrictable are {\textquotedbl}AtomMass{\textquotedbl} for atoms and 
+{\textquotedbl}MoleculeMolecularWeight{\textquotedbl} for molecules).
+
+Filter all atoms chemical species between 0 and 12.011 u:
+
+\parexample{SPECIES\_MASS=0 12.011}
 
 \subsubsection{INCHIKEY}
 
@@ -496,21 +492,6 @@ Some examples : \\
 \parexample{CO : InChI=1S/CO/c1-2, InChIKey=UGFAIRIUMAVXCW-UHFFFAOYSA-N} \\
 \parexample{CO-17       : InChI=1S/CO/c1-2/i2+1, InChIKey=UGFAIRIUMAVXCW-VQEHIDDOSA-N} \\
 \parexample{CO-18       : InChI=1S/CO/c1-2/i2+2, InChIKey=UGFAIRIUMAVXCW-HQMMCQRPSA-N}
-
-
-\subsubsection{SPECIES\_MASS}
-
-The \textbf{SPECIES\_MASS} parameter specifies the minimum and maximum possible mass value 
-for the searched species, to be specified in Unified Atomic Mass Unit (u).  
-
-The mass will be a float value greater than 0. The provided range will be interpreted as the 
-mass of the chemical species  (ucd=\ucd{phys.atmol.element;phys.mass}; 
-corresponding VAMDC restrictable are {\textquotedbl}AtomMass{\textquotedbl} for atoms and 
-{\textquotedbl}MoleculeMolecularWeight{\textquotedbl} for molecules).
-
-Filter all atoms chemical species between 0 and 12.011 u:
-
-\parexample{SPECIES\_MASS=0 12.011}
 
 
 \subsubsection{ION\_CHARGE}
@@ -579,6 +560,23 @@ is {\textquotedbl}RadTransProbabilityA{\textquotedbl}).
 Transition probability between 1.1E-7 and 1.2E-7 s-1:
 
 \parexample{EINSTEINA=1.1E-7 1.2E-7}
+
+\subsubsection{MAXREC}
+
+The MAXREC parameter, defined in DALI, allows the client to
+limit the number of records in the response. A service implementation
+may also impose default and maximum values for this limit. However the
+limit is determined, if the output is truncated due to the limit, the
+server must indicate this using an overflow indicator (\ref{par:QUERY_STATUS}) except in the special
+case of MAXREC=0 where the service responds with metadata-only (normal
+output document with no records).
+
+This parameter is single valued and services must respond with an error if 
+the request includes multiple values for it.\\
+
+Display only 100 lines:
+
+\parexample{MAXREC=100}
 
 \subsubsection{Custom query parameters}
 
@@ -1236,7 +1234,6 @@ lower\_level\_description              & AtomStateDescription, MoleculeStateDesc
 upper\_level\_description              & AtomStateDescription, MoleculeStateDescription                & MUST    &  YES  \\
 observed\_wavelength                   & RadTransWavelength + RadTransWavelengthMethod = observed      & MAY     &  YES  \\
 einstein\_a                            & RadTransProbabilityA                                          & MAY     &  YES  \\
-process                                & RadTransProcess                                               & MAY     &  YES  \\
 lower\_level\_energy                   & StateEnergy                                                   & MAY     &  YES  \\
 upper\_level\_energy                   & StateEnergy                                                   & MAY     &  YES  \\
 transition                             & Not available                                                 & MAY     &  YES  \\
