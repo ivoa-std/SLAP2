@@ -436,7 +436,8 @@ could be queried by specifying this parameter multiple times (ucd=\ucd{phys.atmo
 Atom can be specified exactly by symbol (corresponding VAMDC restrictable is {\textquotedbl}AtomSymbol{\textquotedbl}) or names
 like carbon or iron. 
 Molecules can be specified by conventional molecular name (formula like CO2, CH4 or names like carbon dioxyde or water {\dots}) 
-which might not be unique (corresponding VAMDC restrictable is {\textquotedbl}MoleculeChemicalName{\textquotedbl}). 
+which might not be unique (corresponding VAMDC restrictable are {\textquotedbl}MoleculeChemicalName{\textquotedbl} and 
+{\textquotedbl}MoleculeOrdinaryStructuralFormula{\textquotedbl}). 
 The \{species\} endpoint is the recommended place to discover the correct syntax of a given species in a particular service, 
 providing a pattern matching syntax.
 
@@ -590,8 +591,8 @@ through the VOSI-capabilities operation.
 Using this information, a VO client would be able to dynamically
 construct a form, where this information could be inserted.
 
-\subsection{Successful output}
-\label{sect:lines-output}
+\subsection{Response format}
+\label{sect:lines-response-format}
 
 The output returned by a SLAP service is a VOTable
 \citep{2013ivoa.spec.0920O}, an XML table format, returned with a
@@ -1004,7 +1005,7 @@ Returns all the chemical species whose stoichiometric formula starts with CO :
 
 \parexample{STOICHIOMETRIC\_FORMULA=CO*}
 
-\subsection{Successful output}
+\subsection{Response format}
 \label{species-output}
 
 The global metadata returned by a SLAP service for the \{species\}
@@ -1198,7 +1199,7 @@ ucd=\ucd{meta.id.cross;em.line}, describing the identification status of the lin
 \textbf{SLAP2 parameter name} & \textbf{VAMDC restrictable name} \\
 \hline
 WAVELENGTH           & RadTransWavelength                  \\
-SPECIES              & AtomSymbol, MoleculeChemicalName    \\
+SPECIES              & AtomSymbol, MoleculeChemicalName, MoleculeOrdinaryStructuralFormula \\
 INCHIKEY             & InchiKey                            \\
 SPECIES\_MASS        & AtomMass, MoleculeMolecularWeight   \\
 ION\_CHARGE          & IonCharge                           \\
@@ -1257,7 +1258,7 @@ reference\_additional\_uri             & SourceURI                              
 SPECIES\_TYPE                         & Not available                       \\
 INCHIKEY                              & InchiKey                            \\
 INCHI                                 & Inchi                               \\
-SPECIES                               & AtomSymbol, MoleculeChemicalName    \\
+SPECIES                               & AtomSymbol, MoleculeChemicalName, MoleculeOrdinaryStructuralFormula \\
 STOICHIOMETRIC\_FORMULA               & MoleculeStoichiometric\-Formula     \\
 NUMBER\_OF\_ATOMS                     & Not available                       \\
 
