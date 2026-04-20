@@ -709,7 +709,11 @@ Suggested UCDs are given for every columns but services are allowed to use other
 The current specification requires a specific unit for each column containing
 numerical values (for example, the wavelength in vacuum must be given in meters). 
 However, the original unit in which the value was provided in the source database may be
-different. To allow the user to know the original unit and the original value
+different. For example, this standard provides wavelength in meters whereas the original
+database may provide transitions in $cm^{-1}$, GHz or {\AA}.
+
+
+To allow the user to know the original unit and the original value
 before conversion, the service MAY provide an additional column where data
 will be provided in the original unit.
 
@@ -739,6 +743,10 @@ vacuum of the transition originating the line in meters.
 The corresponding VAMDC returnable is  {"\textbf{RadTransWavelength"}}.
 This value must not be NULL.
 
+One field MAY have name="vacuum\_wavelength\_original" with the same attributes
+as the canonical column, except for the unit, to provide the wavelength 
+in its original publication unit.
+
 \subsubsection{vacuum\_wavelength\_error}
 
 Exactly one field \textbf{MUST} have name={"vacuum\_wavelength\_error"},
@@ -748,6 +756,10 @@ vacuum of the transition originating the line in meters.
 
 The corresponding VAMDC returnable is  {"\textbf{RadTransWavelengthAccuracy"}}.
 This value may be NULL if the value is unknown.
+
+One field MAY have name="vacuum\_wavelength\_error\_original" with the same attributes
+as the canonical column, except for the unit, to provide the wavelength error
+in its original publication unit.
 
 
 \subsubsection{observed\_wavelength}
@@ -870,6 +882,10 @@ describing the energy for the lower level of the transition which originates thi
 The value must appear in Joules to unify results.
 The corresponding VAMDC returnable is  {"\textbf{StateEnergy}"}.
 
+One field MAY have name="lower\_energy\_original" with the same attributes
+as the canonical column, except for the unit, to provide the energy of the lower level
+in its original publication unit.
+
 \subsubsection{upper\_level\_energy}
 
 At most one field \textbf{MAY} have name={"upper\_level\_energy"}, with
@@ -877,6 +893,10 @@ datatype={"double"}, unit={"J"} and
 ucd=\ucd{"phys.energy;phys.atmol.level"},
 describing the energy for the upper level of the transition which originates this line. 
 The value must appear in Joules to unify results. The corresponding VAMDC returnable is {"\textbf{StateEnergy}"}
+
+One field MAY have name="upper\_energy\_original" with the same attributes
+as the canonical column, except for the unit, to provide the energy of the upper level
+in its original publication unit.
 
 \subsubsection{reference\_doi}
 
