@@ -565,7 +565,7 @@ Transition probability between 1.1E-7 and 1.2E-7 s-1:
 
 \subsubsection{MAXREC}
 
-The MAXREC parameter, defined in DALI, allows the client to
+The MAXREC parameter, defined in DALI \citep{2017ivoa.spec.0517D}., allows the client to
 limit the number of records in the response. A service implementation
 may also impose default and maximum values for this limit. However the
 limit is determined, if the output is truncated due to the limit, the
@@ -579,6 +579,14 @@ the request includes multiple values for it.\\
 Display only 100 lines:
 
 \parexample{MAXREC=100}
+
+\subsubsection{RESPONSEFORMAT}
+
+The RESPONSEFORMAT parameter, defined in DALI \citep{2017ivoa.spec.0517D}, allows the client to specify the format 
+of the response. SLAP2 services MUST support application/x-votable+xml and text/xml, 
+both referring to VOTable output. If the parameter is omitted, the service MUST return application/x-votable+xml by default. 
+The service MUST return an error if a format not supported is requested.
+
 
 \subsubsection{Custom query parameters}
 
@@ -1015,8 +1023,8 @@ Returns all the species whose formula ends with "OH" :
 
 \subsubsection{STOICHIOMETRIC\_FORMULA}
 
-The stoichiometric formula is a chemical expression that indicates the quantitative composition of 
-atoms that make up the molecule, e.g. CO2, NH3, CH4.
+For molecules it is constituted by an alphabetical suite of the atomic constituents followed
+ by the total number of their occurence (purely ASCII), for example CO2, NH3, CH4.
 
 The \textbf{STOICHIOMETRIC\_FORMULA} parameter defines an expression accepting pattern matching 
 (see \ref{sect:pattern-matching} for exact syntax) to perform
@@ -1025,6 +1033,13 @@ a search in the list of stoichiometric formula provided by the service.
 Returns all the chemical species whose stoichiometric formula starts with CO :
 
 \parexample{STOICHIOMETRIC\_FORMULA=CO*}
+
+\subsubsection{RESPONSEFORMAT}
+
+The RESPONSEFORMAT parameter, defined in DALI \citep{2017ivoa.spec.0517D}, allows the client to specify the format 
+of the response. SLAP2 services MUST support application/x-votable+xml and text/xml, 
+both referring to VOTable output. If the parameter is omitted, the service MUST return application/x-votable+xml by default. 
+The service MUST return an error if a format not supported is requested.
 
 \subsection{Response format}
 \label{species-output}
