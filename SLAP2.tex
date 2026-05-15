@@ -1220,9 +1220,9 @@ ucd=\ucd{meta.id.cross;em.line}, describing the identification status of the lin
 \textbf{SLAP2 parameter name} & \textbf{VAMDC restrictable name} \\
 \hline
 WAVELENGTH           & RadTransWavelength                  \\
-SPECIES              & AtomSymbol, MoleculeChemicalName, MoleculeOrdinaryStructuralFormula \\
+SPECIES              & AtomSymbol, Molecule\-Chemical\-Name, Molecule\-Ordinary\-Structural\-Formula \\
 INCHIKEY             & InchiKey                            \\
-SPECIES\_MASS        & AtomMass, MoleculeMolecularWeight   \\
+SPECIES\_MASS        & AtomMass, Molecule\-Molecular\-Weight   \\
 ION\_CHARGE          & IonCharge                           \\
 LOWER\_LEVEL\_ENERGY & StateEnergy                         \\
 UPPER\_LEVEL\_ENERGY & StateEnergy                         \\
@@ -1239,22 +1239,22 @@ MAXREC               & N/A                                 \\
 
 \begin{table}[H]
 \centering
-\small
-\begin{tabularx}{\textwidth}{|p{5.5cm}|>{\raggedright\arraybackslash}X|p{2.3cm}|p{1.5cm}|}
+\footnotesize
+\begin{tabularx}{\textwidth}{|p{4cm}|>{\raggedright\arraybackslash}X|p{2.3cm}|p{1.5cm}|}
 \hline
 \textbf{SLAP2 field name} & \textbf{VAMDC returnable name} & \textbf{Requirements for compliance in SLAP2} & \textbf{Nullable} \\
 \hline
 vacuum\_wavelength                     & RadTransWavelength                                            & MUST    &  NO   \\
-vacuum\_wavelength\_error              & RadTransWavelengthAccuracy                                    & MUST    &  YES  \\
+vacuum\_wavelength\_error              & RadTransWavelength\-Accuracy                                    & MUST    &  YES  \\
 line\_title                            & RadTransComment                                               & MUST    &  NO   \\
-species\_name                          & AtomSymbol, MoleculeChemicalName                              & MUST    &  NO   \\
-species\_mass                          & AtomMass, MoleculeMolecularWeight                             & MAY     &  YES  \\
-inchikey                               & AtomInchiKey, MoleculeInchiKey                                & MUST    &  NO   \\
+species\_name                          & AtomSymbol, Molecule\-Chemical\-Name                              & MUST    &  NO   \\
+species\_mass                          & AtomMass, Molecule\-Molecular\-Weight                             & MAY     &  YES  \\
+inchikey                               & Atom\-Inchi\-Key, Molecule\-Inchi\-Key                            & MUST    &  NO   \\
 inchi                                  & AtomInchi, MoleculeInchi                                      & MUST    &  NO   \\
-ion\_charge                            & AtomIonCharge, MoleculeIonCharge                              & MUST    &  NO   \\
-lower\_level\_description              & AtomStateDescription, MoleculeStateDescription                & MUST    &  YES  \\
-upper\_level\_description              & AtomStateDescription, MoleculeStateDescription                & MUST    &  YES  \\
-observed\_wavelength                   & RadTransWavelength + RadTransWavelengthMethod = observed      & MAY     &  YES  \\
+ion\_charge                            & Atom\-Ion\-Charge, Molecule\-Ion\-Charge                          & MUST    &  NO   \\
+lower\_level\_description              & Atom\-State\-Description, Molecule\-State\-Description            & MUST    &  YES  \\
+upper\_level\_description              & Atom\-State\-Description, Molecule\-State\-Description            & MUST    &  YES  \\
+observed\_wavelength                   & RadTrans\-Wavelength + RadTrans\-Wavelength\-Method = observed    & MAY     &  YES  \\
 einstein\_a                            & RadTransProbabilityA                                          & MAY     &  YES  \\
 lower\_level\_energy                   & StateEnergy                                                   & MAY     &  YES  \\
 upper\_level\_energy                   & StateEnergy                                                   & MAY     &  YES  \\
@@ -1279,8 +1279,8 @@ reference\_additional\_uri             & SourceURI                              
 SPECIES\_TYPE                         & Not available                       \\
 INCHIKEY                              & InchiKey                            \\
 INCHI                                 & Inchi                               \\
-SPECIES                               & AtomSymbol, MoleculeChemicalName, MoleculeOrdinaryStructuralFormula \\
-STOICHIOMETRIC\_FORMULA               & MoleculeStoichiometric\-Formula     \\
+SPECIES                               & AtomSymbol, Molecule\-Chemical\-Name, Molecule\-Ordinary\-Structural\-Formula \\
+STOICHIOMETRIC\_FORMULA               & Molecule\-Stoichio\-metric\-Formula     \\
 NUMBER\_OF\_ATOMS                     & Not available                       \\
 
 \hline
@@ -1294,16 +1294,16 @@ NUMBER\_OF\_ATOMS                     & Not available                       \\
 
 \begin{table}[H]
 \centering
-\small
+\footnotesize
 \begin{tabularx}{\textwidth}{|p{5cm}|>{\raggedright\arraybackslash}X|p{2.5cm}|p{1.5cm}|}
 \hline
 \textbf{SLAP2 field name} & \textbf{VAMDC returnable name} & \textbf{Requirements for compliance}  & \textbf{Nullable}  \\
 \hline
-species\_name                     & AtomSymbol, MoleculeChemicalName & MUST     &  NO   \\
-ion\_charge                       & AtomIonCharge, MoleculeIonCharge & MUST     &  NO   \\
-inchikey                          & AtomInchiKey, MoleculeInchiKey   & MUST     &  NO   \\
-inchi                             & AtomInchi, MoleculeInchi         & MUST     &  NO   \\
-species\_stoichiometric\_formula  & MoleculeStoichiometricFormula    & MUST     &  YES  \\
+species\_name                     & AtomSymbol, Molecule\-Chemical\-Name    & MUST     &  NO   \\
+ion\_charge                       & Atom\-Ion\-Charge, Molecule\-Ion\-Charge & MUST     &  NO   \\
+inchikey                          & Atom\-Inchi\-Key, Molecule\-Inchi\-Key   & MUST     &  NO   \\
+inchi                             & AtomInchi, MoleculeInchi                & MUST     &  NO   \\
+species\_stoichiometric\_formula  & Molecule\-Stoichio\-metric\-Formula      & MUST     &  YES  \\
 species\_type                     & Not available                    & SHOULD   &  YES  \\
 number\_of\_atoms                 & Not available                    & SHOULD   &  YES  \\
 
