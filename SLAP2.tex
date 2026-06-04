@@ -582,6 +582,7 @@ Display only 100 lines:
 \parexample{MAXREC=100}
 
 \subsubsection{RESPONSEFORMAT}
+\label{sect:lines-responseformat}
 
 The RESPONSEFORMAT parameter, defined in DALI \citep{2017ivoa.spec.0517D}, allows the client to specify the format 
 of the response. SLAP2 services MUST support application/x-votable+xml and text/xml, 
@@ -1037,7 +1038,8 @@ Returns methanol and its isotopologues (e.g. \textsuperscript{13}CH$_3$OH, CH$_3
 \subsubsection{MAXREC}
 
 The MAXREC parameter, defined in DALI \citep{2017ivoa.spec.0517D}, allows the client to
-limit the number of records in the response ( see \ref{sect:lines-maxrec} for the complete parameter description ).
+limit the number of records in the response 
+( see \ref{sect:lines-maxrec} for the complete parameter description ).
 
 Display only 10 species:
 
@@ -1046,9 +1048,7 @@ Display only 10 species:
 \subsubsection{RESPONSEFORMAT}
 
 The RESPONSEFORMAT parameter, defined in DALI \citep{2017ivoa.spec.0517D}, allows the client to specify the format 
-of the response. SLAP2 services MUST support application/x-votable+xml and text/xml, 
-both referring to VOTable output. If the parameter is omitted, the service MUST return application/x-votable+xml by default. 
-The service MUST return an error if a format not supported is requested.
+of the response ( see \ref{sect:lines-responseformat} for the complete parameter description ).
 
 \subsection{Response format}
 \label{species-output}
