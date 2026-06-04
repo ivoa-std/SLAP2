@@ -564,8 +564,9 @@ Transition probability between 1.1E-7 and 1.2E-7 s-1:
 \parexample{EINSTEINA=1.1E-7 1.2E-7}
 
 \subsubsection{MAXREC}
+\label{sect:lines-maxrec}
 
-The MAXREC parameter, defined in DALI \citep{2017ivoa.spec.0517D}., allows the client to
+The MAXREC parameter, defined in DALI \citep{2017ivoa.spec.0517D}, allows the client to
 limit the number of records in the response. A service implementation
 may also impose default and maximum values for this limit. However the
 limit is determined, if the output is truncated due to the limit, the
@@ -1035,16 +1036,8 @@ Returns methanol and its isotopologues (e.g. \textsuperscript{13}CH$_3$OH, CH$_3
 
 \subsubsection{MAXREC}
 
-The MAXREC parameter, defined in DALI \citep{2017ivoa.spec.0517D}., allows the client to
-limit the number of records in the response. A service implementation
-may also impose default and maximum values for this limit. However the
-limit is determined, if the output is truncated due to the limit, the
-server must indicate this using an overflow indicator (\ref{par:QUERY_STATUS}) except in the special
-case of MAXREC=0 where the service responds with metadata-only (normal
-output document with no records).
-
-This parameter is single valued and services must respond with an error if 
-the request includes multiple values for it.\\
+The MAXREC parameter, defined in DALI \citep{2017ivoa.spec.0517D}, allows the client to
+limit the number of records in the response ( see \ref{sect:lines-maxrec} for the complete parameter description ).
 
 Display only 10 species:
 
