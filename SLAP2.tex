@@ -281,11 +281,22 @@ Users may have various reasons to retrieve a larger number of spectral lines:
 
     When computing theoretical spectra, a comparison to the (observed) ground truth is desirable.
 
-The challenge in all these cases is that displaying all lines known obviously is impossible due to the sheer volume of the data, and it would not help users in any way. Hence, the client needs to have some idea of which lines can be expected to be strong given the physics of the emission's source region.
+The challenge in all these cases is that displaying all lines known obviously is impossible 
+due to the sheer volume of the data, and it would not help users in any way. 
+Hence, the client needs to have some idea of which lines can be expected to be strong given 
+the physics of the emission's source region.
 
-Selecting the lines before retrieval is a significant optimisation in this case, as in wider spectra at least hundreds of thousands of lines will be within the spectral range, while it probably rarely makes sense to plot more than a hundred or so. Hence, careful selection of lines can reduce the volume of data transferred and processed by the client by several orders of magnitude.
+In broad spectral ranges, hundreds of thousands of lines may fall within the selected interval, 
+whereas users typically need to display only a few dozen to a few hundred lines. 
+Careful pre-selection can therefore reduce the amount of data transferred to and 
+processed by the client by several orders of magnitude.
 
-To make good on this promise, the service need to be queryable such that lines suspected to be strong for some combination of chemistry, temperature, and pressure can be filtered out with some accuracy. 
+To achieve this, the service should support queries based on relevant filtering criteria, 
+such as the Einstein A coefficient, the number of atoms in the molecule 
+(to exclude overly complex species), and the upper-level energy, 
+allowing users to remove lines that are unlikely to be present under the physical conditions 
+of interest.
+
 
 \clearpage\section{Query interface}
 \label{sect:query-interface}
@@ -539,17 +550,6 @@ Energy of upper level between 3.93E-18 and 3.94E-18 Joules:
 
 \parexample{UPPER\_LEVEL\_ENERGY=3.93E-18 3.94E-18}
 
-\subsubsection{TEMPERATURE}
-
-The \textbf{TEMPERATURE} parameter specifies the minimum and maximum expected temperatures of the object, to
-be specified in Kelvin (ucd=\ucd{phys.temperature};corresponding VAMDC restrictable
-is {\textquotedbl}EnvironmentTemperature{\textquotedbl}). This parameter would be used (in particular for
-theoretical spectral line databases) to sort the lines in the output
-using physical models. 
-
-Temperature between 10 and 50 Kelvins:
-
-\parexample{TEMPERATURE=10 50}
 
 \subsubsection{EINSTEINA}
 
@@ -1032,6 +1032,23 @@ a search in the list of stoichiometric formula provided by the service.
 
 Returns methanol and its isotopologues (e.g. \textsuperscript{13}CH$_3$OH, CH$_3$O\textsuperscript{17}H) :
 \parexample{STOICHIOMETRIC\_FORMULA=CH4O}
+
+\subsubsection{MAXREC}
+
+The MAXREC parameter, defined in DALI \citep{2017ivoa.spec.0517D}., allows the client to
+limit the number of records in the response. A service implementation
+may also impose default and maximum values for this limit. However the
+limit is determined, if the output is truncated due to the limit, the
+server must indicate this using an overflow indicator (\ref{par:QUERY_STATUS}) except in the special
+case of MAXREC=0 where the service responds with metadata-only (normal
+output document with no records).
+
+This parameter is single valued and services must respond with an error if 
+the request includes multiple values for it.\\
+
+Display only 10 species:
+
+\parexample{MAXREC=10}
 
 \subsubsection{RESPONSEFORMAT}
 
