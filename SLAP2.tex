@@ -1250,9 +1250,9 @@ SPECIES\_MASS        & AtomMass, Molecule\-Molecular\-Weight   \\
 ION\_CHARGE          & IonCharge                           \\
 LOWER\_LEVEL\_ENERGY & StateEnergy                         \\
 UPPER\_LEVEL\_ENERGY & StateEnergy                         \\
-TEMPERATURE          & EnvironmentTemperature              \\
 EINSTEINA            & RadTransProbabilityA                \\
-MAXREC               & N/A                                 \\
+MAXREC               & Not available                       \\
+RESPONSEFORMAT       & Not available                       \\
 \hline
 \end{tabularx}
 \caption{ /lines endpoint parameters and VAMDC restrictables mapping table }
@@ -1282,7 +1282,6 @@ observed\_wavelength                   & RadTrans\-Wavelength + RadTrans\-Wavele
 einstein\_a                            & RadTransProbabilityA                                          & MAY     &  YES  \\
 lower\_level\_energy                   & StateEnergy                                                   & MAY     &  YES  \\
 upper\_level\_energy                   & StateEnergy                                                   & MAY     &  YES  \\
-transition                             & Not available                                                 & MAY     &  YES  \\
 reference\_doi                         & SourceDOI                                                     & SHOULD  &  YES  \\
 reference\_uri                         & SourceURI                                                     & SHOULD  &  YES  \\
 reference\_additional\_uri             & SourceURI                                                     & MAY     &  YES  \\
@@ -1305,8 +1304,9 @@ INCHIKEY                              & InchiKey                            \\
 INCHI                                 & Inchi                               \\
 SPECIES                               & AtomSymbol, Molecule\-Chemical\-Name, Molecule\-Ordinary\-Structural\-Formula \\
 STOICHIOMETRIC\_FORMULA               & Molecule\-Stoichio\-metric\-Formula     \\
-NUMBER\_OF\_ATOMS                     & Not available                       \\
-
+NUMBER\_OF\_ATOMS                     & Not available                        \\
+MAXREC                                & Not available                        \\
+RESPONSEFORMAT                        & Not available                        \\
 \hline
 \end{tabularx}
 \caption{ /species endpoint parameters and VAMDC restrictables mapping table }
