@@ -510,7 +510,7 @@ Some examples of InChI and InChIkey : \\
 \subsubsection{ION\_CHARGE}
 
 The \textbf{ION\_CHARGE} parameter specifies the minimum and maximum charge 
-of an ion (ucd=\ucd{phys.atmol.element;phys.atmol.ionization}; 
+of an ion (ucd=\ucd{phys.atmol.ionization}; 
 corresponding VAMDC restrictable is {\textquotedbl}IonCharge{\textquotedbl}).
  
 It will look for the ionized forms of the species specified in SPECIES
@@ -853,7 +853,7 @@ This value must not be NULL.
 \subsubsection{ion\_charge}
 
 Exactly one field \textbf{MUST} have name={"ion\_charge"}, with
-datatype={"int"} and ucd=\ucd{"phys.atmol.element;phys.atmol.ionization"}, containing the charge of the species origin of the line. 
+datatype={"int"} and ucd=\ucd{"phys.atmol.ionization"}, containing the charge of the species origin of the line. 
 The corresponding VAMDC returnable is {"\textbf{AtomIonCharge}"} for an atomic line and {"\textbf{{MoleculeIonCharge}}"} for a molecular line. This value must not be NULL.
 
 \subsubsection{lower\_level\_description}
@@ -1076,7 +1076,7 @@ the service. This value must not be NULL.
 
 \subsubsection{ion\_charge}
 
-Exactly one field \textbf{MUST} have name={"ion\_charge"} with datatype={"int"} and ucd=\ucd{"phys.atmol.element;phys.atmol.ionization"}, 
+Exactly one field \textbf{MUST} have name={"ion\_charge"} with datatype={"int"} and ucd=\ucd{"phys.atmol.ionization"}, 
 containing the charge of  the considered chemical species. The corresponding VAMDC returnable is {"\textbf{{AtomIonCharge}}"} 
 for an atom and  {"\textbf{{MoleculeIonCharge}}"} for a molecule. This value must not be NULL.
 
