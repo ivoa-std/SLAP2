@@ -426,7 +426,7 @@ Similarly, if an unknown parameter is passed to the service, an error must be ra
 
 The \textbf{WAVELENGTH} parameter specifies the spectral range of interest,
 to be specified in meters of wavelength in the vacuum.
-(ucd=\ucd{em.wl}; the corresponding VAMDC restrictable is ``RadTransWavelength''
+(the corresponding VAMDC restrictable is ``RadTransWavelength''
 to be specified in Angstroms).
 
 Example: To query for spectral lines in the wavelength range between 5.1 and 5.6
@@ -438,9 +438,9 @@ micrometers (both values are included in search):
 
 The \textbf{SPECIES} parameter constrains the search to
 the selected species and it is matched against the \texttt{species\_name} output column. A list of different species
-could be queried by specifying this parameter multiple times (ucd=\ucd{phys.atmol.element}).
+could be queried by specifying this parameter multiple times.
 
-Atoms can be specified exactly by symbol (corresponding VAMDC restrictable is ``AtomSymbol'') or names
+Atoms can be specified exactly by symbol (corresponding VAMDC restrictable is \vamdcref{AtomSymbol}) or names
 like carbon or iron.
 Molecules can be specified by a conventional molecular name (a formula like \emph{CO2}, \emph{CH4} or names like \emph{carbon dioxyde} or \emph{water})
 which might not be unique (corresponding VAMDC restrictable are ``MoleculeChemicalName'' and
@@ -463,9 +463,8 @@ The \textbf{SPECIES\_MASS} parameter specifies the minimum and maximum possible 
 for the searched species, to be specified in Unified Atomic Mass Unit (u).
 
 The mass will be a float value greater than 0. The provided range will be interpreted as the
-mass of the chemical species  (ucd=\ucd{phys.atmol.element;phys.mass};
-corresponding VAMDC restrictable are ``AtomMass'' for atoms and
-``MoleculeMolecularWeight'' for molecules).
+mass of the chemical species  (corresponding VAMDC restrictable are \vamdcref{AtomMass} for atoms and
+\vamdcref{MoleculeMolecularWeight} for molecules).
 
 Filter all atoms chemical species between 0 and 12.011 u:
 
@@ -478,7 +477,7 @@ It is a string of characters capable of uniquely representing a chemical substan
 InChIKey is a compact chemical identifier derived from InChI. The InChIKey is always
 only 27-characters long.
 
-The \textbf{INCHIKEY} parameter (ucd=\ucd{phys.atmol.element}; corresponding VAMDC restrictable is ``InchiKey'')
+The \textbf{INCHIKEY} parameter (corresponding VAMDC restrictable is \vamdcref{InchiKey})
 constrains the search to the species corresponding the provided inchikey value. A list of different
 inchikeys could be queried by specifying this parameter multiple times.
 
@@ -506,8 +505,7 @@ Some examples of InChI and InChIkey: \\
 \subsubsection{ION\_CHARGE}
 
 The \textbf{ION\_CHARGE} parameter specifies the minimum and maximum charge
-of an ion (ucd=\ucd{phys.atmol.element;phys.atmol.ionization};
-the corresponding VAMDC restrictable is ``IonCharge'').
+of an ion (the corresponding VAMDC restrictable is \vamdcref{IonCharge}).
 
 Use this parameter to look for ionized forms when you specify a species
 with the SPECIES
@@ -532,8 +530,7 @@ All lines related to positively charged Fe ions and excluding the neutral form:
 \subsubsection{LOWER\_LEVEL\_ENERGY}
 
 The \textbf{LOWER\_LEVEL\_ENERGY} parameter specifies the minimum and maximum energy for the lower level of the transition,
-to be expressed in Joules (ucd=\ucd{phys.energy;phys.atmol.level}; the corresponding VAMDC restrictable
- is ``StateEnergy'').
+to be expressed in Joules (the corresponding VAMDC restrictable is \vamdcref{StateEnergy}).
 
 Example: Energy of lower level between 3.93E-18 and 3.94E-18 Joules:
 
@@ -542,8 +539,8 @@ Example: Energy of lower level between 3.93E-18 and 3.94E-18 Joules:
 \subsubsection{UPPER\_LEVEL\_ENERGY}
 
 The \textbf{UPPER\_LEVEL\_ENERGY} parameter specifies the minimum
-and maximum energy for the upper level of the transition, to be expressed in Joules (ucd=\ucd{phys.energy;phys.atmol.level};
-the corresponding VAMDC restrictable is {"StateEnergy"}).
+and maximum energy for the upper level of the transition, to be expressed in Joules 
+(the corresponding VAMDC restrictable is \vamdcref{StateEnergy}).
 
 Example: Energy of upper level between 3.93E-18 and 3.94E-18 Joules:
 
@@ -555,8 +552,7 @@ Example: Energy of upper level between 3.93E-18 and 3.94E-18 Joules:
 The \textbf{EINSTEINA} parameter constrains the
 transition probability by specifying the minimum and maximum Einstein A, defined as the probability
 per unit time for spontaneous emission in a bound-bound
-transition (ucd=\ucd{phys.atmol.transProb}; the corresponding VAMDC restrictable
-is ``RadTransProbabilityA'').
+transition (the corresponding VAMDC restrictable is \vamdcref{RadTransProbabilityA}).
 
 Example: Transition probability between 1.1E-7 and 1.2E-7 $\textrm{s}^{-1}$:
 
@@ -985,7 +981,8 @@ Example: Return all the molecules:
 \subsubsection{INCHIKEY}
 
 The \textbf{INCHIKEY} parameter tests the existence of a given
-inchikey in the service data among the data shared by the service.
+inchikey in the service data among the data shared by the service (corresponding
+VAMDC restrictable is \vamdcref{InchiKey}).
 
 Example: Return metadata for molecular hydrogen:
 
@@ -997,7 +994,8 @@ Example: Return metadata for molecular hydrogen:
 
 The \textbf{INCHI} parameter defines an expression accepting pattern matching
 (see \ref{sect:pattern-matching} for exact syntax) to search for species by their InChI identifier.
-This allows searching easily for isotopologues of a given species.
+This allows searching easily for isotopologues of a given species (corresponding
+VAMDC restrictable is \vamdcref{Inchi}).
 
 Examples:
 
@@ -1030,7 +1028,9 @@ Molecules containing 2 to five atoms:
 
 The \textbf{SPECIES} parameter defines an expression accepting pattern matching
 (see \ref{sect:pattern-matching} for exact syntax) to perform a search
-in the list of species provided by the service.
+in the list of species provided by the service (corresponding VAMDC restrictable 
+is \vamdcref{AtomSymbol} for atoms,  \vamdcref{MoleculeChemicalName} and \vamdcref{MoleculeOrdi-
+naryStructuralFormula} for molecules).
 
 Example: Return carbon monoxide and carbon dioxide:
 
@@ -1051,7 +1051,8 @@ by the total number of their occurence (purely ASCII), for example CO2, NH3, CH4
 
 The \textbf{STOICHIOMETRIC\_FORMULA} parameter defines an expression accepting pattern matching
 (see \ref{sect:pattern-matching} for exact syntax) to perform
-a search in the list of stoichiometric formula provided by the service.
+a search in the list of stoichiometric formula provided by the service (corresponding VAMDC restrictable 
+is \vamdcref{MoleculeStoichiometricFormula}).
 
 Example:
 
