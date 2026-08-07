@@ -416,8 +416,11 @@ That means that the service must accept them as valid ones without
 raising an error, and the parameters must be properly used to constrain
 the query.
 
-If one or several parameters cannot be implemented on the a particular collection of lines,
-an error must be raised when the parameter is received in a query (see \ref{par:QUERY_STATUS} for the appropriate syntax).
+When all values in the corresponding column are NULL or an optional column is not present,
+an error must be raised when the parameter is received in a query 
+(see \ref{par:QUERY_STATUS} for the appropriate syntax).
+
+Similarly, if an unknown parameter is passed to the service, an error must be raised.
 
 \subsubsection{WAVELENGTH}
 
@@ -963,8 +966,10 @@ That means that the service must accept them as valid ones without
 raising an error, and the parameters must be properly used to constrain
 the query.
 
-If one or several parameters cannot be implemented on the a particular collection of lines,
+When all values in the corresponding column are NULL or an optional column is not present,
 an error must be raised when the parameter is received in a query (see \ref{par:QUERY_STATUS} for the appropriate syntax).
+
+Similarly, if an unknown parameter is passed to the service, an error must be raised.
 
 \subsubsection{SPECIES\_TYPE}
 
@@ -1114,10 +1119,10 @@ Exactly one field \textbf{MUST} have \attrval{name}{inchi}, with \attrval{dataty
 containing the inchi of the species. The corresponding VAMDC returnable is \vamdcref{AtomInchi} for an atom
 and \vamdcref{MoleculeInchi} for a molecule. This value must not be NULL.
 
-\subsubsection{species\_stoichiometric\_formula}
+\subsubsection{stoichiometric\_formula}
 
 Exactly one field \textbf{MUST} have
-\attrval{name}{species\_stoichiometric\_formula}, \attrval{datatype}{char},
+\attrval{name}{stoichiometric\_formula}, \attrval{datatype}{char},
 \attrval{arraysize}{*} and
 \attrval{ucd}{phys.atmol.element}, containing the stoichiometric formula of a species for which at least one spectral line is available in the service. For an atom, the atom symbol can be used as a value.
 
@@ -1348,7 +1353,7 @@ species\_name                     & AtomSymbol, Molecule\-Chemical\-Name    & MU
 ion\_charge                       & Atom\-Ion\-Charge, Molecule\-Ion\-Charge & MUST     &  NO   \\
 inchikey                          & Atom\-Inchi\-Key, Molecule\-Inchi\-Key   & MUST     &  NO   \\
 inchi                             & AtomInchi, MoleculeInchi                & MUST     &  NO   \\
-species\_stoichiometric\_formula  & Molecule\-Stoichio\-metric\-Formula      & MUST     &  YES  \\
+stoichiometric\_formula           & Molecule\-Stoichio\-metric\-Formula      & MUST     &  YES  \\
 species\_type                     & Not available                    & SHOULD   &  YES  \\
 number\_of\_atoms                 & Not available                    & SHOULD   &  YES  \\
 

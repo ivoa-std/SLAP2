@@ -403,7 +403,7 @@ components:
         | ion_charge | int | — | phys.atmol.element;phys.atmol.ionization | **MUST** | NO |
         | inchikey | char | — | phys.atmol.element | **MUST** | NO |
         | inchi | char | — | phys.atmol.element | **MUST** | NO |
-        | species_stoichiometric_formula | char | — | phys.atmol.element | **MUST** | YES |
+        | stoichiometric_formula | char | — | phys.atmol.element | **MUST** | YES |
         | species_type | char | — | — | **SHOULD** | YES |
         | number_of_atoms | int | — | — | **SHOULD** | YES |
       xml:
