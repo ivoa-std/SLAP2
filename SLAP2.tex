@@ -376,8 +376,6 @@ In that case, the shell wildcards will be used :
 \begin{itemize}
   \item \textbf{*} matches any sequence of characters (including the empty one)
   \item \textbf{?} matches any single character
-  \item \textbf{[seq]} matches the character set defined by seq. The sequence can contain either
-                       a list of characters ( e.g [abc] ) or an interval (e.g [a-c], [1-5])
 \end{itemize}
 
 All the wildcards are case-sensitive.
@@ -387,7 +385,6 @@ Examples:
 \begin{description}
 \item[\parexample{SPECIES=CO*}]  all species starting with CO
 \item[\parexample{SPECIES=*OH}] all species ending with OH
-\item[\parexample{SPECIES=CO[2-3]}] CO2 and CO3
 \item[\parexample{SPECIES=CH3?H}] CH3OH and CH3SH
 \end{description}
 
