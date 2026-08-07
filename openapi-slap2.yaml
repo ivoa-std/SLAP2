@@ -11,7 +11,7 @@ info:
     listed here (marked with `x-slap-standard: false`).
 
     Responses are returned as VOTable 1.5 XML documents (`application/x-votable+xml`).
-    Parameter names are case-insensitive. Interval parameters accept a space-separated pair
+    Parameter names are case-sensitive. Interval parameters accept a space-separated pair
     of values (`min max`), with `-Inf` and `+Inf` supported for open-ended ranges.
     Pattern parameters use shell wildcard syntax: `*` (any sequence), `?` (any character),
     `[seq]` (character class). Multiple occurrences of the same parameter are combined
@@ -365,7 +365,7 @@ components:
         | ion_charge | int | — | phys.atmol.element;phys.atmol.ionization | **MUST** | NO | AtomIonCharge, MoleculeIonCharge |
         | lower_level_description | char | — | meta.title;phys.atmol.level | **MUST** | YES | AtomStateDescription, MoleculeStateDescription |
         | upper_level_description | char | — | meta.title;phys.atmol.level | **MUST** | YES | AtomStateDescription, MoleculeStateDescription |
-        | einstein_a | double | 1/s | phys.atmol.transProb | **MAY** | YES | RadTransProbabilityA |
+        | einsteina | double | s⁻¹ | phys.atmol.transProb | **MAY** | YES | RadTransProbabilityA |
         | lower_level_energy | double | J | phys.energy;phys.atmol.level | **MAY** | YES | StateEnergy |
         | upper_level_energy | double | J | phys.energy;phys.atmol.level | **MAY** | YES | StateEnergy |
         | reference_doi | char | — | meta.ref.doi | **SHOULD** | YES | SourceDOI |
@@ -403,7 +403,7 @@ components:
         | ion_charge | int | — | phys.atmol.element;phys.atmol.ionization | **MUST** | NO |
         | inchikey | char | — | phys.atmol.element | **MUST** | NO |
         | inchi | char | — | phys.atmol.element | **MUST** | NO |
-        | species_stoichiometric_formula | char | — | phys.atmol.element | **MUST** | YES |
+        | stoichiometric_formula | char | — | phys.atmol.element | **MUST** | YES |
         | species_type | char | — | — | **SHOULD** | YES |
         | number_of_atoms | int | — | — | **SHOULD** | YES |
       xml:

@@ -348,12 +348,9 @@ the VO Registry is discussed in sect.~\ref{sect:reg}.
 \subsection{Input parameters}
 \label{sect:input-pars}
 
-As specified in the DALI recommendation, parameter names are not
-case sensitive\todo{Let's change that. Case-sensitive rules!}; a SLAP service must treat upper-, lower-, and mixed-case
-parameter names as equal. Parameter values are case sensitive.
-All query parameters are multi-valued which means multiple occurrences
-of the parameter=value pairs as specified in the DALI recommendation are
-permitted, excepting the MAXREC parameter which is single valued.
+Parameter names are case sensitive. Thus, for the SLAP2 protocol, WAVELENGTH parameter is valid 
+and wavelength is not. Parameter values are case sensitive.
+Parameters are single-valued by default. Exception will be specified in the parameter description section.
 The constraints from multiple occurrences of a parameter are
 combined with a logical OR operator. The constraints from different
 parameters are combined with a logical AND operator. In accordance with these rules,
@@ -379,8 +376,6 @@ In that case, the shell wildcards will be used :
 \begin{itemize}
   \item \textbf{*} matches any sequence of characters (including the empty one)
   \item \textbf{?} matches any single character
-  \item \textbf{[seq]} matches the character set defined by seq. The sequence can contain either
-                       a list of characters ( e.g [abc] ) or an interval (e.g [a-c], [1-5])
 \end{itemize}
 
 All the wildcards are case-sensitive.
@@ -390,7 +385,6 @@ Examples:
 \begin{description}
 \item[\parexample{SPECIES=CO*}]  all species starting with CO
 \item[\parexample{SPECIES=*OH}] all species ending with OH
-\item[\parexample{SPECIES=CO[2-3]}] CO2 and CO3
 \item[\parexample{SPECIES=CH3?H}] CH3OH and CH3SH
 \end{description}
 
@@ -415,22 +409,18 @@ That means that the service must accept them as valid ones without
 raising an error, and the parameters must be properly used to constrain
 the query.
 
-If one or several parameters cannot be implemented on the a particular collection of lines,
-an error must be raised when the parameter is received in a query (see \ref{par:QUERY_STATUS} for the appropriate syntax).
+When all values in the corresponding column are NULL or an optional column is not present,
+an error must be raised when the parameter is received in a query 
+(see \ref{par:QUERY_STATUS} for the appropriate syntax).
+
+Similarly, if an unknown parameter is passed to the service, an error must be raised.
 
 \subsubsection{WAVELENGTH}
 
 The \textbf{WAVELENGTH} parameter specifies the spectral range of interest,
 to be specified in meters of wavelength in the vacuum.
-(ucd=\ucd{em.wl}; the corresponding VAMDC restrictable is ``RadTransWavelength''
+(the corresponding VAMDC restrictable is ``RadTransWavelength''
 to be specified in Angstroms).
-
-As the units in the spectral line database could be different than
-meters, the service will need to translate from the selected units
-(meters) to the internal ones. The selection of one type of units (in
-this case the SI unit meters) will help to unify access to different
-spectral line databases, even when in some cases, the unit selected
-(meter) may not be the best one for the range of interest.
 
 Example: To query for spectral lines in the wavelength range between 5.1 and 5.6
 micrometers (both values are included in search):
@@ -440,17 +430,17 @@ micrometers (both values are included in search):
 \subsubsection{SPECIES}
 
 The \textbf{SPECIES} parameter constrains the search to
-the selected species. A list of different species
-could be queried by specifying this parameter multiple times (ucd=\ucd{phys.atmol.element}).
+the selected species and it is matched against the \texttt{species\_name} output column. A list of different species
+could be queried by specifying this parameter multiple times.
 
-Atoms can be specified exactly by symbol (corresponding VAMDC restrictable is ``AtomSymbol'') or names
+Atoms can be specified exactly by symbol (corresponding VAMDC restrictable is \vamdcref{AtomSymbol}) or names
 like carbon or iron.
 Molecules can be specified by a conventional molecular name (a formula like \emph{CO2}, \emph{CH4} or names like \emph{carbon dioxyde} or \emph{water})
 which might not be unique (corresponding VAMDC restrictable are ``MoleculeChemicalName'' and
 ``MoleculeOrdinaryStructuralFormula'').
 In the case of molecules, the \{species\} endpoint must be used
-to discover the local designation(s) of a given species.  To interoperably
-specify molecule species, use the INCHIKEY parameter.
+to discover the local designation(s) of a given species.  
+To interoperably specify molecule species (for example while performing cross service queries), use the INCHIKEY parameter.
 
 Example: Filter results for Iron only:
 
@@ -466,9 +456,8 @@ The \textbf{SPECIES\_MASS} parameter specifies the minimum and maximum possible 
 for the searched species, to be specified in Unified Atomic Mass Unit (u).
 
 The mass will be a float value greater than 0. The provided range will be interpreted as the
-mass of the chemical species  (ucd=\ucd{phys.atmol.element;phys.mass};
-corresponding VAMDC restrictable are ``AtomMass'' for atoms and
-``MoleculeMolecularWeight'' for molecules).
+mass of the chemical species  (corresponding VAMDC restrictable are \vamdcref{AtomMass} for atoms and
+\vamdcref{MoleculeMolecularWeight} for molecules).
 
 Filter all atoms chemical species between 0 and 12.011 u:
 
@@ -481,7 +470,7 @@ It is a string of characters capable of uniquely representing a chemical substan
 InChIKey is a compact chemical identifier derived from InChI. The InChIKey is always
 only 27-characters long.
 
-The \textbf{INCHIKEY} parameter (ucd=\ucd{phys.atmol.element}; corresponding VAMDC restrictable is ``InchiKey'')
+The \textbf{INCHIKEY} parameter (corresponding VAMDC restrictable is \vamdcref{InchiKey})
 constrains the search to the species corresponding the provided inchikey value. A list of different
 inchikeys could be queried by specifying this parameter multiple times.
 
@@ -509,8 +498,7 @@ Some examples of InChI and InChIkey: \\
 \subsubsection{ION\_CHARGE}
 
 The \textbf{ION\_CHARGE} parameter specifies the minimum and maximum charge
-of an ion (ucd=\ucd{phys.atmol.element;phys.atmol.ionization};
-the corresponding VAMDC restrictable is ``IonCharge'').
+of an ion (the corresponding VAMDC restrictable is \vamdcref{IonCharge}).
 
 Use this parameter to look for ionized forms when you specify a species
 with the SPECIES
@@ -535,8 +523,7 @@ All lines related to positively charged Fe ions and excluding the neutral form:
 \subsubsection{LOWER\_LEVEL\_ENERGY}
 
 The \textbf{LOWER\_LEVEL\_ENERGY} parameter specifies the minimum and maximum energy for the lower level of the transition,
-to be expressed in Joules (ucd=\ucd{phys.energy;phys.atmol.level}; the corresponding VAMDC restrictable
- is ``StateEnergy'').
+to be expressed in Joules (the corresponding VAMDC restrictable is \vamdcref{StateEnergy}).
 
 Example: Energy of lower level between 3.93E-18 and 3.94E-18 Joules:
 
@@ -545,8 +532,8 @@ Example: Energy of lower level between 3.93E-18 and 3.94E-18 Joules:
 \subsubsection{UPPER\_LEVEL\_ENERGY}
 
 The \textbf{UPPER\_LEVEL\_ENERGY} parameter specifies the minimum
-and maximum energy for the upper level of the transition, to be expressed in Joules (ucd=\ucd{phys.energy;phys.atmol.level};
-the corresponding VAMDC restrictable is {"StateEnergy"}).
+and maximum energy for the upper level of the transition, to be expressed in Joules 
+(the corresponding VAMDC restrictable is \vamdcref{StateEnergy}).
 
 Example: Energy of upper level between 3.93E-18 and 3.94E-18 Joules:
 
@@ -558,8 +545,7 @@ Example: Energy of upper level between 3.93E-18 and 3.94E-18 Joules:
 The \textbf{EINSTEINA} parameter constrains the
 transition probability by specifying the minimum and maximum Einstein A, defined as the probability
 per unit time for spontaneous emission in a bound-bound
-transition (ucd=\ucd{phys.atmol.transProb}; the corresponding VAMDC restrictable
-is ``RadTransProbabilityA'').
+transition (the corresponding VAMDC restrictable is \vamdcref{RadTransProbabilityA}).
 
 Example: Transition probability between 1.1E-7 and 1.2E-7 $\textrm{s}^{-1}$:
 
@@ -617,11 +603,11 @@ The table lists all the spectral lines found in the server database that
 match the query constraints.
 
 It \textbf{MUST} contain a RESOURCE element identified with the attribute
-\attrval{type}{results} that \textbf{SHOULD} contain
+\attrval{type}{results} that \textbf{MUST} contain
 a single TABLE element which contains the results of the query. The
 VOTable is permitted to contain additional RESOURCE elements, but the
 usage of any such elements is not defined here. If multiple resources
-are present it is recommended that the query results be returned in the
+are present, the query results \textbf{MUST} be returned in the
 first resource element.
 
 The VOTable \textbf{MAY} contain references to other name spaces, like
@@ -884,9 +870,9 @@ Example:
 
 \verb|H2 v=1, J=2|
 
-\subsubsection{einstein\_a}
-At most one field \textbf{MAY} have \attrval{name}{einstein\_a}, with
-\attrval{datatype}{double}, \attrval{unit}{1/s} and \attrval{ucd}{phys.atmol.transProb}, containing Einstein A value,
+\subsubsection{einsteina}
+At most one field \textbf{MAY} have \attrval{name}{einsteina}, with
+\attrval{datatype}{double}, \attrval{unit}{s**-1} and \attrval{ucd}{phys.atmol.transProb}, containing Einstein A value,
 defined as the probability per unit time $\textrm{s}^{-1}$ for spontaneous emission in a bound-bound transition.
 The corresponding VAMDC returnable is  \vamdcref{RadTransProbabilityA}.
 
@@ -924,12 +910,15 @@ attached to this reference. The corresponding VAMDC returnable is  \vamdcref{Sou
 
 One or more fields \textbf{SHOULD} have \attrval{name}{reference\_uri},
 with \attrval{ucd}{meta.ref.uri}, \attrval{datatype}{char} and
-\attrval{arraysize}{*}, to specify an http link that contains a scientific publication related to the spectral line. Since the URL will often contain metacharacters, the URL is normally enclosed in an XML CDATA section ({\textless}![CDATA[...]]{\textgreater}) or otherwise encoded to escape any embedded metacharacters. The corresponding VAMDC returnable is \vamdcref{SourceURI}.
+\attrval{arraysize}{*}, to specify an http link that contains a scientific publication related to the spectral line. 
+The corresponding VAMDC returnable is \vamdcref{SourceURI}.
 
 
 \subsubsection{reference\_additional\_uri}
 
-One or more fields \textbf{MAY} have \attrval{name}{reference\_additional\_uri} with \attrval{ucd}{meta.ref.uri}, \attrval{datatype}{char}, \attrval{arraysize}{*} and free names, to specify URLs that contains extra information related to the spectral line. Same criteria than before about the CDATA section.
+One or more fields \textbf{MAY} have \attrval{name}{reference\_additional\_uri} with 
+\attrval{ucd}{meta.ref.uri}, \attrval{datatype}{char}, \attrval{arraysize}{*} and free names, 
+to specify URLs that contains extra information related to the spectral line.
 The corresponding VAMDC returnable is  \vamdcref{SourceURI}.
 
 \subsection{Non-standard output fields}
@@ -966,8 +955,10 @@ That means that the service must accept them as valid ones without
 raising an error, and the parameters must be properly used to constrain
 the query.
 
-If one or several parameters cannot be implemented on the a particular collection of lines,
+When all values in the corresponding column are NULL or an optional column is not present,
 an error must be raised when the parameter is received in a query (see \ref{par:QUERY_STATUS} for the appropriate syntax).
+
+Similarly, if an unknown parameter is passed to the service, an error must be raised.
 
 \subsubsection{SPECIES\_TYPE}
 
@@ -983,7 +974,9 @@ Example: Return all the molecules:
 \subsubsection{INCHIKEY}
 
 The \textbf{INCHIKEY} parameter tests the existence of a given
-inchikey in the service data among the data shared by the service.
+inchikey in the service data among the data shared by the service (corresponding
+VAMDC restrictable is \vamdcref{InchiKey}). A list of different inchikeys
+could be queried by specifying this parameter multiple times.
 
 Example: Return metadata for molecular hydrogen:
 
@@ -995,7 +988,9 @@ Example: Return metadata for molecular hydrogen:
 
 The \textbf{INCHI} parameter defines an expression accepting pattern matching
 (see \ref{sect:pattern-matching} for exact syntax) to search for species by their InChI identifier.
-This allows searching easily for isotopologues of a given species.
+This allows searching easily for isotopologues of a given species (corresponding
+VAMDC restrictable is \vamdcref{Inchi}). A list of different inchis
+could be queried by specifying this parameter multiple times.
 
 Examples:
 
@@ -1028,7 +1023,10 @@ Molecules containing 2 to five atoms:
 
 The \textbf{SPECIES} parameter defines an expression accepting pattern matching
 (see \ref{sect:pattern-matching} for exact syntax) to perform a search
-in the list of species provided by the service.
+in the list of species provided by the service (corresponding VAMDC restrictable 
+is \vamdcref{AtomSymbol} for atoms,  \vamdcref{MoleculeChemicalName} and \vamdcref{MoleculeOrdi-
+naryStructuralFormula} for molecules). A list of different species
+could be queried by specifying this parameter multiple times.
 
 Example: Return carbon monoxide and carbon dioxide:
 
@@ -1049,7 +1047,8 @@ by the total number of their occurence (purely ASCII), for example CO2, NH3, CH4
 
 The \textbf{STOICHIOMETRIC\_FORMULA} parameter defines an expression accepting pattern matching
 (see \ref{sect:pattern-matching} for exact syntax) to perform
-a search in the list of stoichiometric formula provided by the service.
+a search in the list of stoichiometric formula provided by the service (corresponding VAMDC restrictable 
+is \vamdcref{MoleculeStoichiometricFormula}).
 
 Example:
 
@@ -1106,9 +1105,11 @@ for an atom and  \vamdcref{MoleculeIonCharge} for a molecule. This value must no
 
 Exactly one field \textbf{MUST} have \attrval{name}{inchikey}, with
 \attrval{datatype}{char}, \attrval{arraysize}{*} and \attrval{ucd}{phys.atmol.element}, containing the inchikey
-of the chemical species.
+of the chemical species. The inchikey must not be considered as a primary key for a species because it could appear
+several times in a query response. For example, a line could have species\_name="CH4" and another one species\_name="methane", 
+denoting the fact that both are possible search values. Both will have the same inchikey.
 
-The corresponding VAMDC returnable is  \vamdcref{AtomInchiKey}" for an atom and \vamdcref{MoleculeInchiKey} for a molecule.
+The corresponding VAMDC returnable is \vamdcref{AtomInchiKey} for an atom and \vamdcref{MoleculeInchiKey} for a molecule.
 This value must not be NULL.
 
 \subsubsection{inchi}
@@ -1117,10 +1118,10 @@ Exactly one field \textbf{MUST} have \attrval{name}{inchi}, with \attrval{dataty
 containing the inchi of the species. The corresponding VAMDC returnable is \vamdcref{AtomInchi} for an atom
 and \vamdcref{MoleculeInchi} for a molecule. This value must not be NULL.
 
-\subsubsection{species\_stoichiometric\_formula}
+\subsubsection{stoichiometric\_formula}
 
 Exactly one field \textbf{MUST} have
-\attrval{name}{species\_stoichiometric\_formula}, \attrval{datatype}{char},
+\attrval{name}{stoichiometric\_formula}, \attrval{datatype}{char},
 \attrval{arraysize}{*} and
 \attrval{ucd}{phys.atmol.element}, containing the stoichiometric formula of a species for which at least one spectral line is available in the service. For an atom, the atom symbol can be used as a value.
 
@@ -1303,7 +1304,7 @@ ion\_charge                            & Atom\-Ion\-Charge, Molecule\-Ion\-Charg
 lower\_level\_description              & Atom\-State\-Description, Molecule\-State\-Description            & MUST    &  YES  \\
 upper\_level\_description              & Atom\-State\-Description, Molecule\-State\-Description            & MUST    &  YES  \\
 observed\_wavelength                   & RadTrans\-Wavelength + RadTrans\-Wavelength\-Method = observed    & MAY     &  YES  \\
-einstein\_a                            & RadTransProbabilityA                                          & MAY     &  YES  \\
+einsteina                              & RadTransProbabilityA                                          & MAY     &  YES  \\
 lower\_level\_energy                   & StateEnergy                                                   & MAY     &  YES  \\
 upper\_level\_energy                   & StateEnergy                                                   & MAY     &  YES  \\
 reference\_doi                         & SourceDOI                                                     & SHOULD  &  YES  \\
@@ -1351,7 +1352,7 @@ species\_name                     & AtomSymbol, Molecule\-Chemical\-Name    & MU
 ion\_charge                       & Atom\-Ion\-Charge, Molecule\-Ion\-Charge & MUST     &  NO   \\
 inchikey                          & Atom\-Inchi\-Key, Molecule\-Inchi\-Key   & MUST     &  NO   \\
 inchi                             & AtomInchi, MoleculeInchi                & MUST     &  NO   \\
-species\_stoichiometric\_formula  & Molecule\-Stoichio\-metric\-Formula      & MUST     &  YES  \\
+stoichiometric\_formula           & Molecule\-Stoichio\-metric\-Formula      & MUST     &  YES  \\
 species\_type                     & Not available                    & SHOULD   &  YES  \\
 number\_of\_atoms                 & Not available                    & SHOULD   &  YES  \\
 
