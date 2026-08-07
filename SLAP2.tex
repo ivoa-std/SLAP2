@@ -426,13 +426,6 @@ to be specified in meters of wavelength in the vacuum.
 (ucd=\ucd{em.wl}; the corresponding VAMDC restrictable is ``RadTransWavelength''
 to be specified in Angstroms).
 
-As the units in the spectral line database could be different than
-meters, the service will need to translate from the selected units
-(meters) to the internal ones. The selection of one type of units (in
-this case the SI unit meters) will help to unify access to different
-spectral line databases, even when in some cases, the unit selected
-(meter) may not be the best one for the range of interest.
-
 Example: To query for spectral lines in the wavelength range between 5.1 and 5.6
 micrometers (both values are included in search):
 
@@ -441,7 +434,7 @@ micrometers (both values are included in search):
 \subsubsection{SPECIES}
 
 The \textbf{SPECIES} parameter constrains the search to
-the selected species. A list of different species
+the selected species and it is matched against the \texttt{species\_name} output column. A list of different species
 could be queried by specifying this parameter multiple times (ucd=\ucd{phys.atmol.element}).
 
 Atoms can be specified exactly by symbol (corresponding VAMDC restrictable is ``AtomSymbol'') or names
@@ -450,8 +443,8 @@ Molecules can be specified by a conventional molecular name (a formula like \emp
 which might not be unique (corresponding VAMDC restrictable are ``MoleculeChemicalName'' and
 ``MoleculeOrdinaryStructuralFormula'').
 In the case of molecules, the \{species\} endpoint must be used
-to discover the local designation(s) of a given species.  To interoperably
-specify molecule species, use the INCHIKEY parameter.
+to discover the local designation(s) of a given species.  
+To interoperably specify molecule species (for example while performing cross service queries), use the INCHIKEY parameter.
 
 Example: Filter results for Iron only:
 
