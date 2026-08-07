@@ -351,7 +351,8 @@ the VO Registry is discussed in sect.~\ref{sect:reg}.
 As specified in the DALI recommendation, parameter names are not
 case sensitive\todo{Let's change that. Case-sensitive rules!}; a SLAP service must treat upper-, lower-, and mixed-case
 parameter names as equal. Parameter values are case sensitive.
-All query parameters are multi-valued which means multiple occurrences
+Parameters are single-valued by default. Exception will be specified in the parameter description section.
+with the exception of SPECIES and INCHIKEY which means multiple occurrences
 of the parameter=value pairs as specified in the DALI recommendation are
 permitted, excepting the MAXREC parameter which is single valued.
 The constraints from multiple occurrences of a parameter are
@@ -924,12 +925,15 @@ attached to this reference. The corresponding VAMDC returnable is  \vamdcref{Sou
 
 One or more fields \textbf{SHOULD} have \attrval{name}{reference\_uri},
 with \attrval{ucd}{meta.ref.uri}, \attrval{datatype}{char} and
-\attrval{arraysize}{*}, to specify an http link that contains a scientific publication related to the spectral line. Since the URL will often contain metacharacters, the URL is normally enclosed in an XML CDATA section ({\textless}![CDATA[...]]{\textgreater}) or otherwise encoded to escape any embedded metacharacters. The corresponding VAMDC returnable is \vamdcref{SourceURI}.
+\attrval{arraysize}{*}, to specify an http link that contains a scientific publication related to the spectral line. 
+The corresponding VAMDC returnable is \vamdcref{SourceURI}.
 
 
 \subsubsection{reference\_additional\_uri}
 
-One or more fields \textbf{MAY} have \attrval{name}{reference\_additional\_uri} with \attrval{ucd}{meta.ref.uri}, \attrval{datatype}{char}, \attrval{arraysize}{*} and free names, to specify URLs that contains extra information related to the spectral line. Same criteria than before about the CDATA section.
+One or more fields \textbf{MAY} have \attrval{name}{reference\_additional\_uri} with 
+\attrval{ucd}{meta.ref.uri}, \attrval{datatype}{char}, \attrval{arraysize}{*} and free names, 
+to specify URLs that contains extra information related to the spectral line.
 The corresponding VAMDC returnable is  \vamdcref{SourceURI}.
 
 \subsection{Non-standard output fields}
