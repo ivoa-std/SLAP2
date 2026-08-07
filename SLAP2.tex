@@ -1106,7 +1106,7 @@ for an atom and  \vamdcref{MoleculeIonCharge} for a molecule. This value must no
 Exactly one field \textbf{MUST} have \attrval{name}{inchikey}, with
 \attrval{datatype}{char}, \attrval{arraysize}{*} and \attrval{ucd}{phys.atmol.element}, containing the inchikey
 of the chemical species. The inchikey must not be considered as a primary key for a species because it could appear
-several times in a query response. For example, a line could have species_name="CH4" and another one species_name="methane", 
+several times in a query response. For example, a line could have species\_name="CH4" and another one species\_name="methane", 
 denoting the fact that both are possible search values. Both will have the same inchikey.
 
 The corresponding VAMDC returnable is \vamdcref{AtomInchiKey} for an atom and \vamdcref{MoleculeInchiKey} for a molecule.
