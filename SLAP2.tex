@@ -348,13 +348,9 @@ the VO Registry is discussed in sect.~\ref{sect:reg}.
 \subsection{Input parameters}
 \label{sect:input-pars}
 
-As specified in the DALI recommendation, parameter names are not
-case sensitive\todo{Let's change that. Case-sensitive rules!}; a SLAP service must treat upper-, lower-, and mixed-case
-parameter names as equal. Parameter values are case sensitive.
+Parameter names are case sensitive. Thus, for the SLAP2 protocol, WAVELENGTH parameter is valid 
+and wavelength is not. Parameter values are case sensitive.
 Parameters are single-valued by default. Exception will be specified in the parameter description section.
-with the exception of SPECIES and INCHIKEY which means multiple occurrences
-of the parameter=value pairs as specified in the DALI recommendation are
-permitted, excepting the MAXREC parameter which is single valued.
 The constraints from multiple occurrences of a parameter are
 combined with a logical OR operator. The constraints from different
 parameters are combined with a logical AND operator. In accordance with these rules,
@@ -982,7 +978,8 @@ Example: Return all the molecules:
 
 The \textbf{INCHIKEY} parameter tests the existence of a given
 inchikey in the service data among the data shared by the service (corresponding
-VAMDC restrictable is \vamdcref{InchiKey}).
+VAMDC restrictable is \vamdcref{InchiKey}). A list of different inchikeys
+could be queried by specifying this parameter multiple times.
 
 Example: Return metadata for molecular hydrogen:
 
@@ -995,7 +992,8 @@ Example: Return metadata for molecular hydrogen:
 The \textbf{INCHI} parameter defines an expression accepting pattern matching
 (see \ref{sect:pattern-matching} for exact syntax) to search for species by their InChI identifier.
 This allows searching easily for isotopologues of a given species (corresponding
-VAMDC restrictable is \vamdcref{Inchi}).
+VAMDC restrictable is \vamdcref{Inchi}). A list of different inchis
+could be queried by specifying this parameter multiple times.
 
 Examples:
 
@@ -1030,7 +1028,8 @@ The \textbf{SPECIES} parameter defines an expression accepting pattern matching
 (see \ref{sect:pattern-matching} for exact syntax) to perform a search
 in the list of species provided by the service (corresponding VAMDC restrictable 
 is \vamdcref{AtomSymbol} for atoms,  \vamdcref{MoleculeChemicalName} and \vamdcref{MoleculeOrdi-
-naryStructuralFormula} for molecules).
+naryStructuralFormula} for molecules). A list of different species
+could be queried by specifying this parameter multiple times.
 
 Example: Return carbon monoxide and carbon dioxide:
 

@@ -11,7 +11,7 @@ info:
     listed here (marked with `x-slap-standard: false`).
 
     Responses are returned as VOTable 1.5 XML documents (`application/x-votable+xml`).
-    Parameter names are case-insensitive. Interval parameters accept a space-separated pair
+    Parameter names are case-sensitive. Interval parameters accept a space-separated pair
     of values (`min max`), with `-Inf` and `+Inf` supported for open-ended ranges.
     Pattern parameters use shell wildcard syntax: `*` (any sequence), `?` (any character),
     `[seq]` (character class). Multiple occurrences of the same parameter are combined
