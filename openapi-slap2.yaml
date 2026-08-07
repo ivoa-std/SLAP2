@@ -365,7 +365,7 @@ components:
         | ion_charge | int | — | phys.atmol.element;phys.atmol.ionization | **MUST** | NO | AtomIonCharge, MoleculeIonCharge |
         | lower_level_description | char | — | meta.title;phys.atmol.level | **MUST** | YES | AtomStateDescription, MoleculeStateDescription |
         | upper_level_description | char | — | meta.title;phys.atmol.level | **MUST** | YES | AtomStateDescription, MoleculeStateDescription |
-        | einstein_a | double | 1/s | phys.atmol.transProb | **MAY** | YES | RadTransProbabilityA |
+        | einsteina | double | s⁻¹ | phys.atmol.transProb | **MAY** | YES | RadTransProbabilityA |
         | lower_level_energy | double | J | phys.energy;phys.atmol.level | **MAY** | YES | StateEnergy |
         | upper_level_energy | double | J | phys.energy;phys.atmol.level | **MAY** | YES | StateEnergy |
         | reference_doi | char | — | meta.ref.doi | **SHOULD** | YES | SourceDOI |

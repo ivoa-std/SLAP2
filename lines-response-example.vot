@@ -19,7 +19,7 @@
 			<FIELD ucd="phys.atmol.element;phys.atmol.ionization" name="ion_charge"  datatype="int" />
 			<FIELD ucd="meta.title;phys.atmol.level" name="lower_level_description"  datatype="char" arraysize="*"/>
 			<FIELD ucd="meta.title;phys.atmol.level" name="upper_level_description"  datatype="char" arraysize="*"/>
-			<FIELD ucd="phys.atmol.transProb" name="einstein_a"  datatype="double" unit="s**-1"/>
+			<FIELD ucd="phys.atmol.transProb" name="einsteina"  datatype="double" unit="s**-1"/>
 			<FIELD ucd="phys.energy;phys.atmol.level" name="lower_level_energy"  datatype="double" unit="J"/>
 			<FIELD ucd="phys.energy;phys.atmol.level" name="upper_level_energy"  datatype="double" unit="J"/>
 			<FIELD ucd="meta.ref.doi" name="reference_doi"  datatype="char" arraysize="*"/>
