@@ -349,8 +349,8 @@ the VO Registry is discussed in sect.~\ref{sect:reg}.
 \label{sect:input-pars}
 
 Parameter names are case sensitive. Thus, for the SLAP2 protocol, WAVELENGTH parameter is valid 
-and wavelength is not. Parameter values are case sensitive.
-Parameters are single-valued by default. Exception will be specified in the parameter description section.
+and wavelength is not. Parameter values are case sensitive and single-valued by default.
+There are some exceptions that will be specified in the parameter description section.
 The constraints from multiple occurrences of a parameter are
 combined with a logical OR operator. The constraints from different
 parameters are combined with a logical AND operator. In accordance with these rules,
@@ -618,19 +618,16 @@ SLAP, Characterization, etc.
 
 The RESOURCE element contains several INFO elements that store metadata
 about the request execution and the queried service.
-These pieces of metadata facilitate the identification of the data provenance and enable the reproducibility
-of the query on the service.
-They are originally described in the Data Origin document \citep{ivoaDataOrigin1.1},
-with the exception of QUERY\_STATUS, which is described in DALI 1.1 \citep{2017ivoa.spec.0517D}.
 
 \paragraph{QUERY\_STATUS}\label{par:QUERY_STATUS}
-
 It \textbf{MUST} contain an INFO with
 \attrval{name}{QUERY\_STATUS}. Its value attribute
 MUST be set to \texttt{OK} if the query is executed successfully,
 regardless of whether any matching spectral lines were found. \ If an
 overflow occurs (result exceeds MAXREC) the value attribute will be set
-to \texttt{OVERFLOW}.
+to \texttt{OVERFLOW}. The QUERY\_STATUS field is described 
+in DALI 1.1 \citep{2017ivoa.spec.0517D}.
+
 
 Successful query example :
 \begin{lstlisting}{language=XML}
@@ -642,62 +639,30 @@ Error example for a standard parameter :
 <INFO name="QUERY_STATUS" value="ERROR">Parameter TEMPERATURE is not supported</INFO>
 \end{lstlisting}
 
-\paragraph{request\_date}
 
-The RESOURCE element \textbf{SHOULD} contain an INFO with
-\attrval{name}{request\_date}.
+\paragraph{Data origin}\label{par:Data_origin}
+The other INFO elements are pieces of metadata facilitating the identification of the data provenance and enabling the
+reproducibility of the query on the service. They are described in the Data Origin document \citep{ivoaDataOrigin1.1}.
+The RESOURCE element SHOULD contain at least the fields listed in Table~\ref{tab:data-origin-infos}.
 
-\begin{lstlisting}{language=XML}
-<INFO name="request_date" value="2025-10-31T14:57:18+01:00" />
-\end{lstlisting}
+\begin{table}[H]
+\centering
+\begin{tabularx}{\linewidth}{ll>{\raggedright\arraybackslash}X>{\ttfamily\small\raggedright\arraybackslash}X}
+\hline
+\textbf{Name} & \textbf{Req.} & \textbf{Description} & \textbf{Example value} \\
+\hline
+\texttt{request\_date}     & SHOULD & ISO 8601 timestamp of the request          & 2025-10-31T14:57:18+01:00 \\
+\texttt{request}           & SHOULD & Full request URL including query string     & https://myvo.org/slap2/lines?... \\
+\texttt{service\_ivoid}    & SHOULD & IVOID of the service                       & ivo://myvo.org/slap2 \\
+\texttt{service\_protocol} & SHOULD & IVOID of the protocol standard             & ivo://ivoa.net/std/SLAP\#lines-2.0 \\
+\texttt{publisher}         & SHOULD & Name of the data publisher                 & Data center name \\
+\texttt{last\_update\_date}& SHOULD & Date of last database update               & 2025-09-20T12:00:00+01:00 \\
+\hline
+\end{tabularx}
+\caption{Data provenance INFO elements, from the Data Origin document \citep{ivoaDataOrigin1.1}.}
+\label{tab:data-origin-infos}
+\end{table}
 
-\paragraph{request}
-
-The RESOURCE element \textbf{SHOULD} contain an INFO with
-\attrval{name}{request} containing the full request
-URL including a query string.
-
-\begin{lstlisting}{language=XML}
-<INFO name="request" value="https://myvo.org/slap2/lines?WAVELENGTH=9e-8+9.1e-8"/>
-\end{lstlisting}
-
-\paragraph{service\_ivoid}
-
-The RESOURCE element \textbf{SHOULD} contain an INFO with
-\attrval{name}{service\_ivoid} containing the ivoid
-of the service that executed the query.
-
-\begin{lstlisting}{language=XML}
-<INFO name="service_ivoid" value="ivo://myvo.org/slap2"/>
-\end{lstlisting}
-
-\paragraph{service\_protocol}
-
-The RESOURCE element \textbf{SHOULD} contain an INFO with
-\attrval{name}{service\_protocol} containing the ivoid
-of the protocol.
-
-\begin{lstlisting}{language=XML}
-<INFO name="service_protocol" value="ivo://ivoa.net/std/SLAP#lines-2.0"/>
-\end{lstlisting}
-
-\paragraph{publisher}
-
-The RESOURCE element \textbf{SHOULD} contain an INFO with
-\attrval{name}{publisher}.
-
-\begin{lstlisting}{language=XML}
-<INFO name="publisher" value="Data center name"/>
-\end{lstlisting}
-
-\paragraph{last\_update\_date}
-
-The RESOURCE element \textbf{SHOULD} contain an INFO with
-\attrval{name}{last\_update\_date}.
-
-\begin{lstlisting}{language=XML}
-<INFO name="last_update_date" value="2025-09-20T12:00:00+01:00"/>
-\end{lstlisting}
 
 \subsubsection{The TABLE element}
 
