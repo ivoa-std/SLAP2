@@ -832,8 +832,8 @@ This value must not be NULL.
 \subsubsection{ion\_charge}
 
 Exactly one field \textbf{MUST} have \attrval{name}{ion\_charge}, with
-\attrval{datatype}{int} and \attrval{ucd}{phys.atmol.ionization}, containing the charge of the species origin of the line.
-The corresponding VAMDC returnable is\vamdcret{AtomIonCharge} 
+\attrval{datatype}{int} and \attrval{ucd}{phys.atmol.element;phys.atmol.ionization}, containing the charge of the species origin of the line.
+The corresponding VAMDC returnable is\vamdcret{AtomIonCharge}
 for an atomic line and \vamdcret{MoleculeIonCharge} for a molecular line. This value must not be NULL.
 
 \subsubsection{lower\_level\_description}
@@ -1087,7 +1087,7 @@ the service. This value must not be NULL.
 
 \subsubsection{ion\_charge}
 
-Exactly one field \textbf{MUST} have \attrval{name}{ion\_charge} with \attrval{datatype}{int} and \attrval{ucd}{phys.atmol.ionization},
+Exactly one field \textbf{MUST} have \attrval{name}{ion\_charge} with \attrval{datatype}{int} and \attrval{ucd}{phys.atmol.element;phys.atmol.ionization},
 containing the charge of  the considered chemical species. The corresponding VAMDC returnable is \vamdcret{AtomIonCharge}
 for an atom and  \vamdcret{MoleculeIonCharge} for a molecule. This value must not be NULL.
 
