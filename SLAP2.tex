@@ -1038,7 +1038,8 @@ by the total number of their occurence (purely ASCII), for example CO2, NH3, CH4
 The \textbf{STOICHIOMETRIC\_FORMULA} parameter defines an expression accepting pattern matching
 (see \ref{sect:pattern-matching} for exact syntax) to perform
 a search in the list of stoichiometric formula provided by the service (corresponding VAMDC restrictable 
-is \vamdcres{MoleculeStoichiometricFormula}).
+is \vamdcres{MoleculeStoichiometricFormula}). A list of different formula
+could be queried by specifying this parameter multiple times.
 
 Example:
 
@@ -1248,27 +1249,27 @@ provisional assignment value.
 
 \auxiliaryurl{lines-response-example.vot}
 
-\section{Mapping between /lines endpoint parameters and VAMDC restrictables}
+\section{/lines endpoint parameters}
 
 \def\headerstrut{\vrule width 0pt height 12pt depth 6pt}
 
 \begin{table}[H]
 \centering
 \small
-\begin{tabularx}{\textwidth}{|p{4.5cm}|>{\raggedright\arraybackslash}X|}
+\begin{tabularx}{\textwidth}{|p{4.5cm}|p{1.5cm}|>{\raggedright\arraybackslash}X|}
 \hline
-\textbf{\headerstrut SLAP2 parameter name} & \textbf{VAMDC restrictable name} \\
+\textbf{\headerstrut SLAP2 parameter name} & \textbf{Multi valued} & \textbf{VAMDC restrictable name}\\
 \hline
-WAVELENGTH           & RadTransWavelength                  \\
-SPECIES              & AtomSymbol, Molecule\-Chemical\-Name, Molecule\-Ordinary\-Structural\-Formula \\
-INCHIKEY             & InchiKey                            \\
-SPECIES\_MASS        & AtomMass, Molecule\-Molecular\-Weight   \\
-ION\_CHARGE          & IonCharge                           \\
-LOWER\_LEVEL\_ENERGY & StateEnergy                         \\
-UPPER\_LEVEL\_ENERGY & StateEnergy                         \\
-EINSTEINA            & RadTransProbabilityA                \\
-MAXREC               & Not available                       \\
-RESPONSEFORMAT       & Not available                       \\
+WAVELENGTH           & NO  & RadTransWavelength                    \\
+SPECIES              & YES & AtomSymbol, Molecule\-Chemical\-Name, Molecule\-Ordinary\-Structural\-Formula \\
+INCHIKEY             & YES & InchiKey                              \\
+SPECIES\_MASS        & NO  & AtomMass, Molecule\-Molecular\-Weight \\
+ION\_CHARGE          & NO  & IonCharge                             \\
+LOWER\_LEVEL\_ENERGY & NO  & StateEnergy                           \\
+UPPER\_LEVEL\_ENERGY & NO  & StateEnergy                           \\
+EINSTEINA            & NO  & RadTransProbabilityA                  \\
+MAXREC               & NO  & Not available                         \\
+RESPONSEFORMAT       & NO  & Not available                         \\
 \hline
 \end{tabularx}
 \caption{ /lines endpoint parameters and VAMDC restrictables mapping table }
@@ -1284,7 +1285,7 @@ RESPONSEFORMAT       & Not available                       \\
 \hline
 \textbf{\headerstrut SLAP2 field name} & \textbf{Returnable name} & \textbf{Status} & \textbf{Nullable} \\
 \hline
-vacuum\_wavelength                     & RadTransWavelength                                            & MUST    &  NO   \\
+vacuum\_wavelength                     & \vamdcretlink{RadTransWavelength}                             & MUST    &  NO   \\
 vacuum\_wavelength\_error              & RadTransWavelength\-Accuracy                                    & MUST    &  YES  \\
 line\_title                            & RadTransComment                                               & MUST    &  NO   \\
 species\_name                          & AtomSymbol, Molecule\-Chemical\-Name                              & MUST    &  NO   \\
@@ -1306,23 +1307,23 @@ reference\_additional\_uri             & SourceURI                              
 \caption{/lines endpoint output fields and VAMDC returnables mapping table}
 \end{table}
 
-\section{Mapping between /species endpoint parameters and VAMDC restrictables}
+\section{/species endpoint parameters}
 
 \begin{table}[H]
 \centering
 \footnotesize
-\begin{tabularx}{\textwidth}{|p{5.8cm}|>{\raggedright\arraybackslash}X|}
+\begin{tabularx}{\textwidth}{|p{5.8cm}|p{1.5cm}|>{\raggedright\arraybackslash}X|}
 \hline
-\headerstrut\textbf{SLAP2 parameter name} & \textbf{VAMDC restrictable name}\\
+\headerstrut\textbf{SLAP2 parameter name} & \textbf{Multi valued} & \textbf{VAMDC restrictable name}\\
 \hline
-SPECIES\_TYPE                         & Not available                       \\
-INCHIKEY                              & InchiKey                            \\
-INCHI                                 & Inchi                               \\
-SPECIES                               & AtomSymbol, Molecule\-Chemical\-Name, Molecule\-Ordinary\-Structural\-Formula \\
-STOICHIOMETRIC\_FORMULA               & Molecule\-Stoichio\-metric\-Formula     \\
-NUMBER\_OF\_ATOMS                     & Not available                        \\
-MAXREC                                & Not available                        \\
-RESPONSEFORMAT                        & Not available                        \\
+SPECIES\_TYPE                         & NO      & Not available       \\
+INCHIKEY                              & YES     & InchiKey            \\
+INCHI                                 & YES     & Inchi               \\
+SPECIES                               & YES     & AtomSymbol, Molecule\-Chemical\-Name, Molecule\-Ordinary\-Structural\-Formula \\
+STOICHIOMETRIC\_FORMULA               & YES     & Molecule\-Stoichio\-metric\-Formula \\
+NUMBER\_OF\_ATOMS                     & NO      & Not available        \\
+MAXREC                                & NO      & Not available        \\
+RESPONSEFORMAT                        & NO      & Not available        \\
 \hline
 \end{tabularx}
 \caption{ /species endpoint parameters and VAMDC restrictables mapping table }
