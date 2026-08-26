@@ -1,0 +1,899 @@
+<?xml version="1.0"?>
+<ri:Resource xmlns:oai="http://www.openarchives.org/OAI/2.0/" xmlns:ri="http://www.ivoa.net/xml/RegistryInterface/v1.0" xmlns:slap="http://www.ivoa.net/xml/SLAP/v1.0" xmlns:vg="http://www.ivoa.net/xml/VORegistry/v1.0" xmlns:vr="http://www.ivoa.net/xml/VOResource/v1.0" xmlns:vs="http://www.ivoa.net/xml/VODataService/v1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" created="2015-08-10T11:30:00Z" status="active" updated="2026-07-27T13:43:29Z" version="1.2" xsi:type="vs:CatalogService">
+  <title>TOSS &#x2013; T&#xFC;bingen Oscillator Strengths Service</title>
+  <shortName>TOSS slap</shortName>
+  <identifier>ivo://org.gavo.dc/toss/q/q</identifier>
+  <altIdentifier>doi:10.21938/3i01isnuCODnh1zjbCvuwA</altIdentifier>
+  <curation>
+    <publisher>The GAVO DC team</publisher>
+    <creator>
+      <name>Rauch, T.</name>
+    </creator>
+    <creator>
+      <name>Quinet, P.</name>
+    </creator>
+    <creator>
+      <name>Hoyer, D.</name>
+    </creator>
+    <creator>
+      <name>Werner, K.</name>
+    </creator>
+    <creator>
+      <name>Demleitner, M.</name>
+    </creator>
+    <creator>
+      <name>Kruk, J. W.</name>
+    </creator>
+    <date role="Updated">2026-07-29T09:03:30Z</date>
+    <date role="ExportRequested">2023-10-27</date>
+    <date role="Updated">2016-01-15</date>
+    <date role="Updated">2016-09-26</date>
+    <date role="Updated">2017-01-17</date>
+    <date role="Updated">2019-09-11</date>
+    <contact>
+      <name>GAVO Data Centre Team</name>
+      <address>M&#xF6;nchhofstrasse 12-14, D-69120 Heidelberg</address>
+      <email>gavo@ari.uni-heidelberg.de</email>
+      <telephone>+49 6221 54 1837</telephone>
+    </contact>
+  </curation>
+  <content>
+    <subject>atomic-physics</subject>
+    <subject>spectral-line-identification</subject>
+    <description> This service provides oscillator strengths and transition
+probabilities. Mainly based on experimental energy levels, these were
+calculated with the pseudo-relativistic Hartree-Fock method including
+core-polarization corrections.</description>
+    <source format="bibcode">2016A&amp;A...587A..39R</source>
+    <referenceURL>http://dc.g-vo.org/toss/q/q/info</referenceURL>
+    <relationship>
+      <relationshipType>IsServedBy</relationshipType>
+      <relatedResource ivo-id="ivo://org.gavo.dc/tap">GAVO Data Center TAP service</relatedResource>
+    </relationship>
+  </content>
+  <rights> When publishing research making use of this tool, please acknowledge:
+&#x201C;The TOSS service (http://dc.g-vo.org/TOSS) used for this paper was
+constructed as part of the activities of the German Astrophysical
+Virtual Observatory.&#x201D;</rights>
+  <capability standardID="ivo://ivoa.net/std/SLAP#lines-2.0" xsi:type="slap:SimpleLineAccess">
+    <interface xsi:type="vs:ParamHTTP">
+      <accessURL use="base">http://dc.g-vo.org/toss/q/q/lines?</accessURL>
+      <mirrorURL>https://dc.g-vo.org/toss/q/q/lines?</mirrorURL>
+      <queryType>GET</queryType>
+      <resultType>application/x-votable+xml</resultType>
+      <param std="true">
+        <name>WAVELENGTH</name>
+        <description>The wavelength of the transition</description>
+        <unit>m</unit>
+        <stats>
+          <min>1.07005e-08</min>
+          <percentile03>3.164765e-08</percentile03>
+          <median>1.51973e-07</median>
+          <percentile97>2.3999556499999968e-06</percentile97>
+          <max>4.9930139000000005e-05</max>
+          <fillFactor>1.0</fillFactor>
+        </stats>
+        <dataType arraysize="2" xsi:type="vs:SimpleDataType">real</dataType>
+      </param>
+      <param std="true">
+        <name>SPECIES_MASS</name>
+        <description>Mass of the atom or molecule</description>
+        <unit>u</unit>
+        <stats>
+          <min>63.546</min>
+          <percentile03>72.62999725341797</percentile03>
+          <median>97.0</median>
+          <percentile97>97.0</percentile97>
+          <max>137.33</max>
+          <fillFactor>1.0</fillFactor>
+        </stats>
+        <dataType arraysize="2" xsi:type="vs:SimpleDataType">real</dataType>
+      </param>
+      <param std="true">
+        <name>ION_CHARGE</name>
+        <description>Charge of the atom or molecule</description>
+        <stats>
+          <min>-6</min>
+          <percentile03>-5.0</percentile03>
+          <median>-3.0</median>
+          <percentile97>-3.0</percentile97>
+          <max>-3</max>
+          <fillFactor>1.0</fillFactor>
+        </stats>
+        <dataType arraysize="2" xsi:type="vs:SimpleDataType">real</dataType>
+      </param>
+      <param std="true">
+        <name>LOWER_LEVEL_ENERGY</name>
+        <description>Lower level of the transition</description>
+        <unit>J</unit>
+        <stats>
+          <min>0.0</min>
+          <percentile03>8.525229685126064e-19</percentile03>
+          <median>3.844646769760322e-18</median>
+          <percentile97>5.689141205957388e-18</percentile97>
+          <max>1.2494287558919616e-17</max>
+          <fillFactor>1.0</fillFactor>
+        </stats>
+        <dataType arraysize="2" xsi:type="vs:SimpleDataType">real</dataType>
+      </param>
+      <param std="true">
+        <name>UPPER_LEVEL_ENERGY</name>
+        <description>Lower level of the transition</description>
+        <unit>J</unit>
+        <stats>
+          <min>6.094415889732886e-20</min>
+          <percentile03>2.9456608326490024e-18</percentile03>
+          <median>5.016888198981048e-18</median>
+          <percentile97>9.847825201274385e-18</percentile97>
+          <max>1.856405165556531e-17</max>
+          <fillFactor>1.0</fillFactor>
+        </stats>
+        <dataType arraysize="2" xsi:type="vs:SimpleDataType">real</dataType>
+      </param>
+      <param std="true">
+        <name>EINSTEINA</name>
+        <description>Einstein A of the transition</description>
+        <unit>s**-1</unit>
+        <stats>
+          <min>0.0301</min>
+          <percentile03>180.0</percentile03>
+          <median>940000.0</median>
+          <percentile97>1000000000.0</percentile97>
+          <max>5300000000000.0</max>
+          <fillFactor>1.0</fillFactor>
+        </stats>
+        <dataType arraysize="2" xsi:type="vs:SimpleDataType">real</dataType>
+      </param>
+      <param std="true">
+        <name>INCHIKEY</name>
+        <description>The InChI-Key of the species doing the transition. Note that this is the only interoperable way to constrain species of molecules, as there is no common syntax for species_name. Use SLAP2 species endpoints to obtain InChI-Keys for species you are interested in.</description>
+        <ucd>phys.atmol.element</ucd>
+        <dataType arraysize="*" xsi:type="vs:SimpleDataType">char</dataType>
+      </param>
+      <param std="true">
+        <name>SPECIES</name>
+        <description>A name for the species doing the transition. This can be an atom symbol; for molecules, use this service's species endpoint to figure out the local syntax or, better, use the interoperable InChI-Key.</description>
+        <ucd>phys.atmol.element</ucd>
+        <stats>
+          <option freq="0.0218029">Cu</option>
+          <option freq="0.0024488103">Zn</option>
+          <option freq="0.006048422">Ga</option>
+          <option freq="0.0027647165">Ge</option>
+          <option freq="0.00033309837">Se</option>
+          <option freq="0.0032772582">Kr</option>
+          <option freq="0.010439948">Sr</option>
+          <option freq="0.0038994">Zr</option>
+          <option freq="0.011630506">Mo</option>
+          <option freq="0.93250996">Tc</option>
+          <option freq="0.00019126294">Te</option>
+          <option freq="0.00021167865">I</option>
+          <option freq="0.0026841282">Xe</option>
+          <option freq="0.0017578998">Ba</option>
+        </stats>
+        <dataType arraysize="*" xsi:type="vs:SimpleDataType">char</dataType>
+      </param>
+      <param std="true">
+        <name>RESPONSEFORMAT</name>
+        <description>File format requested for output.</description>
+        <ucd>meta.code.mime</ucd>
+        <stats>
+          <option>text/tab-separated-values</option>
+          <option>tsv</option>
+          <option>text/plain</option>
+          <option>txt</option>
+          <option>text/csv</option>
+          <option>csv_bare</option>
+          <option>text/csv;header=present</option>
+          <option>csv</option>
+          <option>application/json</option>
+          <option>json</option>
+          <option>application/geo+json</option>
+          <option>geojson</option>
+          <option>application/x-votable+xml</option>
+          <option>votable</option>
+          <option>application/x-votable+xml;serialization=binary2</option>
+          <option>votable/b2</option>
+          <option>votableb2</option>
+          <option>application/x-votable+xml;serialization=tabledata</option>
+          <option>text/xml</option>
+          <option>votable/td</option>
+          <option>votabletd</option>
+          <option>application/x-votable+xml;serialization=tabledata;version=1.1</option>
+          <option>text/xml</option>
+          <option>votabletd1.1</option>
+          <option>application/x-votable+xml;version=1.1</option>
+          <option>text/xml</option>
+          <option>votable1.1</option>
+          <option>application/x-votable+xml;serialization=tabledata;version=1.2</option>
+          <option>text/xml</option>
+          <option>votabletd1.2</option>
+          <option>application/x-votable+xml;serialization=tabledata;version=1.6</option>
+          <option>vodml</option>
+          <option>application/x-votable+xml;version=1.6</option>
+          <option>vodmlb</option>
+          <option>text/html</option>
+          <option>html</option>
+          <option>application/fits</option>
+          <option>fits</option>
+        </stats>
+        <dataType arraysize="*" xsi:type="vs:SimpleDataType">char</dataType>
+      </param>
+      <param std="true">
+        <name>MAXREC</name>
+        <description>Maximum number of records returned. Pass 0 to retrieve service parameters.</description>
+        <dataType xsi:type="vs:SimpleDataType">integer</dataType>
+      </param>
+      <param std="true">
+        <name>VERB</name>
+        <description>Exhaustiveness of column selection. VERB=1 only returns the most important columns, VERB=2 selects the columns deemed useful to the average user, VERB=3 returns a table with all available columns.</description>
+        <stats>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+        </stats>
+        <dataType xsi:type="vs:SimpleDataType">integer</dataType>
+      </param>
+    </interface>
+    <complianceLevel>full</complianceLevel>
+    <dataSource>theoretical</dataSource>
+  </capability>
+  <capability>
+    <interface xsi:type="vr:WebBrowser">
+      <accessURL use="full">http://dc.g-vo.org/TOSS</accessURL>
+      <mirrorURL>https://dc.g-vo.org/TOSS</mirrorURL>
+    </interface>
+  </capability>
+  <capability standardID="ivo://ivoa.net/std/SLAP#species-2.0">
+    <interface xsi:type="vs:ParamHTTP">
+      <accessURL use="base">http://dc.g-vo.org/toss/q/sp/species?</accessURL>
+      <mirrorURL>https://dc.g-vo.org/toss/q/sp/species?</mirrorURL>
+      <queryType>GET</queryType>
+      <resultType>application/x-votable+xml</resultType>
+      <param std="true">
+        <name>INCHIKEY</name>
+        <description>An InChI-Key of a species to locate.</description>
+        <ucd>phys.atmol.element</ucd>
+        <dataType arraysize="*" xsi:type="vs:SimpleDataType">char</dataType>
+      </param>
+      <param std="true">
+        <name>SPECIES_TYPE</name>
+        <description>'atom' or 'molecule'</description>
+        <stats>
+          <option>atom</option>
+          <option>molecule</option>
+        </stats>
+        <dataType arraysize="*" xsi:type="vs:SimpleDataType">char</dataType>
+      </param>
+      <param std="true">
+        <name>INCHI</name>
+        <description>A pattern for an InChI of a species to find</description>
+        <ucd>phys.atmol.element</ucd>
+        <dataType arraysize="*" xsi:type="vs:SimpleDataType">char</dataType>
+      </param>
+      <param std="true">
+        <name>SPECIES</name>
+        <description>A pattern for an species name</description>
+        <ucd>phys.atmol.element</ucd>
+        <stats>
+          <option freq="0.0218029">Cu</option>
+          <option freq="0.0024488103">Zn</option>
+          <option freq="0.006048422">Ga</option>
+          <option freq="0.0027647165">Ge</option>
+          <option freq="0.00033309837">Se</option>
+          <option freq="0.0032772582">Kr</option>
+          <option freq="0.010439948">Sr</option>
+          <option freq="0.0038994">Zr</option>
+          <option freq="0.011630506">Mo</option>
+          <option freq="0.93250996">Tc</option>
+          <option freq="0.00019126294">Te</option>
+          <option freq="0.00021167865">I</option>
+          <option freq="0.0026841282">Xe</option>
+          <option freq="0.0017578998">Ba</option>
+        </stats>
+        <dataType arraysize="*" xsi:type="vs:SimpleDataType">char</dataType>
+      </param>
+      <param std="true">
+        <name>STOICHIOMETRIC_FORMULA</name>
+        <description>A pattern for an species name</description>
+        <ucd>phys.atmol.element</ucd>
+        <dataType arraysize="*" xsi:type="vs:SimpleDataType">char</dataType>
+      </param>
+      <param std="true">
+        <name>NUMBER_OF_ATOMS</name>
+        <description>Number of atoms in a species to locate</description>
+        <dataType arraysize="2" xsi:type="vs:SimpleDataType">integer</dataType>
+      </param>
+      <param std="true">
+        <name>RESPONSEFORMAT</name>
+        <description>File format requested for output.</description>
+        <ucd>meta.code.mime</ucd>
+        <stats>
+          <option>text/tab-separated-values</option>
+          <option>tsv</option>
+          <option>text/plain</option>
+          <option>txt</option>
+          <option>text/csv</option>
+          <option>csv_bare</option>
+          <option>text/csv;header=present</option>
+          <option>csv</option>
+          <option>application/json</option>
+          <option>json</option>
+          <option>application/geo+json</option>
+          <option>geojson</option>
+          <option>application/x-votable+xml</option>
+          <option>votable</option>
+          <option>application/x-votable+xml;serialization=binary2</option>
+          <option>votable/b2</option>
+          <option>votableb2</option>
+          <option>application/x-votable+xml;serialization=tabledata</option>
+          <option>text/xml</option>
+          <option>votable/td</option>
+          <option>votabletd</option>
+          <option>application/x-votable+xml;serialization=tabledata;version=1.1</option>
+          <option>text/xml</option>
+          <option>votabletd1.1</option>
+          <option>application/x-votable+xml;version=1.1</option>
+          <option>text/xml</option>
+          <option>votable1.1</option>
+          <option>application/x-votable+xml;serialization=tabledata;version=1.2</option>
+          <option>text/xml</option>
+          <option>votabletd1.2</option>
+          <option>application/x-votable+xml;serialization=tabledata;version=1.6</option>
+          <option>vodml</option>
+          <option>application/x-votable+xml;version=1.6</option>
+          <option>vodmlb</option>
+          <option>text/html</option>
+          <option>html</option>
+          <option>application/fits</option>
+          <option>fits</option>
+        </stats>
+        <dataType arraysize="*" xsi:type="vs:SimpleDataType">char</dataType>
+      </param>
+      <param std="true">
+        <name>MAXREC</name>
+        <description>Maximum number of records returned. Pass 0 to retrieve service parameters.</description>
+        <dataType xsi:type="vs:SimpleDataType">integer</dataType>
+      </param>
+      <param std="true">
+        <name>VERB</name>
+        <description>Exhaustiveness of column selection. VERB=1 only returns the most important columns, VERB=2 selects the columns deemed useful to the average user, VERB=3 returns a table with all available columns.</description>
+        <stats>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+        </stats>
+        <dataType xsi:type="vs:SimpleDataType">integer</dataType>
+      </param>
+    </interface>
+  </capability>
+  <capability standardID="ivo://ivoa.net/std/VOSI#capabilities">
+    <interface role="std" xsi:type="vs:ParamHTTP">
+      <accessURL use="full">http://dc.g-vo.org/toss/q/q/capabilities</accessURL>
+      <mirrorURL>https://dc.g-vo.org/toss/q/q/capabilities</mirrorURL>
+    </interface>
+  </capability>
+  <capability standardID="ivo://ivoa.net/std/VOSI#availability">
+    <interface role="std" xsi:type="vs:ParamHTTP">
+      <accessURL use="full">http://dc.g-vo.org/toss/q/q/availability</accessURL>
+      <mirrorURL>https://dc.g-vo.org/toss/q/q/availability</mirrorURL>
+    </interface>
+  </capability>
+  <capability standardID="ivo://ivoa.net/std/VOSI#tables">
+    <interface role="std" version="1.1" xsi:type="vs:ParamHTTP">
+      <accessURL use="full">http://dc.g-vo.org/toss/q/q/tableMetadata</accessURL>
+      <mirrorURL>https://dc.g-vo.org/toss/q/q/tableMetadata</mirrorURL>
+    </interface>
+  </capability>
+  <capability standardID="ivo://ivoa.net/std/TAP#aux">
+    <interface role="std" version="1.1" xsi:type="vs:ParamHTTP">
+      <accessURL use="full">http://dc.g-vo.org/tap</accessURL>
+      <mirrorURL>https://dc.g-vo.org/tap</mirrorURL>
+    </interface>
+  </capability>
+  <capability standardID="ivo://ivoa.net/std/DALI#examples">
+    <interface xsi:type="vr:WebBrowser">
+      <accessURL use="full">http://dc.g-vo.org/toss/q/q/examples</accessURL>
+      <mirrorURL>https://dc.g-vo.org/toss/q/q/examples</mirrorURL>
+    </interface>
+  </capability>
+  <tableset>
+    <schema>
+      <name>toss</name>
+      <title>TOSS &#x2013; T&#xFC;bingen Oscillator Strengths Service</title>
+      <description> This service provides oscillator strengths and transition
+probabilities. Mainly based on experimental energy levels, these were
+calculated with the pseudo-relativistic Hartree-Fock method including
+core-polarization corrections.</description>
+      <table>
+        <name>toss.data</name>
+        <description> This table contains line data computed using a pseudo-relativistic
+Hartree-Fock method including core-polarization corrections.</description>
+        <nrows>930656</nrows>
+        <column>
+          <name>vacuum_wavelength</name>
+          <description>Vacuum wavelength of the transition</description>
+          <unit>m</unit>
+          <ucd>em.wl</ucd>
+          <stats>
+            <min>1.07005e-08</min>
+            <percentile03>3.16477e-08</percentile03>
+            <median>1.51973e-07</median>
+            <percentile97>2.39996e-06</percentile97>
+            <max>4.99301e-05</max>
+            <fillFactor>1</fillFactor>
+          </stats>
+          <dataType xsi:type="vs:VOTableType">double</dataType>
+          <flag>indexed</flag>
+        </column>
+        <column>
+          <name>vacuum_wavelength_error</name>
+          <description>Total error in vacuum_wavelength</description>
+          <unit>m</unit>
+          <ucd>stat.error;em.wl</ucd>
+          <stats>
+            <fillFactor>0</fillFactor>
+          </stats>
+          <dataType xsi:type="vs:VOTableType">double</dataType>
+          <flag>nullable</flag>
+        </column>
+        <column>
+          <name>line_title</name>
+          <description>Human-readable line designation.</description>
+          <ucd>meta.title</ucd>
+          <dataType arraysize="*" xsi:type="vs:VOTableType">char</dataType>
+        </column>
+        <column>
+          <name>species_name</name>
+          <description>A human-readable designation of the atom or molecule doing the transition.</description>
+          <ucd>phys.atmol.element</ucd>
+          <stats>
+            <option freq="0.0218029">Cu</option>
+            <option freq="0.0024488103">Zn</option>
+            <option freq="0.006048422">Ga</option>
+            <option freq="0.0027647165">Ge</option>
+            <option freq="0.00033309837">Se</option>
+            <option freq="0.0032772582">Kr</option>
+            <option freq="0.010439948">Sr</option>
+            <option freq="0.0038994">Zr</option>
+            <option freq="0.011630506">Mo</option>
+            <option freq="0.93250996">Tc</option>
+            <option freq="0.00019126294">Te</option>
+            <option freq="0.00021167865">I</option>
+            <option freq="0.0026841282">Xe</option>
+            <option freq="0.0017578998">Ba</option>
+          </stats>
+          <dataType arraysize="*" xsi:type="vs:VOTableType">char</dataType>
+        </column>
+        <column>
+          <name>inchikey</name>
+          <description>The InChi key (hash) generated from inchi.</description>
+          <ucd>meta.id;phys.atmol</ucd>
+          <dataType arraysize="*" xsi:type="vs:VOTableType">char</dataType>
+        </column>
+        <column>
+          <name>inchi</name>
+          <description>International Chemical Identifier InChI.</description>
+          <ucd>meta.id;phys.atmol;meta.main</ucd>
+          <dataType arraysize="*" xsi:type="vs:VOTableType">char</dataType>
+        </column>
+        <column>
+          <name>ion_charge</name>
+          <description>Total charge (ionisation level) of the emitting particle.</description>
+          <ucd>phys.electCharge</ucd>
+          <stats>
+            <min>-6</min>
+            <percentile03>-5.0</percentile03>
+            <median>-3.0</median>
+            <percentile97>-3.0</percentile97>
+            <max>-3</max>
+            <fillFactor>1.0</fillFactor>
+          </stats>
+          <dataType xsi:type="vs:VOTableType">int</dataType>
+          <flag>indexed</flag>
+        </column>
+        <column>
+          <name>species_mass</name>
+          <description>Assumed mass of the atom; this is the mass given by NIST, https://www.nist.gov/pml/periodic-table-elements</description>
+          <unit>u</unit>
+          <ucd>phys.atmol.weight</ucd>
+          <stats>
+            <min>63.546</min>
+            <percentile03>72.63</percentile03>
+            <median>97</median>
+            <percentile97>97</percentile97>
+            <max>137.33</max>
+            <fillFactor>1</fillFactor>
+          </stats>
+          <dataType xsi:type="vs:VOTableType">float</dataType>
+          <flag>indexed</flag>
+          <flag>nullable</flag>
+        </column>
+        <column>
+          <name>lower_level_description</name>
+          <description>A human-readable designation of the lower (less total energy) state.</description>
+          <unit>J</unit>
+          <ucd>meta.title;phys.atmol.level</ucd>
+          <dataType arraysize="*" xsi:type="vs:VOTableType">char</dataType>
+          <flag>nullable</flag>
+        </column>
+        <column>
+          <name>upper_level_description</name>
+          <description>A human-readable designation of the upper (more total energy) state.</description>
+          <unit>J</unit>
+          <ucd>meta.title;phys.atmol.level</ucd>
+          <dataType arraysize="*" xsi:type="vs:VOTableType">char</dataType>
+          <flag>nullable</flag>
+        </column>
+        <column>
+          <name>einstein_a</name>
+          <description>Einstein A coefficient of the radiative transition.</description>
+          <unit>1/s</unit>
+          <ucd>phys.atmol.transProb</ucd>
+          <stats>
+            <min>0.0301</min>
+            <percentile03>180</percentile03>
+            <median>940000</median>
+            <percentile97>1e+09</percentile97>
+            <max>5.3e+12</max>
+            <fillFactor>1</fillFactor>
+          </stats>
+          <dataType xsi:type="vs:VOTableType">double</dataType>
+          <flag>indexed</flag>
+          <flag>nullable</flag>
+        </column>
+        <column>
+          <name>lower_energy</name>
+          <description>Energy of the lower state</description>
+          <unit>J</unit>
+          <ucd>phys.energy;phys.atmol.level</ucd>
+          <stats>
+            <min>0</min>
+            <percentile03>8.52523e-19</percentile03>
+            <median>3.84465e-18</median>
+            <percentile97>5.68914e-18</percentile97>
+            <max>1.24943e-17</max>
+            <fillFactor>1</fillFactor>
+          </stats>
+          <dataType xsi:type="vs:VOTableType">double</dataType>
+          <flag>indexed</flag>
+          <flag>nullable</flag>
+        </column>
+        <column>
+          <name>upper_energy</name>
+          <description>Energy of the upper state</description>
+          <unit>J</unit>
+          <ucd>phys.energy;phys.atmol.level</ucd>
+          <stats>
+            <min>6.09442e-20</min>
+            <percentile03>2.94566e-18</percentile03>
+            <median>5.01689e-18</median>
+            <percentile97>9.84783e-18</percentile97>
+            <max>1.85641e-17</max>
+            <fillFactor>1</fillFactor>
+          </stats>
+          <dataType xsi:type="vs:VOTableType">double</dataType>
+          <flag>indexed</flag>
+          <flag>nullable</flag>
+        </column>
+        <column>
+          <name>reference_doi</name>
+          <description>DOI of the source of this data.</description>
+          <ucd>meta.ref.doi</ucd>
+          <dataType arraysize="*" xsi:type="vs:VOTableType">char</dataType>
+          <flag>nullable</flag>
+        </column>
+        <column>
+          <name>reference_uri</name>
+          <description>URI of the source of this data.</description>
+          <ucd>meta.ref.uri</ucd>
+          <dataType arraysize="*" xsi:type="vs:VOTableType">char</dataType>
+          <flag>nullable</flag>
+        </column>
+        <column>
+          <name>method</name>
+          <description>Method the wavelength was obtained with (XSAMS controlled vocabulary: observed, theory, ritz)</description>
+          <ucd>meta.code.class</ucd>
+          <stats>
+            <option>observed</option>
+            <option freq="1.0">theory</option>
+            <option>ritz</option>
+          </stats>
+          <dataType arraysize="*" xsi:type="vs:VOTableType">char</dataType>
+          <flag>nullable</flag>
+        </column>
+        <column>
+          <name>ion_stage</name>
+          <description>Ionisation stage</description>
+          <ucd>phys.atmol.ionStage</ucd>
+          <dataType arraysize="*" xsi:type="vs:VOTableType">char</dataType>
+          <flag>nullable</flag>
+        </column>
+        <column>
+          <name>c_wavelength</name>
+          <description>Conventional wavelength of the transition. This is the air wavelength between 2000 and 20000 Angstrom, the vacuum wavelength otherwise.</description>
+          <unit>Angstrom</unit>
+          <ucd>em.wl;phys.atmol.transition</ucd>
+          <stats>
+            <min>107.005</min>
+            <percentile03>316.476</percentile03>
+            <median>1519.73</median>
+            <percentile97>23999.6</percentile97>
+            <max>499301</max>
+            <fillFactor>1</fillFactor>
+          </stats>
+          <dataType xsi:type="vs:VOTableType">double</dataType>
+          <flag>nullable</flag>
+        </column>
+        <column>
+          <name>par_init</name>
+          <description>Parity of the init level of the transition</description>
+          <ucd>phys.atmol.parity</ucd>
+          <stats>
+            <option>e</option>
+            <option>o</option>
+          </stats>
+          <dataType arraysize="1" xsi:type="vs:VOTableType">char</dataType>
+        </column>
+        <column>
+          <name>j_init</name>
+          <description>Angular momentum quantum number of the init level of the transition.</description>
+          <ucd>phys.atmol.qn</ucd>
+          <stats>
+            <min>0</min>
+            <percentile03>0</percentile03>
+            <median>2</median>
+            <percentile97>5.5</percentile97>
+            <max>9.5</max>
+            <fillFactor>1</fillFactor>
+          </stats>
+          <dataType xsi:type="vs:VOTableType">float</dataType>
+          <flag>nullable</flag>
+        </column>
+        <column>
+          <name>par_final</name>
+          <description>Parity of the final level of the transition</description>
+          <ucd>phys.atmol.parity</ucd>
+          <stats>
+            <option>e</option>
+            <option>o</option>
+          </stats>
+          <dataType arraysize="1" xsi:type="vs:VOTableType">char</dataType>
+        </column>
+        <column>
+          <name>j_final</name>
+          <description>Angular momentum quantum number of the final level of the transition.</description>
+          <ucd>phys.atmol.qn</ucd>
+          <stats>
+            <min>0</min>
+            <percentile03>0</percentile03>
+            <median>2</median>
+            <percentile97>5.5</percentile97>
+            <max>10.5</max>
+            <fillFactor>1</fillFactor>
+          </stats>
+          <dataType xsi:type="vs:VOTableType">float</dataType>
+          <flag>nullable</flag>
+        </column>
+        <column>
+          <name>log_gf</name>
+          <description>Calculated HRF log(gf) (g &#x2013; statistical weight of the lower level; f &#x2013; oscillator strength)</description>
+          <ucd>phys.atmol.wOscStrength</ucd>
+          <stats>
+            <min>-9.87</min>
+            <percentile03>-6.72</percentile03>
+            <median>-3.32</median>
+            <percentile97>-0.78</percentile97>
+            <max>1.57</max>
+            <fillFactor>1</fillFactor>
+          </stats>
+          <dataType xsi:type="vs:VOTableType">float</dataType>
+          <flag>nullable</flag>
+        </column>
+        <column>
+          <name>cf</name>
+          <description>Cancellation factor as defined by 1981tass.book.....C</description>
+          <stats>
+            <min>-1</min>
+            <percentile03>-0.689</percentile03>
+            <median>0</median>
+            <percentile97>0.69</percentile97>
+            <max>1</max>
+            <fillFactor>0.06749</fillFactor>
+          </stats>
+          <dataType xsi:type="vs:VOTableType">float</dataType>
+          <flag>nullable</flag>
+        </column>
+      </table>
+      <table>
+        <name>toss.legacy_data</name>
+        <description>A view on top of toss.data that has values in conventional units and
+with air wavelengths (rather than vacuum) between 2000 and 20000
+&#xC5;ngstr&#xF8;m.</description>
+        <column>
+          <name>c_wavelength</name>
+          <description>Conventional wavelength of the transition. This is the air wavelength between 2000 and 20000 Angstrom, the vacuum wavelength otherwise.</description>
+          <unit>Angstrom</unit>
+          <ucd>em.wl;phys.atmol.transition</ucd>
+          <stats>
+            <min>107.005</min>
+            <percentile03>316.476</percentile03>
+            <median>1519.73</median>
+            <percentile97>23999.6</percentile97>
+            <max>499301</max>
+            <fillFactor>1</fillFactor>
+          </stats>
+          <dataType xsi:type="vs:VOTableType">double</dataType>
+          <flag>nullable</flag>
+        </column>
+        <column>
+          <name>species_name</name>
+          <description>A human-readable designation of the atom or molecule doing the transition.</description>
+          <ucd>phys.atmol.element</ucd>
+          <stats>
+            <option freq="0.0218029">Cu</option>
+            <option freq="0.0024488103">Zn</option>
+            <option freq="0.006048422">Ga</option>
+            <option freq="0.0027647165">Ge</option>
+            <option freq="0.00033309837">Se</option>
+            <option freq="0.0032772582">Kr</option>
+            <option freq="0.010439948">Sr</option>
+            <option freq="0.0038994">Zr</option>
+            <option freq="0.011630506">Mo</option>
+            <option freq="0.93250996">Tc</option>
+            <option freq="0.00019126294">Te</option>
+            <option freq="0.00021167865">I</option>
+            <option freq="0.0026841282">Xe</option>
+            <option freq="0.0017578998">Ba</option>
+          </stats>
+          <dataType arraysize="*" xsi:type="vs:VOTableType">char</dataType>
+        </column>
+        <column>
+          <name>ion_stage</name>
+          <description>Ionisation stage</description>
+          <ucd>phys.atmol.ionStage</ucd>
+          <dataType arraysize="*" xsi:type="vs:VOTableType">char</dataType>
+          <flag>nullable</flag>
+        </column>
+        <column>
+          <name>log_gf</name>
+          <description>Calculated HRF log(gf) (g &#x2013; statistical weight of the lower level; f &#x2013; oscillator strength)</description>
+          <ucd>phys.atmol.wOscStrength</ucd>
+          <stats>
+            <min>-9.87</min>
+            <percentile03>-6.72</percentile03>
+            <median>-3.32</median>
+            <percentile97>-0.78</percentile97>
+            <max>1.57</max>
+            <fillFactor>1</fillFactor>
+          </stats>
+          <dataType xsi:type="vs:VOTableType">float</dataType>
+          <flag>nullable</flag>
+        </column>
+        <column>
+          <name>einstein_a</name>
+          <description>Einstein A coefficient of the radiative transition.</description>
+          <unit>1/s</unit>
+          <ucd>phys.atmol.transProb</ucd>
+          <stats>
+            <min>0.0301</min>
+            <percentile03>180</percentile03>
+            <median>940000</median>
+            <percentile97>1e+09</percentile97>
+            <max>5.3e+12</max>
+            <fillFactor>1</fillFactor>
+          </stats>
+          <dataType xsi:type="vs:VOTableType">double</dataType>
+          <flag>nullable</flag>
+        </column>
+        <column>
+          <name>par_init</name>
+          <description>Parity of the init level of the transition</description>
+          <ucd>phys.atmol.parity</ucd>
+          <stats>
+            <option>e</option>
+            <option>o</option>
+          </stats>
+          <dataType arraysize="1" xsi:type="vs:VOTableType">char</dataType>
+        </column>
+        <column>
+          <name>j_init</name>
+          <description>Angular momentum quantum number of the init level of the transition.</description>
+          <ucd>phys.atmol.qn</ucd>
+          <stats>
+            <min>0</min>
+            <percentile03>0</percentile03>
+            <median>2</median>
+            <percentile97>5.5</percentile97>
+            <max>9.5</max>
+            <fillFactor>1</fillFactor>
+          </stats>
+          <dataType xsi:type="vs:VOTableType">float</dataType>
+          <flag>nullable</flag>
+        </column>
+        <column>
+          <name>par_final</name>
+          <description>Parity of the final level of the transition</description>
+          <ucd>phys.atmol.parity</ucd>
+          <stats>
+            <option>e</option>
+            <option>o</option>
+          </stats>
+          <dataType arraysize="1" xsi:type="vs:VOTableType">char</dataType>
+        </column>
+        <column>
+          <name>j_final</name>
+          <description>Angular momentum quantum number of the final level of the transition.</description>
+          <ucd>phys.atmol.qn</ucd>
+          <stats>
+            <min>0</min>
+            <percentile03>0</percentile03>
+            <median>2</median>
+            <percentile97>5.5</percentile97>
+            <max>10.5</max>
+            <fillFactor>1</fillFactor>
+          </stats>
+          <dataType xsi:type="vs:VOTableType">float</dataType>
+          <flag>nullable</flag>
+        </column>
+        <column>
+          <name>reference_uri</name>
+          <description>URI of the source of this data.</description>
+          <ucd>meta.ref.uri</ucd>
+          <dataType arraysize="*" xsi:type="vs:VOTableType">char</dataType>
+          <flag>nullable</flag>
+        </column>
+      </table>
+    </schema>
+    <schema>
+      <name>__system</name>
+      <description>A mixin and other support material for SLAP2.</description>
+      <table>
+        <name>__system.species_response</name>
+        <description> This table contains line data computed using a pseudo-relativistic
+Hartree-Fock method including core-polarization corrections.</description>
+        <column>
+          <name>species_name</name>
+          <description>A human-readable designation of the atom or molecule doing the transition.</description>
+          <ucd>phys.atmol.element</ucd>
+          <dataType arraysize="*" xsi:type="vs:VOTableType">char</dataType>
+        </column>
+        <column>
+          <name>inchikey</name>
+          <description>The InChi key (hash) generated from inchi.</description>
+          <ucd>meta.id;phys.atmol</ucd>
+          <dataType arraysize="*" xsi:type="vs:VOTableType">char</dataType>
+        </column>
+        <column>
+          <name>inchi</name>
+          <description>International Chemical Identifier InChI.</description>
+          <ucd>meta.id;phys.atmol;meta.main</ucd>
+          <dataType arraysize="*" xsi:type="vs:VOTableType">char</dataType>
+        </column>
+        <column>
+          <name>ion_charge</name>
+          <description>Total charge (ionisation level) of the emitting particle.</description>
+          <ucd>phys.electCharge</ucd>
+          <dataType xsi:type="vs:VOTableType">int</dataType>
+        </column>
+        <column>
+          <name>species_stoichiometric_formula</name>
+          <description>Stoichiometric formula of a species, i.e., atomic constituents forllowed by the total number of their occurrence as in CH4O.</description>
+          <ucd>phys.atmol.element</ucd>
+          <dataType arraysize="*" xsi:type="vs:VOTableType">char</dataType>
+          <flag>nullable</flag>
+        </column>
+        <column>
+          <name>species_type</name>
+          <description>Type of the species (either atom or molecule).</description>
+          <dataType arraysize="*" xsi:type="vs:VOTableType">char</dataType>
+        </column>
+        <column>
+          <name>number_of_atoms</name>
+          <description>Number of atoms in the species.</description>
+          <dataType xsi:type="vs:VOTableType">int</dataType>
+          <flag>nullable</flag>
+        </column>
+      </table>
+    </schema>
+  </tableset>
+</ri:Resource>

@@ -41,6 +41,12 @@ ivoatex/Makefile:
 
 STILTS ?= stilts
 
+registry-sample.xml:
+	curl "http://dc.g-vo.org/oai.xml?verb=GetRecord&metadataPrefix=ivo_vor&identifier=ivo://org.gavo.dc/toss/q/q" \
+		| xmlstarlet sel --indent -N ri=http://www.ivoa.net/xml/RegistryInterface/v1.0 -t -c //ri:Resource \
+		| xmlstarlet fo > $@
+
+
 test:
 	@$(STILTS) xsdvalidate \
 		schemaloc="http://www.ivoa.net/xml/VOSICapabilities/v1.0=http://www.ivoa.net/xml/VOSICapabilities/v1.0 http://www.ivoa.net/xml/VODataService/v1.1=http://www.ivoa.net/xml/VODataService/v1.1" \
@@ -48,3 +54,6 @@ test:
 	@$(STILTS) xsdvalidate \
 		schemaloc="http://www.ivoa.net/xml/VOTable/v1.3=http://www.ivoa.net/xml/VOTable/v1.3" \
 		lines-response-example.vot
+	@$(STILTS) xsdvalidate \
+		schemaloc="http://www.ivoa.net/xml/VODataService/v1.1=http://docs.g-vo.org/schemata/VODataService.xsd http://www.ivoa.net/xml/SLAP/v1.0=SLAP-v1.2.xsd" \
+		registry-sample.xml

@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns:vr="http://www.ivoa.net/xml/VOResource/v1.0"
            xmlns:slap="http://www.ivoa.net/xml/SLAP/v1.0"
            xmlns:vm="http://www.ivoa.net/xml/VOMetadata/v0.1"
            targetNamespace="http://www.ivoa.net/xml/SLAP/v1.0"
            elementFormDefault="unqualified" attributeFormDefault="unqualified"
-           version="1.1">
+           version="1.2-pr1">
 
-   <!-- 
-	First version 09/09/09
-	Authors: Jesus Salgado/Aurelien Stebe (ESAVO)
-     -->
    <xs:annotation>
       <xs:appinfo>
         <vm:schemaName>SLAP</vm:schemaName>
@@ -30,7 +26,7 @@
    <xs:complexType name="SimpleLineAccess">
       <xs:annotation>
          <xs:documentation>
-            The capabilities of an SLAP service implementation.  
+            The capabilities of an SLAP service implementation.
          </xs:documentation>
       </xs:annotation>
 
@@ -42,10 +38,10 @@
                   <xs:annotation>
                      <xs:documentation>
                         The category indicating the level to which this
-                        service instance complies with the SLAP standard.  
+                        service instance complies with the SLAP standard.
                      </xs:documentation>
                      <xs:documentation>
-                        Allowed values are "minimal" and "full".
+                        Allowed values are “minimal” and “full”.
                         See definitions of allowed values for details.
                      </xs:documentation>
                   </xs:annotation>
@@ -55,11 +51,11 @@
                   <xs:annotation>
                      <xs:documentation>
                         The category specifying where the data accessed by
-			the service originally came from. 
+			the service originally came from.
                      </xs:documentation>
                      <xs:documentation>
-                        Allowed values are "observational/astrophysical", 
-			"observational/laboratory", "theoretical"
+                        Allowed values are “observational/astrophysical”,
+			“observational/laboratory”, “theoretical”
                      </xs:documentation>
                   </xs:annotation>
                </xs:element>
@@ -68,18 +64,16 @@
                            minOccurs="0" maxOccurs="1">
                   <xs:annotation>
                      <xs:documentation>
-                        The hard limit on the largest number of records that 
+                        The hard limit on the largest number of records that
                         the query operation will return in a single response.
-                        Not providing this value means that there is no 
-                        effective limit.  
+                        Not providing this value means that there is no
+                        effective limit.
                      </xs:documentation>
                      <xs:documentation>
-                        This does not refer to the total number of spectra in 
-                        the archive but rather maximum number of records the 
-                        service is capable of returning.  A limit that is 
-                        greater than the number of spectra available in the 
-                        archive is equivalent to their being no effective 
-                        limit.  (See RM, Hanisch 2007.)
+                        This does not refer to the total number of spectra in
+                        the archive but rather maximum number of records the
+                        service is capable of returning.  A number smaller
+                        than one means that there is no effective limit.
                      </xs:documentation>
                   </xs:annotation>
                </xs:element>
@@ -88,14 +82,8 @@
                            minOccurs="0" maxOccurs="1">
                   <xs:annotation>
                      <xs:documentation>
-                        A set of queryData parameters that is expected to
-			produce at least one matched record which can be
-                        used to test the service.
-                     </xs:documentation>
-                     <xs:documentation>
-		        The value should include all parameters required
-			for the test query but should exclude the baseURL
-			and the REQUEST parameter.
+                        Deprecated; use vs:ParamHTTP's testQuery element
+                        instead.
                      </xs:documentation>
                   </xs:annotation>
                </xs:element>
@@ -109,7 +97,7 @@
       <xs:annotation>
          <xs:documentation>
             The allowed values for indicating the level at which a service
-	    instance complies with the SLAP standard.  
+	    instance complies with the SLAP standard.
          </xs:documentation>
       </xs:annotation>
 
@@ -118,16 +106,16 @@
             <xs:annotation>
                <xs:documentation>
                   The service supports all of the capabilities and features
-                  of the SLAP protocol identified as "must" in the 
+                  of the SLAP protocol identified as “must” in the
                   specification.
                </xs:documentation>
                <xs:documentation>
                   In brief, this includes:
                     * implementing the GET interface,
                     * WAVELENGTH, REQUEST for input query,
-		    * ssldm:Line.wavelength.value and ssldm:Line.title for output 
-		    fields 
-                    * supports the "FORMAT=METADATA" metadata query.
+		    * ssldm:Line.wavelength.value and ssldm:Line.title for output
+		    fields
+                    * supports the “FORMAT=METADATA” metadata query.
                </xs:documentation>
             </xs:annotation>
          </xs:enumeration>
@@ -136,8 +124,8 @@
             <xs:annotation>
                <xs:documentation>
                   The service supports, at a minimum, all of the capabilities
-		  and features of the SLAP protocol identified as "must" or
-		  "should" in the specification.
+		  and features of the SLAP protocol identified as “must” or
+		  “should” in the specification.
                </xs:documentation>
             </xs:annotation>
          </xs:enumeration>
@@ -147,7 +135,7 @@
    <xs:simpleType name="DataSource">
       <xs:annotation>
          <xs:documentation>
-           The defined categories that specify where the line data 
+           The defined categories that specify where the line data
            originally came from, i.e., the type of data collections to
 	   which the service provides access.
          </xs:documentation>
@@ -159,7 +147,7 @@
                <xs:documentation>
                  Lines observed and identified in real spectra of
 		 astrophysical observations by different
-		 instrument/projects 
+		 instrument/projects
                </xs:documentation>
             </xs:annotation>
          </xs:enumeration>
@@ -187,7 +175,8 @@
    <xs:complexType name="Query">
       <xs:annotation>
          <xs:documentation>
-            A query to be sent to the service, e.g., a test query.
+            A deprecated type, originally intended for testQuery.  Use
+            vs:ParamHTTP's testQuery instead.
          </xs:documentation>
       </xs:annotation>
 
@@ -206,8 +195,8 @@
                <xs:documentation>
                    Fully specified queryData test query formatted as an URL
 		   argument list in the syntax specified by the SLAP standard.
-                   The list must exclude the REQUEST argument which is 
-                   assumed to be set to "queryData".  VERSION may be
+                   The list must exclude the REQUEST argument which is
+                   assumed to be set to “queryData”.  VERSION may be
 		   included if the test query applies to a specific version
 		   of the service protocol.
                </xs:documentation>
@@ -221,7 +210,7 @@
                    This value must be a string in the form of name=value
                    pairs delimited with ampersands (&amp;).  A query may
 		   then be formed by appending to the baseURL the request
-		   argument, "REQUEST=queryData&amp;", followed by the
+		   argument, “REQUEST=queryData&amp;”, followed by the
 		   contents of this element.
                </xs:documentation>
             </xs:annotation>
@@ -232,8 +221,8 @@
    <xs:complexType name="WavelengthRange">
       <xs:annotation>
          <xs:documentation>
-            Spectral range in meters to be used to constrain the query
-	    of spectral lines  
+            This was used with slap:Query and is deprecated together with it.
+	    of spectral lines
          </xs:documentation>
       </xs:annotation>
 
@@ -242,7 +231,7 @@
             <xs:annotation>
                <xs:documentation>
                   Minimum wavelength in meters to be used to constrain the query
-	    	  of spectral lines 
+	    	  of spectral lines
                </xs:documentation>
             </xs:annotation>
          </xs:element>
