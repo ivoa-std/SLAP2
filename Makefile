@@ -43,10 +43,8 @@ STILTS ?= stilts
 
 test:
 	@$(STILTS) xsdvalidate \
-		schemaloc="http://www.ivoa.net/xml/VOSICapabilities/v1.0 \
-		           http://www.ivoa.net/xml/VOSICapabilities/v1.0" \
+		schemaloc="http://www.ivoa.net/xml/VOSICapabilities/v1.0=http://www.ivoa.net/xml/VOSICapabilities/v1.0 http://www.ivoa.net/xml/VODataService/v1.1=http://www.ivoa.net/xml/VODataService/v1.1" \
 		vosi-capabilities.xml
 	@$(STILTS) xsdvalidate \
-		schemaloc="http://www.ivoa.net/xml/VOTable/v1.3 \
-		           http://www.ivoa.net/xml/VOTable/VOTable-1.3.xsd" \
+		schemaloc="http://www.ivoa.net/xml/VOTable/v1.3=http://www.ivoa.net/xml/VOTable/v1.3" \
 		lines-response-example.vot
