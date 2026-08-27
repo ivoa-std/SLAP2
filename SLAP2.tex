@@ -58,12 +58,12 @@ These lines can be either observed or theoretical and will be typically
 used to identify emission or absorption features in astronomical
 spectra.
 
-It makes use of the \href{https://dictionary.vamdc.eu/}{VAMDC dictionary} to define the query parameters and the returned data. 
-This dictionary is actually the equivalent of a relational database view built on top of the data model defined in 
+It makes use of the \href{https://dictionary.vamdc.eu/}{VAMDC dictionary} to define the query parameters and the returned data.
+This dictionary is actually the equivalent of a relational database view built on top of the data model defined in
 the \textit{VAMDC XSAMS schema 12.07}
-\citep{std:XSAMS12.07}. The primary objective of this schema is to set up a framework for the correct exchange 
-of atomic, molecular and particle-surface interaction processes data. 
-It has been developed and is currently maintained by the \href{https://vamdc.org/structure/presentation/}{VAMDC Consortium}. 
+\citep{std:XSAMS12.07}. The primary objective of this schema is to set up a framework for the correct exchange
+of atomic, molecular and particle-surface interaction processes data.
+It has been developed and is currently maintained by the \href{https://vamdc.org/structure/presentation/}{VAMDC Consortium}.
 Each quantity defined in the dictionary is clearly defined and related to a field in the VAMDC schema.
 
 Physical units are described by using the standard VO Units syntax \citep{2014ivoa.spec.0523D}.
@@ -109,7 +109,7 @@ infrastructure that enable VO applications.
 \section{Introduction}
 
 The Simple Line Access Protocol (SLAP henceforth) in its first version \citep{2010ivoa.specQ1209O} made
-use of the work done in the Simple Spectral Lines Data Model definition \citep{2010ivoa.spec.1209O} as the source of 
+use of the work done in the Simple Spectral Lines Data Model definition \citep{2010ivoa.spec.1209O} as the source of
 the abstract representation of
 a spectral line. This second version now relies on the standardization work made by
 the VAMDC Consortium in the XSAMS data model to describe quantities \citep{std:XSAMS12.07}.
@@ -202,8 +202,8 @@ Some SLAP2 services might make use of extra parameters, not defined in this
 document, to support additional filtering and selection, for instance:
 
 \begin{itemize}
-\item For the Stark-b database \citep{2012JPhCS.397a2019S} which provides widths and shifts of isolated lines of 
-neutral and ionized elements due to electron and ion impacts, it is necessary to provide the perturber density and 
+\item For the Stark-b database \citep{2012JPhCS.397a2019S} which provides widths and shifts of isolated lines of
+neutral and ionized elements due to electron and ion impacts, it is necessary to provide the perturber density and
 the temperature to filter the transitions.
 
 \item For the NIST Atomic Spectra Database Lines \citep{NIST_ASD}
@@ -266,9 +266,9 @@ state, oscillator strengths or quantum numbers to identify rotational or vibrati
 \subsubsection{Finding available lines for a given species}
 \label{sect:finding-all}
 
-Using a mass spectrometer, researchers find a molecule with the sum formula $\textrm{C}_{16}\textrm{H}_{10}$ in a comet. 
-They now want to figure out whether any line in the spectrum of the coma of the parent object corresponds 
-to some molecule with that sum formula. Conversely, a researcher may want to find lines of Methane or perhaps even Methane 
+Using a mass spectrometer, researchers find a molecule with the sum formula $\textrm{C}_{16}\textrm{H}_{10}$ in a comet.
+They now want to figure out whether any line in the spectrum of the coma of the parent object corresponds
+to some molecule with that sum formula. Conversely, a researcher may want to find lines of Methane or perhaps even Methane
 with one hydrogen atom being replaced by a deuteron.
 
 In that case,  a first step could be to search in the list of available species if the \{species\} endpoint is available,
@@ -277,11 +277,11 @@ then using the \{lines\} endpoint with SPECIES or INCHIKEY parameters.
 \subsubsection{Finding Well-Known Lines}
 \label{sect:finding-known-line}
 
-A user wants to display the Lyman series over a plot of a spectrum. Hence, a client needs to discover which service holds such data, 
-select the appropriate records -- presumably by their properties, perhaps even by their name --, and retrieve them. 
+A user wants to display the Lyman series over a plot of a spectrum. Hence, a client needs to discover which service holds such data,
+select the appropriate records -- presumably by their properties, perhaps even by their name --, and retrieve them.
 If multiple services hold the desired data, it might need to reconcile differing specifications.
 
-This could be done by defining H as the searched SPECIES (for molecules, INCHIKEY would need to be used for interoperability) 
+This could be done by defining H as the searched SPECIES (for molecules, INCHIKEY would need to be used for interoperability)
 and providing a narrow WAVELENGTH interval corresponding to each lines in the serie.
 
 \subsubsection[Retrieving Spectral Lines for Cross-Identification]{Retrieving Spectral Lines for Cross-Identification}
@@ -289,8 +289,8 @@ and providing a narrow WAVELENGTH interval corresponding to each lines in the se
 
 Users may have various reasons to retrieve a larger number of spectral lines:
 
-    When analysing a given spectrum, selecting spectral lines that may fit the ones in the spectrum, for instance to establish 
-    the source's chemistry or physical state. Depending on the prior knowledge of the source, 
+    When analysing a given spectrum, selecting spectral lines that may fit the ones in the spectrum, for instance to establish
+    the source's chemistry or physical state. Depending on the prior knowledge of the source,
     they will want to constrain the matches to specific species in specific ionisation (or even excitation) states.
 
     When estimating the redshift of an object, features found in the spectrum need to be matched to the rest wavelengths.
@@ -370,7 +370,7 @@ the VO Registry is discussed in sect.~\ref{sect:reg}.
 \subsection{Input parameters}
 \label{sect:input-pars}
 
-Parameter names are case sensitive. Thus, for the SLAP2 protocol, WAVELENGTH parameter is valid 
+Parameter names are case sensitive. Thus, for the SLAP2 protocol, WAVELENGTH parameter is valid
 and wavelength is not. Parameter values are case sensitive and single-valued by default.
 There are some exceptions that will be specified in the parameter description section.
 The constraints from multiple occurrences of a parameter are
@@ -432,7 +432,7 @@ raising an error, and the parameters must be properly used to constrain
 the query.
 
 When all values in the corresponding column are NULL or an optional column is not present,
-an error must be raised when the parameter is received in a query 
+an error must be raised when the parameter is received in a query
 (see \ref{par:QUERY_STATUS} for the appropriate syntax).
 
 Similarly, if an unknown parameter is passed to the service, an error must be raised.
@@ -457,11 +457,11 @@ could be queried by specifying this parameter multiple times.
 
 Atoms can be specified exactly by symbol (corresponding VAMDC restrictable is \vamdcres{AtomSymbol}) or names
 like carbon or iron.
-Molecules can be specified by a conventional molecular name (a formula like \emph{CO2}, \emph{CH4} or names like \emph{carbon dioxyde} 
+Molecules can be specified by a conventional molecular name (a formula like \emph{CO2}, \emph{CH4} or names like \emph{carbon dioxyde}
 or \emph{water}) which might not be unique (corresponding VAMDC restrictable are \vamdcres{MoleculeChemicalName} and
 \vamdcres{MoleculeOrdinaryStructuralFormula}).
 In the case of molecules, the \{species\} endpoint must be used
-to discover the local designation(s) of a given species.  
+to discover the local designation(s) of a given species.
 To interoperably specify molecule species (for example while performing cross service queries), use the INCHIKEY parameter.
 
 Example: Filter results for Iron only:
@@ -554,7 +554,7 @@ Example: Energy of lower level between 3.93E-18 and 3.94E-18 Joules:
 \subsubsection{UPPER\_LEVEL\_ENERGY}
 
 The \textbf{UPPER\_LEVEL\_ENERGY} parameter specifies the minimum
-and maximum energy for the upper level of the transition, to be expressed in Joules 
+and maximum energy for the upper level of the transition, to be expressed in Joules
 (the corresponding VAMDC restrictable is \vamdcres{StateEnergy}).
 
 Example: Energy of upper level between 3.93E-18 and 3.94E-18 Joules:
@@ -647,7 +647,7 @@ It \textbf{MUST} contain an INFO with
 MUST be set to \texttt{OK} if the query is executed successfully,
 regardless of whether any matching spectral lines were found. \ If an
 overflow occurs (result exceeds MAXREC) the value attribute will be set
-to \texttt{OVERFLOW}. The QUERY\_STATUS field is described 
+to \texttt{OVERFLOW}. The QUERY\_STATUS field is described
 in DALI 1.1 \citep{2017ivoa.spec.0517D}.
 
 
@@ -900,14 +900,14 @@ attached to this reference. The corresponding VAMDC returnable is \vamdcret{Sour
 
 One or more fields \textbf{SHOULD} have \attrval{name}{reference\_uri},
 with \attrval{ucd}{meta.ref.uri}, \attrval{datatype}{char} and
-\attrval{arraysize}{*}, to specify an http link that contains a scientific publication related to the spectral line. 
+\attrval{arraysize}{*}, to specify an http link that contains a scientific publication related to the spectral line.
 The corresponding VAMDC returnable is \vamdcret{SourceURI}.
 
 
 \subsubsection{reference\_additional\_uri}
 
-One or more fields \textbf{MAY} have \attrval{name}{reference\_additional\_uri} with 
-\attrval{ucd}{meta.ref.uri}, \attrval{datatype}{char}, \attrval{arraysize}{*} and free names, 
+One or more fields \textbf{MAY} have \attrval{name}{reference\_additional\_uri} with
+\attrval{ucd}{meta.ref.uri}, \attrval{datatype}{char}, \attrval{arraysize}{*} and free names,
 to specify URLs that contains extra information related to the spectral line.
 The corresponding VAMDC returnable is \vamdcret{SourceURI}.
 
@@ -1013,7 +1013,7 @@ Molecules containing 2 to five atoms:
 
 The \textbf{SPECIES} parameter defines an expression accepting pattern matching
 (see \ref{sect:pattern-matching} for exact syntax) to perform a search
-in the list of species provided by the service (corresponding VAMDC restrictable 
+in the list of species provided by the service (corresponding VAMDC restrictable
 is \vamdcres{AtomSymbol} for atoms,  \vamdcres{MoleculeChemicalName} and \vamdcres{MoleculeOrdi-
 naryStructuralFormula} for molecules). A list of different species
 could be queried by specifying this parameter multiple times.
@@ -1037,7 +1037,7 @@ by the total number of their occurence (purely ASCII), for example CO2, NH3, CH4
 
 The \textbf{STOICHIOMETRIC\_FORMULA} parameter defines an expression accepting pattern matching
 (see \ref{sect:pattern-matching} for exact syntax) to perform
-a search in the list of stoichiometric formula provided by the service (corresponding VAMDC restrictable 
+a search in the list of stoichiometric formula provided by the service (corresponding VAMDC restrictable
 is \vamdcres{MoleculeStoichiometricFormula}).
 
 Example:
@@ -1096,7 +1096,7 @@ for an atom and  \vamdcret{MoleculeIonCharge} for a molecule. This value must no
 Exactly one field \textbf{MUST} have \attrval{name}{inchikey}, with
 \attrval{datatype}{char}, \attrval{arraysize}{*} and \attrval{ucd}{phys.atmol.element}, containing the inchikey
 of the chemical species. The inchikey must not be considered as a primary key for a species because it could appear
-several times in a query response. For example, a line could have species\_name="CH4" and another one species\_name="methane", 
+several times in a query response. For example, a line could have species\_name="CH4" and another one species\_name="methane",
 denoting the fact that both are possible search values. Both will have the same inchikey.
 
 The corresponding VAMDC returnable is \vamdcret{AtomInchiKey} for an atom and \vamdcret{MoleculeInchiKey} for a molecule.
@@ -1104,8 +1104,8 @@ This value must not be NULL.
 
 \subsubsection{inchi}
 
-Exactly one field \textbf{MUST} have \attrval{name}{inchi}, with \attrval{datatype}{char}, \attrval{arraysize}{*} 
-and \attrval{ucd}{phys.atmol.element}, containing the inchi of the species. The corresponding VAMDC returnable 
+Exactly one field \textbf{MUST} have \attrval{name}{inchi}, with \attrval{datatype}{char}, \attrval{arraysize}{*}
+and \attrval{ucd}{phys.atmol.element}, containing the inchi of the species. The corresponding VAMDC returnable
 is \vamdcret{AtomInchi} for an atom and \vamdcret{MoleculeInchi} for a molecule. This value must not be NULL.
 
 \subsubsection{stoichiometric\_formula}
@@ -1113,9 +1113,9 @@ is \vamdcret{AtomInchi} for an atom and \vamdcret{MoleculeInchi} for a molecule.
 Exactly one field \textbf{MUST} have
 \attrval{name}{stoichiometric\_formula}, \attrval{datatype}{char},
 \attrval{arraysize}{*} and
-\attrval{ucd}{phys.atmol.element}, containing the stoichiometric formula of a species for which at least one spectral line 
+\attrval{ucd}{phys.atmol.element}, containing the stoichiometric formula of a species for which at least one spectral line
 is available in the service. For an atom, the atom symbol can be used as a value.
-The corresponding VAMDC returnable is \vamdcret{MoleculeStoichiometricFormula} in the case of a molecule. 
+The corresponding VAMDC returnable is \vamdcret{MoleculeStoichiometricFormula} in the case of a molecule.
 The value is not defined for an atom. This value may be NULL.
 
 \subsubsection{species\_type}
@@ -1134,6 +1134,7 @@ Examples of valid values are 1 for the hydrogen atom, 3 for the water molecule.
 
 
 \section{VOSI-capabilities}
+\label{sect:vosicap}
 
 A compliant simple spectral line service \textbf{MUST} provide a
 VOSI capabilities resource used to query the service metadata.  It must be a sibling of lines and species, and its name is \textit{capbilities}.
@@ -1160,13 +1161,194 @@ An example of such a document could be:
 
 \auxiliaryurl{vosi-capabilities.xml}
 
-\section{Registration and discovering of SLAP resources}
+\section{SLAP2 and the Registry}
 \label{sect:reg}
 
-Users can discover a service instance through an IVOA-compliant
-registry. The description is recognized as an instance of a SLAP
-service when it complies with the SLAP VOResource metadata extension
-schema \citep{2017ivoa.spec.0530P}.
+\subsection{Registering SLAP2 Services}
+
+SLAP2 services are registered as VODataService
+\citep{2021ivoa.spec.1102D} \xmlel{vs:CatalogService} resources, where a
+tableset must be present and must define the responses of both the lines
+and the species table.
+
+The record must contain at least two capabilities, one with each of the
+two \xmlel{standardID}s given in sect.~\ref{sect:vosicap}, for the lines
+and species endpoints.
+
+The capability for the lines endpoint should use the
+\xmlel{slap:SimpleLineAccess} type defined in the SLAP VOResource
+extension.  This used to be defined in SimpleDALRegExt
+\citep{2022ivoa.spec.0222D}.  As envisioned there, with this version of
+SLAP the definition of that extension is moved into the standard itself.
+The present standard hence deprecates the SLAP section of SimpleDALRegExt.
+
+\subsubsection{The SLAP Registry Extension}
+
+The namespace associated with the SLA extension schema is
+$$\hbox{\nolinkurl{http://www.ivoa.net/xml/SLAP/v1.0}}.$$  We retain the
+original namespace URI regardless of the mismatch of minor (and in this
+case major) standard version; see \citet{2018ivoa.spec.0529H} for
+details on legacy namespace URIs in the VO.
+
+The canonical namespace prefix as per RegTAP \citep{2024ivoa.spec.1002D}
+is \xmlel{slap:}.  Avoid binding the SLAP namespace URI to any other prefix
+for interoperability.
+
+The central element in that schema is \xmlel{slap:SimpleLineAccess}, a
+subtype of \xmlel{vr:Capability}.  It is defined as follows:
+
+% GENERATED: !schemadoc SLAP-v1.2.xsd SimpleLineAccess
+\begin{generated}
+\begingroup
+        \renewcommand*\descriptionlabel[1]{%
+        \hbox to 5.5em{\emph{#1}\hfil}}\vspace{2ex}\noindent\textbf{\xmlel{slap:SimpleLineAccess} Type Schema Documentation}
+
+\noindent{\small{}The capabilities of an SLAP service implementation.\par}
+
+\vspace{1ex}\noindent\textbf{\xmlel{slap:SimpleLineAccess} Type Schema Definition}
+
+\begin{lstlisting}[language=XML,basicstyle=\footnotesize]
+<xs:complexType name="SimpleLineAccess" >
+  <xs:complexContent >
+    <xs:extension base="vr:Capability" >
+      <xs:sequence >
+        <xs:element name="complianceLevel"
+                  type="slap:ComplianceLevel" />
+        <xs:element name="dataSource" type="slap:DataSource" />
+        <xs:element name="maxRecords" type="xs:positiveInteger" minOccurs="0"
+                  maxOccurs="1" />
+        <xs:element name="testQuery" type="slap:Query" minOccurs="0"
+                  maxOccurs="1" />
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+\end{lstlisting}
+
+\vspace{0.5ex}\noindent\textbf{\xmlel{slap:SimpleLineAccess} Extension Metadata Elements}
+
+\begingroup\small\begin{bigdescription}\item[Element \xmlel{complianceLevel}]
+\begin{description}
+\item[Type] string with controlled vocabulary
+\item[Meaning] The category indicating the level to which this
+                        service instance complies with the SLAP standard.
+\item[Occurrence] required
+
+\item[Terms]\hfil
+\begin{longtermsdescription}
+\item[minimal]The service supports all of the capabilities and features
+                  of the SLAP protocol identified as “must” in the
+                  specification.
+\item[full]The service supports, at a minimum, all of the capabilities
+		  and features of the SLAP protocol identified as “must” or
+		  “should” in the specification.
+\end{longtermsdescription}
+\item[Comment] Allowed values are “minimal” and “full”.
+                        See definitions of allowed values for details.
+
+\end{description}
+\item[Element \xmlel{dataSource}]
+\begin{description}
+\item[Type] string with controlled vocabulary
+\item[Meaning] The category specifying where the data accessed by
+			the service originally came from.
+\item[Occurrence] required
+
+\item[Terms]\hfil
+\begin{longtermsdescription}
+\item[observational/astrophysical]Lines observed and identified in real spectra of
+		 astrophysical observations by different
+		 instrument/projects
+\item[observational/laboratory]Lines observed and identified in real spectra of
+		 laboratory measurements
+\item[theoretical]Servers containing theoretical spectral lines
+\end{longtermsdescription}
+\item[Comment] Allowed values are “observational/astrophysical”,
+			“observational/laboratory”, “theoretical”
+
+\end{description}
+\item[Element \xmlel{maxRecords}]
+\begin{description}
+\item[Type] \xmlel{xs:positiveInteger}
+\item[Meaning] The hard limit on the largest number of records that
+                        the query operation will return in a single response.
+                        Not providing this value means that there is no
+                        effective limit.
+\item[Occurrence] optional
+\item[Comment] This does not refer to the total number of spectra in
+                        the archive but rather maximum number of records the
+                        service is capable of returning.  A limit that is
+                        greater than the number of spectra available in the
+                        archive is equivalent to their being no effective
+                        limit.  (See RM, Hanisch 2007.)
+
+\end{description}
+\item[Element \xmlel{testQuery}]
+\begin{description}
+\item[Type] composite: \xmlel{slap:Query}
+\item[Meaning] Deprecated; use vs:ParamHTTP's testQuery element
+                        instead.
+\item[Occurrence] optional
+
+\end{description}
+
+
+\end{bigdescription}\endgroup
+
+\endgroup
+\end{generated}
+
+% /GENERATED
+
+\subsubsection{RegTAP Details Keys}
+
+The following RegTAP \verb|res_details| keys are derived from the
+SLAP capability type by mapping xpaths as defined by RegTAP; keys RegTAP
+services must include in their tables if they are given in the registry
+record are marked by an exclamation mark:
+
+\begin{description}
+\item[/capability/complianceLevel (!)] The level to which this service instance complies with SLAP standard
+\item[/capability/dataSource (!)] The means that were used to generate the data published (see schema for the values allowed here)
+\item[/capability/maxRecords (!)] The largest number of lines the service will return
+\end{description}
+
+\subsubsection{A Sample Registry Record}
+
+A sample registry record comes with this
+document\footnote{\auxiliaryurl{registry-sample.xml}}.  Note that this
+is from a live service and hence has many features that are not
+mandatory for valid SLAP2 registry records.  For instance, this document
+does not make requirements for passing on column statistics (although
+doing so is highly encouraged).
+
+In case there are any inconsistencies between this sample record and the
+normative content of this specification, the error is on the side of the
+record.
+
+\subsection{Discovering SLAP2 Services}
+
+The most common operation a lines client will do is to discover the
+access URLs of SLAP2 services.  The following RegTAP query will effect
+that:
+
+\begin{lstlisting}[basicstyle=\ttfamily]
+SELECT ivoid, access_url
+FROM rr.capability
+NATURAL JOIN rr.interface
+WHERE standard_id like 'ivo://ivoa.net/std/slap#lines-2.%'
+  AND intf_type='vs:paramhttp'
+\end{lstlisting}
+
+While species endpoints could be found in the Registry in an analogous
+way, the typical workflow is expected to be such that clients will be
+interested in a species endpoint for a lines endpoint they have
+discovered.  To do that, it is recommended to replace the last path
+segment in the access URL discovered for the lines endpoint with
+\texttt{capabilities}, dereference the resulting URL and in the content
+look for a capability with the standard id $$
+\hbox{\nolinkurl{ivo://ivoa.net/std/slap#species-2.0}}.$$  Note that
+ivoids must be compared case-insensitively.
 
 \appendix
 
