@@ -1326,6 +1326,30 @@ In case there are any inconsistencies between this sample record and the
 normative content of this specification, the error is on the side of the
 record.
 
+\subsection{Discovering SLAP2 Services}
+
+The most common operation a lines client will do is to discover the
+access URLs of SLAP2 services.  The following RegTAP query will effect
+that:
+
+\begin{lstlisting}[basicstyle=\ttfamily]
+SELECT ivoid, access_url
+FROM rr.capability
+NATURAL JOIN rr.interface
+WHERE standard_id like 'ivo://ivoa.net/std/slap#lines-2.%'
+  AND intf_type='vs:paramhttp'
+\end{lstlisting}
+
+While species endpoints could be found in the Registry in an analogous
+way, the typical workflow is expected to be such that clients will be
+interested in a species endpoint for a lines endpoint they have
+discovered.  To do that, it is recommended to replace the last path
+segment in the access URL discovered for the lines endpoint with
+\texttt{capabilities}, dereference the resulting URL and in the content
+look for a capability with the standard id $$
+\hbox{\nolinkurl{ivo://ivoa.net/std/slap#species-2.0}}.$$  Note that
+ivoids must be compared case-insensitively.
+
 \appendix
 
 \section{SLAP services for uncorrected and unidentified lines}
