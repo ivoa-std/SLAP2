@@ -1184,7 +1184,7 @@ The present standard hence deprecates the SLAP section of SimpleDALRegExt.
 
 \subsubsection{The SLAP Registry Extension}
 
-The namespace associated with the SLA extension schema is
+The namespace associated with the SLAP extension schema is
 $$\hbox{\nolinkurl{http://www.ivoa.net/xml/SLAP/v1.0}}.$$  We retain the
 original namespace URI regardless of the mismatch of minor (and in this
 case major) standard version; see \citet{2018ivoa.spec.0529H} for
@@ -1277,10 +1277,8 @@ subtype of \xmlel{vr:Capability}.  It is defined as follows:
 \item[Occurrence] optional
 \item[Comment] This does not refer to the total number of spectra in
                         the archive but rather maximum number of records the
-                        service is capable of returning.  A limit that is
-                        greater than the number of spectra available in the
-                        archive is equivalent to their being no effective
-                        limit.  (See RM, Hanisch 2007.)
+                        service is capable of returning.  A number smaller
+                        than one means that there is no effective limit.
 
 \end{description}
 \item[Element \xmlel{testQuery}]
@@ -1346,7 +1344,7 @@ interested in a species endpoint for a lines endpoint they have
 discovered.  To do that, it is recommended to replace the last path
 segment in the access URL discovered for the lines endpoint with
 \texttt{capabilities}, dereference the resulting URL and in the content
-look for a capability with the standard id $$
+look for a capability with the standard ID $$
 \hbox{\nolinkurl{ivo://ivoa.net/std/slap#species-2.0}}.$$  Note that
 ivoids must be compared case-insensitively.
 
