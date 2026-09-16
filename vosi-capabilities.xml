@@ -9,13 +9,6 @@
      </accessURL>
     </interface>
   </capability>
-  <capability standardID="ivo://ivoa.net/std/VOSI#availability">
-    <interface xsi:type="vs:ParamHTTP" role="std">
-      <accessURL use="full">
-        http://example.com/slap2/availability
-      </accessURL>
-    </interface>
-  </capability>
   <capability standardID="ivo://ivoa.net/std/SLAP#species-2.0">
     <interface xsi:type="vs:ParamHTTP" role="std" version="2.0">
       <accessURL>
@@ -39,7 +32,7 @@
         <name>inchikey</name>
         <description>Inchikey of the searched chemical element</description>
         <ucd>phys.atmol.element</ucd>
-        <dataType arraysize="*">char</dataType>        
+        <dataType arraysize="*">char</dataType>
       </param>
       <param std="true" use="optional">
         <name>chemical_element</name>
@@ -57,8 +50,8 @@
       <param std="false" use="optional">
         <name>wavenumber</name>
         <description>Minimum and maximum wavenumber of the line</description>
-        <ucd>em.wavenumber</ucd>
         <unit>m**-1</unit>
+        <ucd>em.wavenumber</ucd>
         <dataType arraysize="2">real</dataType>
       </param>
     </interface>
