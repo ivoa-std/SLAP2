@@ -1214,7 +1214,6 @@ subtype of \xmlel{vr:Capability}.  It is defined as follows:
       <xs:sequence >
         <xs:element name="complianceLevel"
                   type="slap:ComplianceLevel" />
-        <xs:element name="dataSource" type="slap:DataSource" />
         <xs:element name="maxRecords" type="xs:positiveInteger" minOccurs="0"
                   maxOccurs="1" />
         <xs:element name="testQuery" type="slap:Query" minOccurs="0"
@@ -1245,26 +1244,6 @@ subtype of \xmlel{vr:Capability}.  It is defined as follows:
 \end{longtermsdescription}
 \item[Comment] Allowed values are “minimal” and “full”.
                         See definitions of allowed values for details.
-
-\end{description}
-\item[Element \xmlel{dataSource}]
-\begin{description}
-\item[Type] string with controlled vocabulary
-\item[Meaning] The category specifying where the data accessed by
-			the service originally came from.
-\item[Occurrence] required
-
-\item[Terms]\hfil
-\begin{longtermsdescription}
-\item[observational/astrophysical]Lines observed and identified in real spectra of
-		 astrophysical observations by different
-		 instrument/projects
-\item[observational/laboratory]Lines observed and identified in real spectra of
-		 laboratory measurements
-\item[theoretical]Servers containing theoretical spectral lines
-\end{longtermsdescription}
-\item[Comment] Allowed values are “observational/astrophysical”,
-			“observational/laboratory”, “theoretical”
 
 \end{description}
 \item[Element \xmlel{maxRecords}]
@@ -1586,10 +1565,11 @@ Returnables are concepts describing the data fields that a VAMDC service can ret
 
 \section{Changes from Previous Versions}
 
-\subsection{Changes from version 1}
-\todo{fill in}
-% these would be subsections "Changes from v. WD-..."
-% Use itemize environments.
+\subsection{Changes from WD-20190409}
+\begin{itemize}
+\item Dropping dataSource from the capability; we will have this in
+standard VODataService.
+\end{itemize}
 
 \bibliography{bibliography/ivoabib,bibliography/docrepo,bibliography/other}
 
