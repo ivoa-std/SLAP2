@@ -1407,10 +1407,61 @@ Returnables are concepts describing the data fields that a VAMDC service can ret
 
 \section{Changes from Previous Versions}
 
-\subsection{Changes from version 1}
-\todo{fill in}
-% these would be subsections "Changes from v. WD-..."
-% Use itemize environments.
+\subsection{Changes from version 2.0-20190409}
+\paragraph{Global changes}
+\begin{itemize}
+\item Simple Spectral Lines Data Model (SSLDM) has been removed from the standard as well as the corresponding utypes
+\item UCDs values for columns are only suggested
+\item species resource is now mandatory
+\item VOSI-availabiltiy resource is now optional
+\item all query parameters in both lines and species resources are mandatory
+\item resources names are now fixed and cannot be changed by the service provider
+\item column names are now fixed and cannot be changed by the service provider
+\item parameter names are case sensitive
+\item for each column, the corresponding VAMDC returnable is now specified
+\item text parameters support pattern matching (with ? and * wildcards)
+\item added INFO metadata from data origin note in the query response, replacing the previously existing protocol specific metadata fields (REQUEST_COMPLETED_TIMESTAMP, SERVICE_VERSION, SERVICE_NAME, REQUEST_DESCRIPTION)
+\item a column can be added to express a physical quantity in its original unit, in addition to the canonical column
+\end{itemize}
+
+\paragraph{Changes in the /lines resource}
+
+\begin{itemize}
+\item CHEMICAL_ELEMENT parameter renamed to SPECIES
+\item EINSTEIN_A parameter renamed to EINSTEINA
+\item removed parameters : LEVEL_ENERGY, TEMPERATURE, PROCESS_TYPE, PROCESS_NAME
+\item added parameters : SPECIES_MASS, INCHIKEY
+\item removed columns : Line.identificationStatus, Query.Score, Line.lowerLevel.configuration, Line.upperLevel.configuration,
+Line.lowerLevel.quantumState, Line.upperLevel.quantumState, Process.type, Process.name, Line.Reference.bibtex, Target.name, 
+SpatialAxis.Coverage.Location.Value, TimeAxis.Coverage.Bounds.Start, TimeAxis.Coverage.Bounds.Stop
+\item added columns : vacuum_wavelength_error, species_mass, reference_doi, reference_additional_uri
+\item mandatory columns are now : vacuum_wavelength, vacuum_wavelength_error, line_title, species_name, 
+inchikey, inchi, ion_charge, lower_level_description, upper_level_description
+\end{itemize}
+
+\paragraph{Changes in the /species resource}
+\begin{itemize}
+\item added parameters : SPECIES, SPECIES_TYPE, INCHIKEY, INCHI, NUMBER_OF_ATOMS, STOICHIOMETRIC_FORMULA, MAXREC
+\item added columns : number_of_atoms, stoichiometric_formula
+\item mandatory columns are now : species_name, inchikey, inchi, ion_charge, stoichiometric_formula
+\item considered species types are now : atom, molecule (particle has been removed)
+\end{itemize}
+
+\subsection{From SLAP1 to SLAP2: the need for a new version}
+
+SLAP1 was labelled has a simple protocol but came with a data model that was
+both too complex for simple use-cases (finding lines in a given wavelength range and labelling it textually) 
+and too simple for complex use-cases  (finding lines in a given wavelength range and identifying the corresponding quantum numbers).
+Moreover, the VAMDC infrastructure that was developped shortly after SLAP1 was released could handle the complex use-cases 
+more efficiently than SLAP1. It was however not pratical for simple use-cases because of the complexity of the VAMDC data model. 
+In the end, only a few services implemented the first version of SLAP.
+
+Thus the aim of SLAP2 is to provide a simple protocol for simple use-cases, while relying on the VAMDC infrastructure for complex use-cases.
+To accomplish this goal, SLAP2 relies on a limited set of columns whose definition correspond to their VAMDC counterparts. 
+This allows to provide a simple protocol for simple use-cases, while allowing users with more complex use-cases 
+to use the more complex VAMDC standard.
+
+
 
 \bibliography{bibliography/ivoabib,bibliography/docrepo,bibliography/other}
 
