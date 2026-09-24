@@ -1137,7 +1137,8 @@ Examples of valid values are 1 for the hydrogen atom, 3 for the water molecule.
 \section{VOSI-capabilities}
 
 A compliant simple spectral line service \textbf{MUST} provide a
-VOSI capabilities resource used to query the service metadata.  It must be a sibling of lines and species, and its name is \textit{capbilities}.
+VOSI capabilities resource used to query the service metadata.  
+It must be a sibling of lines and species, and its name is \textit{capabilities}.
 
 This resource will return the capability metadata as described in
 VOSI. The DALI-sync resources will
@@ -1410,41 +1411,45 @@ Returnables are concepts describing the data fields that a VAMDC service can ret
 \subsection{Changes from version 2.0-20190409}
 \paragraph{Global changes}
 \begin{itemize}
-\item Simple Spectral Lines Data Model (SSLDM) has been removed from the standard as well as the corresponding utypes
-\item UCDs values for columns are only suggested
-\item species resource is now mandatory
-\item VOSI-availabiltiy resource is now optional
-\item all query parameters in both lines and species resources are mandatory
-\item resources names are now fixed and cannot be changed by the service provider
+\item Simple Spectral Lines Data Model (SSLDM) has been removed from the standard as well 
+as the corresponding utypes
+\item UCD values for columns are only suggested
+\item /species resource is now mandatory
+\item /availabilty resource is now optional
+\item all query parameters in both /lines and /species resources are mandatory
+\item resource names are now fixed and cannot be changed by the service provider
 \item column names are now fixed and cannot be changed by the service provider
 \item parameter names are case sensitive
-\item for each column, the corresponding VAMDC returnable is now specified
-\item text parameters support pattern matching (with ? and * wildcards)
-\item added INFO metadata from data origin note in the query response, replacing the previously existing protocol specific metadata fields (REQUEST_COMPLETED_TIMESTAMP, SERVICE_VERSION, SERVICE_NAME, REQUEST_DESCRIPTION)
-\item a column can be added to express a physical quantity in its original unit, in addition to the canonical column
+\item each column is now mapped to a VAMDC returnable
+\item added INFO metadata from data origin note in the query response, replacing the previously 
+existing protocol specific metadata fields 
+(REQUEST\_COMPLETED\_TIMESTAMP, SERVICE\_VERSION, SERVICE\_NAME, REQUEST\_DESCRIPTION)
+\item an additional column may be added to express a physical quantity in its original unit, 
+alongside the canonical column
 \end{itemize}
 
 \paragraph{Changes in the /lines resource}
 
 \begin{itemize}
-\item CHEMICAL_ELEMENT parameter renamed to SPECIES
-\item EINSTEIN_A parameter renamed to EINSTEINA
-\item removed parameters : LEVEL_ENERGY, TEMPERATURE, PROCESS_TYPE, PROCESS_NAME
-\item added parameters : SPECIES_MASS, INCHIKEY
+\item CHEMICAL\_ELEMENT parameter renamed to SPECIES
+\item EINSTEIN\_A parameter renamed to EINSTEINA
+\item removed parameters : LEVEL\_ENERGY, TEMPERATURE, PROCESS\_TYPE, PROCESS\_NAME
+\item added parameters : SPECIES\_MASS, INCHIKEY
 \item removed columns : Line.identificationStatus, Query.Score, Line.lowerLevel.configuration, Line.upperLevel.configuration,
 Line.lowerLevel.quantumState, Line.upperLevel.quantumState, Process.type, Process.name, Line.Reference.bibtex, Target.name, 
 SpatialAxis.Coverage.Location.Value, TimeAxis.Coverage.Bounds.Start, TimeAxis.Coverage.Bounds.Stop
-\item added columns : vacuum_wavelength_error, species_mass, reference_doi, reference_additional_uri
-\item mandatory columns are now : vacuum_wavelength, vacuum_wavelength_error, line_title, species_name, 
-inchikey, inchi, ion_charge, lower_level_description, upper_level_description
+\item added columns : vacuum\_wavelength\_error, species\_mass, reference\_doi, reference\_additional\_uri
+\item mandatory columns are now : vacuum\_wavelength, vacuum\_wavelength\_error, line\_title, species\_name, 
+inchikey, inchi, ion\_charge, lower\_level\_description, upper\_level\_description
 \end{itemize}
 
 \paragraph{Changes in the /species resource}
 \begin{itemize}
-\item added parameters : SPECIES, SPECIES_TYPE, INCHIKEY, INCHI, NUMBER_OF_ATOMS, STOICHIOMETRIC_FORMULA, MAXREC
-\item added columns : number_of_atoms, stoichiometric_formula
-\item mandatory columns are now : species_name, inchikey, inchi, ion_charge, stoichiometric_formula
-\item considered species types are now : atom, molecule (particle has been removed)
+\item added parameters : SPECIES, SPECIES\_TYPE, INCHIKEY, INCHI, NUMBER\_OF\_ATOMS, STOICHIOMETRIC\_FORMULA, MAXREC
+\item SPECIES, INCHI and STOICHIOMETRIC\_FORMULAtext parameters support pattern matching (with ? and * wildcards)
+\item added columns : number\_of\_atoms, stoichiometric\_formula
+\item mandatory columns are now : species\_name, inchikey, inchi, ion\_charge, stoichiometric\_formula
+\item available species types are now : atom, molecule (particle has been removed)
 \end{itemize}
 
 \subsection{From SLAP1 to SLAP2: the need for a new version}
