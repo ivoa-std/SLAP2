@@ -1,3 +1,5 @@
+[![PDF-Preview](https://img.shields.io/badge/Preview-PDF-blue)](../../releases/download/auto-pdf-preview/SLAP2-draft.pdf)
+
 This document describes/defines FILL-THIS-OUT in the [Virtual
 Observatory](https://ivoa.net)
 
