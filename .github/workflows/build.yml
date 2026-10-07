@@ -7,7 +7,7 @@
 name: Check the IVOA document
 
 env:
-  doc_name: SLAP2
+  doc_name: SLAP
 
 on:
   pull_request:
