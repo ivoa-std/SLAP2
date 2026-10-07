@@ -7,7 +7,7 @@
 name: Update PDF Preview
 
 env:
-  doc_name   : SLAP2
+  doc_name   : SLAP
   branch_name: ${{ github.head_ref || github.ref_name }}
   tag_preview: auto-pdf-preview
 

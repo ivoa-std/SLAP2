@@ -2,13 +2,13 @@
 # for the targets available.
 
 # short name of your document (edit $DOCNAME.tex; would be like RegTAP)
-DOCNAME = SLAP2
+DOCNAME = SLAP
 
 # count up; you probably do not want to bother with versions <1.0
 DOCVERSION = 2.0
 
 # Publication date, ISO format; update manually for "releases"
-DOCDATE = 2026-09-24
+DOCDATE = 2026-10-07
 
 # What is it you're writing: NOTE, WD, PR, REC, PEN, or EN
 DOCTYPE = WD
@@ -30,7 +30,7 @@ FIGURES = role_diagram.svg
 VECTORFIGURES =
 
 # Additional files to distribute (e.g., CSS, schema files, examples...)
-AUX_FILES = vosi-capabilities.xml, lines-response-example.vot
+AUX_FILES = vosi-capabilities.xml lines-response-example.vot
 
 -include ivoatex/Makefile
 
